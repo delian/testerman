@@ -925,7 +925,7 @@ def write_latex(docindex, options, format):
                     'ps2pdf -sPAPERSIZE#letter -dMaxSubsetPct#100 '
                     '-dSubsetFonts#true -dCompatibilityLevel#1.2 '
                     '-dEmbedAllFonts#true api.ps api.pdf')
-        except RunSubprocessError, e:
+        except RunSubprocessError as e:
             if running == 'latex':
                 e.out = re.sub(r'(?sm)\A.*?!( LaTeX Error:)?', r'', e.out)
                 e.out = re.sub(r'(?sm)\s*Type X to quit.*', '', e.out)

@@ -448,7 +448,7 @@ class SequenceNode(SyntaxNode):
 
 			try:
 				v, nextTokens = self._fields[fieldName][1].parse(nextTokens[1:])
-			except ParsingException, e:
+			except ParsingException as e:
 				e.forwardAs(fieldName)
 			ret[fieldName] = v
 			
@@ -478,7 +478,7 @@ class SequenceNode(SyntaxNode):
 			# Check if the current field wants to complete something or not
 			try:
 				suggestions, completionRequired, nextTokens = self._fields[fieldName][1].suggestNextTokens(nextTokens[1:])
-			except ParsingException, e:
+			except ParsingException as e:
 				e.forwardAs(fieldName)
 
 			if completionRequired:
@@ -635,7 +635,7 @@ class ChoiceNode(SyntaxNode):
 		if choiceName in self._choices:
 			try:
 				v, remaining = self._choices[choiceName][1].parse(tokens[1:])
-			except ParsingException, e:
+			except ParsingException as e:
 				e.forwardAs(choiceName)
 
 			return ( (choiceName, v), remaining )
@@ -656,7 +656,7 @@ class ChoiceNode(SyntaxNode):
 			if choiceName in self._choices:
 				try:
 					return self._choices[choiceName][1].suggestNextTokens(tokens[1:])
-				except ParsingException, e:
+				except ParsingException as e:
 					e.forwardAs(choiceName)
 			else:
 				raise InvalidSyntax("invalid choice name (%s)" % (choiceName)) 
@@ -747,7 +747,7 @@ class PositionalSequenceNode(SyntaxNode):
 			fieldName, fieldDescription, fieldSyntaxNode = self._fields[nextField]
 			try:
 				v, nextTokens = fieldSyntaxNode.parse(nextTokens)
-			except ParsingException, e:
+			except ParsingException as e:
 				e.forwardAs(fieldName)
 			ret[fieldName] = v
 			nextField += 1
@@ -770,7 +770,7 @@ class PositionalSequenceNode(SyntaxNode):
 			fieldName, fieldDescription, fieldSyntaxNode = self._fields[nextField]
 			try:
 				suggestions, completionRequired, nextTokens = fieldSyntaxNode.suggestNextTokens(nextTokens)
-			except ParsingException, e:
+			except ParsingException as e:
 				e.forwardAs(fieldName)
 			
 			if completionRequired:
@@ -1192,7 +1192,7 @@ class CmdContextManagerAdapter(ContextManager):
 			
 			try:
 				completionRequired, ret = self._contextManager.getSuggestions(tokens)
-			except ParsingException, e:
+			except ParsingException as e:
 				self.stdout.write("\n%% error: %s\n" % str(e))
 				self.redisplay()
 				return None

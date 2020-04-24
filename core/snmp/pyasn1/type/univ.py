@@ -301,7 +301,7 @@ class ObjectIdentifier(base.AbstractSimpleAsn1Item):
             except string.atoi_error:
                 try:
                     r.append(string.atol(element, 0))
-                except string.atol_error, why:                        
+                except string.atol_error as why:
                     raise error.PyAsn1Error(
                         'Malformed Object ID %s at %s: %s' %
                         (str(value), self.__class__.__name__, why)

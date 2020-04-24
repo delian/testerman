@@ -26,7 +26,7 @@ class DgramTwistedTransport(DatagramProtocol, AbstractTwistedTransport):
             debug.logger & debug.flagIO and debug.logger('startProtocol: transportAddress %s outgoingMessage %s' % (transportAddress, repr(outgoingMessage)))
             try:
                 self.transport.write(outgoingMessage, transportAddress)
-            except Exception, why:
+            except Exception as why:
                 raise error.CarrierError('Twisted exception: %s' % (why,))
 
     def stopProtocol(self):
@@ -40,5 +40,5 @@ class DgramTwistedTransport(DatagramProtocol, AbstractTwistedTransport):
         else:
             try:
                 self.transport.write(outgoingMessage, transportAddress)
-            except Exception, why:
+            except Exception as why:
                 raise error.CarrierError('Twisted exception: %s' % (why,))

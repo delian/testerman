@@ -45,7 +45,7 @@ class Client(TestermanClient.Client):
 		"""
 		try:
 			return self.__proxy.purgeJobQueue(older_than)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("Fault while purging old jobs: " + str(e))
 			raise Exception(e.faultString)
 		
@@ -53,7 +53,7 @@ class Client(TestermanClient.Client):
 	def persistJobQueue(self):
 		try:
 			return self.__proxy.persistJobQueue()
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("Fault while persisting jobs: " + str(e))
 			raise Exception(e.faultString)
 	

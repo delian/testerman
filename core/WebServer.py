@@ -319,7 +319,7 @@ class WebApplication:
 	def do_GET(self):
 		try:
 			self._authenticate()
-		except AuthenticationError, e:
+		except AuthenticationError as e:
 			self.request.sendResponse(401)
 			self.request.sendHeader('WWW-Authenticate', 'Basic realm="%s"' % self._authenticationRealm)
 			self.request.sendHeader('Connection', 'Close')
@@ -603,7 +603,7 @@ class WebSocketApplication:
 		# Is basic authentication supported for WebSocket ?
 		try:
 			self._authenticate()
-		except AuthenticationError, e:
+		except AuthenticationError as e:
 			self.request.sendResponse(401)
 			self.request.sendHeader('WWW-Authenticate', 'Basic realm="%s"' % self._authenticationRealm)
 			self.request.sendHeader('Connection', 'Close')
@@ -673,11 +673,11 @@ class WebSocketApplication:
 					self.buf = ''.join([self.buf, read]) # faster than += r
 					self.__on_incoming_data()
 				
-			except EOFError, e:
+			except EOFError as e:
 				getLogger().info("WebSocket: Disconnected by peer.")
 				self.wsClose()
 
-			except socket.error, e:
+			except socket.error as e:
 				getLogger().error("WebSocket: Low level error: " + str(e))
 				self.wsClose()
 

@@ -821,7 +821,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 		try:
 			parser.suite(te).compile()
 			compiler.parse(te)
-		except SyntaxError, e:
+		except SyntaxError as e:
 			t = te.split('\n')
 			line = t[e.lineno]
 			context = '\n'.join([ "%s: %s" % (x, t[x]) for x in range(e.lineno-5, e.lineno+5)])

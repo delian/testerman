@@ -252,7 +252,7 @@ class SimpleXMLRPCDispatcher:
             # wrap response in a singleton tuple
             response = (response,)
             response = xmlrpclib.dumps(response, methodresponse=1, allow_none=1)
-        except Fault, fault:
+        except Fault as fault:
             response = xmlrpclib.dumps(fault)
         except:
             # report exception back to server
@@ -349,7 +349,7 @@ class SimpleXMLRPCDispatcher:
                 # XXX A marshalling error in any response will fail the entire
                 # multicall. If someone cares they should fix this.
                 results.append([self._dispatch(method_name, params)])
-            except Fault, fault:
+            except Fault as fault:
                 results.append(
                     {'faultCode' : fault.faultCode,
                      'faultString' : fault.faultString}
@@ -505,7 +505,7 @@ class CGIXMLRPCRequestHandler(SimpleXMLRPCDispatcher):
              'message' : message,
              'explain' : explain
             }
-        print ('Status: %d %s' % (code, message)))
+        print ('Status: %d %s' % (code, message))
         print ('Content-Type: text/html')
         print ('Content-Length: %d' % len(response))
         print ()

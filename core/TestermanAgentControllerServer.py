@@ -163,12 +163,12 @@ class XaServer(Nodes.ListeningNode):
 			else:
 				raise XaException("Unsupported method", 505, "Not Supported")
 
-		except TacsException, e:
+		except TacsException as e:
 			resp = Messages.Response(e.code, e.reason)
 			resp.setBody(str(e))
 			self.sendResponse(channel, transactionId, resp)
 
-		except XaException, e:
+		except XaException as e:
 			resp = Messages.Response(e.code, e.reason)
 			resp.setBody(str(e))
 			self.sendResponse(channel, transactionId, resp)
@@ -429,17 +429,17 @@ class IaServer(Nodes.ListeningNode):
 			else:
 				raise IaException("Unsupported method", 505, "Not Supported")
 
-		except TacsException, e:
+		except TacsException as e:
 			resp = Messages.Response(e.code, e.reason)
 			resp.setBody(str(e))
 			self.sendResponse(channel, transactionId, resp)
 
-		except IaException, e:
+		except IaException as e:
 			resp = Messages.Response(e.code, e.reason)
 			resp.setBody(str(e))
 			self.sendResponse(channel, transactionId, resp)
 
-		except XaException, e:
+		except XaException as e:
 			resp = Messages.Response(e.code, e.reason)
 			resp.setBody(str(e))
 			self.sendResponse(channel, transactionId, resp)

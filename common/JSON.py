@@ -25,12 +25,12 @@
 # -*- coding: utf-8 -*-
 ##
 
-# For Python 2.2
-from __future__ import generators
-try:
-	True, False
-except:
-	True, False = 0, 1
+## For Python 2.2
+#from __future__ import generators
+#try:
+#	True, False
+#except:
+#	True, False = 0, 1
 
 r"""
 A simple, fast, extensible JSON encoder and decoder
@@ -459,8 +459,8 @@ class JSONEncoder(object):
 
 def _make_iterencode(markers, _default, _encoder, _indent, _floatstr, _key_separator, _item_separator, _sort_keys, _skipkeys, _one_shot,
         ## HACK: hand-optimized bytecode; turn globals into locals
-        False=False,
-        True=True,
+        #False=False,
+        #True=True,
         ValueError=ValueError,
         basestring=basestring,
         dict=dict,

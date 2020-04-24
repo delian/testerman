@@ -319,7 +319,7 @@ class Client(Nodes.ConnectingNode):
 					s[k.encode('utf-8')] = v.encode('utf-8')
 			
 			return self.__proxy.scheduleAts(ats, atsId.encode('utf-8'), username.encode('utf-8'), s, at, path, groups)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("ATS Scheduling fault: " + str(e))
 			raise Exception(e.faultString)
 
@@ -356,7 +356,7 @@ class Client(Nodes.ConnectingNode):
 					s[k.encode('utf-8')] = v.encode('utf-8')
 			
 			return self.__proxy.scheduleCampaign(source, campaignId.encode('utf-8'), username.encode('utf-8'), s, at, path)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("Campaign Scheduling fault: " + str(e))
 			raise Exception(e.faultString)
 		
@@ -378,7 +378,7 @@ class Client(Nodes.ConnectingNode):
 		"""
 		try:
 			return self.__proxy.rescheduleJob(jobId, at)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("Job rescheduling fault: " + str(e))
 			raise(e)
 
@@ -1119,7 +1119,7 @@ class Client(Nodes.ConnectingNode):
 		ret = None
 		try:
 			ret = self.__proxy.createPackage(path)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("!! exportPackage: Fault: " + str(e.faultString))
 			raise e
 		return ret
@@ -1146,7 +1146,7 @@ class Client(Nodes.ConnectingNode):
 			if content:
 				content = zlib.decompress(base64.decodestring(content))
 				self.getLogger().debug("Package file extracted, loaded in %fs" % (time.time() - start))
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("!! exportPackage: Fault: " + str(e.faultString))
 			raise e
 		return content
@@ -1171,7 +1171,7 @@ class Client(Nodes.ConnectingNode):
 		try:
 			res = self.__proxy.importPackageFile(base64.encodestring(content), path, False)
 			self.getLogger().debug("Package file imported, loaded in %fs" % (time.time() - start))
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("!! importPackageFile: Fault: " + str(e.faultString))
 			raise e
 		return res
@@ -1187,7 +1187,7 @@ class Client(Nodes.ConnectingNode):
 					s[k.encode('utf-8')] = v.encode('utf-8')
 
 			return self.__proxy.schedulePackage(path, username.encode('utf-8'), s, at, script, profileName)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("Package Scheduling fault: " + str(e))
 			raise Exception(e.faultString)
 
@@ -1203,7 +1203,7 @@ class Client(Nodes.ConnectingNode):
 		res = []
 		try:
 			res = self.__proxy.getRegisteredProbes()
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("!! getRegisteredProbes: Fault: " + str(e.faultString))
 			raise e
 		self.getLogger().debug("<< getRegisteredProbes: %d probes returned" % len(res))
@@ -1217,7 +1217,7 @@ class Client(Nodes.ConnectingNode):
 		res = []
 		try:
 			res = self.__proxy.getRegisteredAgents()
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().debug("!! getRegisteredAgents: Fault: " + str(e.faultString))
 			raise e
 		self.getLogger().debug("<< getRegisteredAgents: %d agents returned" % len(res))
@@ -1230,7 +1230,7 @@ class Client(Nodes.ConnectingNode):
 		self.getLogger().debug("Deploying probe %s: %s on %s..." % (probeType, probeName, agentName))
 		try:
 			return self.__proxy.deployProbe(agentName, probeName, probeType)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("Deploying fault: " + str(e))
 		return False
 
@@ -1241,7 +1241,7 @@ class Client(Nodes.ConnectingNode):
 		self.getLogger().debug("Undeploying probe %s from %s..." % (probeName, agentName))
 		try:
 			return self.__proxy.undeployProbe(agentName, probeName)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("Undeploying fault: " + str(e))
 			raise e
 		return False
@@ -1253,7 +1253,7 @@ class Client(Nodes.ConnectingNode):
 		self.getLogger().debug("Restarting agent %s..." % (agentName))
 		try:
 			return self.__proxy.restartAgent(agentName)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("Restarting fault: " + str(e))
 			raise Exception(e.faultString)
 		return False
@@ -1266,7 +1266,7 @@ class Client(Nodes.ConnectingNode):
 		self.getLogger().debug("Updating agent %s..." % (agentName))
 		try:
 			return self.__proxy.updateAgent(agentName, branch, version)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			self.getLogger().error("Updating fault: " + str(e))
 			raise Exception(e.faultString)
 		return False

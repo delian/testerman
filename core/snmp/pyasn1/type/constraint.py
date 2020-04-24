@@ -28,7 +28,7 @@ class AbstractConstraint:
     def __call__(self, value, idx=None):
         try:
             self._testValue(value, idx)
-        except error.ValueConstraintError, why:
+        except error.ValueConstraintError as why:
             raise error.ValueConstraintError('%s failed at: %s' % (
                 self, why
                 ))

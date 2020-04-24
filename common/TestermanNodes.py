@@ -319,11 +319,11 @@ class TcpPacketizerClientThread(threading.Thread):
 					else:
 						timeout = next_ka_in
 
-			except EOFError, e:
+			except EOFError as e:
 				self.trace("Disconnected by peer.")
 				raise e # We'll reconnect.
 
-			except socket.error, e:
+			except socket.error as e:
 				self.trace("Low level error: " + str(e))
 				raise e # We'll reconnect
 
@@ -382,11 +382,11 @@ class TcpPacketizerClientThread(threading.Thread):
 						# Not ready. Will perform a new attempt on next main loop iteration
 						break
 
-			except EOFError, e:
+			except EOFError as e:
 				self.trace("Disconnected by peer.")
 				raise e # We'll reconnect.
 
-			except socket.error, e:
+			except socket.error as e:
 				self.trace("Low level error: " + str(e))
 				raise e # We'll reconnect
 
@@ -691,7 +691,7 @@ class TcpPacketizerServerThread(threading.Thread):
 							self.socket.sendall(message)
 						except Queue.Empty:
 							pass
-						except IOError, e:
+						except IOError as e:
 							self.trace("IOError while sending a packet to client (%s) - disconnecting" % str(e))
 							self.stop()
 						except Exception as e:
