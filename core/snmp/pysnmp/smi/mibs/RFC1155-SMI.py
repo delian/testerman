@@ -16,11 +16,11 @@ from pysnmp.proto.rfc1155 import NetworkAddress
 # Types
 
 class Counter(Integer32):
-    subtypeSpec = Integer32.subtypeSpec+constraint.ValueRangeConstraint(0,4294967295L)
+    subtypeSpec = Integer32.subtypeSpec+constraint.ValueRangeConstraint(0,4294967295)
     pass
 
 class Gauge(Integer32):
-    subtypeSpec = Integer32.subtypeSpec+constraint.ValueRangeConstraint(0,4294967295L)
+    subtypeSpec = Integer32.subtypeSpec+constraint.ValueRangeConstraint(0,4294967295)
     pass
 
 class IpAddress(OctetString):
@@ -38,7 +38,7 @@ class Opaque(OctetString):
     pass
 
 class TimeTicks(Integer32):
-    subtypeSpec = Integer32.subtypeSpec+constraint.ValueRangeConstraint(0,4294967295L)
+    subtypeSpec = Integer32.subtypeSpec+constraint.ValueRangeConstraint(0,4294967295)
     pass
 
 

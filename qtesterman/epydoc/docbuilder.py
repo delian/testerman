@@ -412,7 +412,7 @@ def _get_docs_from_pyobject(obj, options, progress_estimator):
     introspect_error = parse_error = None
     try:
         introspect_doc = introspect_docs(value=obj)
-    except ImportError, e:
+    except ImportError as e:
         log.error(e)
         return (None, None)
     if options.parse:
@@ -447,14 +447,14 @@ def _get_docs_from_pyname(name, options, progress_estimator,
     if options.must_introspect(name):
         try:
             introspect_doc = introspect_docs(name=name)
-        except ImportError, e:
+        except ImportError as e:
             introspect_error = str(e)
     if options.must_parse(name):
         try:
             parse_doc = parse_docs(name=name)
-        except ParseError, e:
+        except ParseError as e:
             parse_error = str(e)
-        except ImportError, e:
+        except ImportError as e:
             # If we get here, then there' probably no python source
             # available; don't bother to generate a warnining.
             pass
@@ -478,14 +478,14 @@ def _get_docs_from_pyscript(filename, options, progress_estimator):
             introspect_doc = introspect_docs(filename=filename, is_script=True)
             if introspect_doc.canonical_name is UNKNOWN:
                 introspect_doc.canonical_name = munge_script_name(filename)
-        except ImportError, e:
+        except ImportError as e:
             introspect_error = str(e)
     if options.parse:
         try:
             parse_doc = parse_docs(filename=filename, is_script=True)
-        except ParseError, e:
+        except ParseError as e:
             parse_error = str(e)
-        except ImportError, e:
+        except ImportError as e:
             parse_error = str(e)
                 
     # Report any errors we encountered.
@@ -541,15 +541,15 @@ def _get_docs_from_module_file(filename, options, progress_estimator,
                 filename=filename, context=parent_docs[0])
             if introspect_doc.canonical_name is UNKNOWN:
                 introspect_doc.canonical_name = modulename
-        except ImportError, e:
+        except ImportError as e:
             introspect_error = str(e)
     if src_file_available and options.must_parse(modulename):
         try:
             parse_doc = parse_docs(
                 filename=filename, context=parent_docs[1])
-        except ParseError, e:
+        except ParseError as e:
             parse_error = str(e)
-        except ImportError, e:
+        except ImportError as e:
             parse_error = str(e)
 
     # Report any errors we encountered.

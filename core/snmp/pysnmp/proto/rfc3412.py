@@ -27,7 +27,7 @@ class MsgAndPduDispatcher:
         self.__appsRegistration = {}
 
         # Source of sendPduHandle and cache of requesting apps
-        self.__sendPduHandle = 0L
+        self.__sendPduHandle = 0
         self.__cacheRepository = {}
 
         # To pass transport info to app
@@ -176,7 +176,7 @@ class MsgAndPduDispatcher:
                 sendPduHandle
                 )
             debug.logger & debug.flagDsp and debug.logger('sendPdu: MP succeeded')
-        except error.StatusInformation, statusInformation:
+        except error.StatusInformation as statusInformation:
 # XXX is it still needed here?
 #            self.releaseStateInformation(snmpEngine, sendPduHandle, messageProcessingModel)
             raise
@@ -252,7 +252,7 @@ class MsgAndPduDispatcher:
                 statusInformation
                 )
             debug.logger & debug.flagDsp and debug.logger('returnResponsePdu: MP suceeded')
-        except error.StatusInformation, statusInformation:
+        except error.StatusInformation as statusInformation:
             # 4.1.2.3
             raise
 
@@ -330,7 +330,7 @@ class MsgAndPduDispatcher:
                 wholeMsg
                 )
             debug.logger & debug.flagDsp and debug.logger('receiveMessage: MP succeded')
-        except error.StatusInformation, statusInformation:
+        except error.StatusInformation as statusInformation:
             if statusInformation.has_key('sendPduHandle'):
                 # Dropped REPORT -- re-run pending reqs queue as some
                 # of them may be waiting for this REPORT
@@ -386,7 +386,7 @@ class MsgAndPduDispatcher:
                         stateReference,
                         statusInformation
                         )
-                except error.StatusInformation, statusInformation:
+                except error.StatusInformation as statusInformation:
                     debug.logger & debug.flagDsp and debug.logger('receiveMessage: report failed, statusInformation %s' % statusInformation)
                     return restOfWholeMsg
                 

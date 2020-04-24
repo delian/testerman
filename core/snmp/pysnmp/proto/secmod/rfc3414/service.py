@@ -17,8 +17,8 @@ import time
 class UsmSecurityParameters(rfc1155.TypeCoercionHackMixIn, univ.Sequence):
     componentType = namedtype.NamedTypes(
         namedtype.NamedType('msgAuthoritativeEngineID', univ.OctetString()),
-        namedtype.NamedType('msgAuthoritativeEngineBoots', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(0, 2147483647L))),
-        namedtype.NamedType('msgAuthoritativeEngineTime', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(0, 2147483647L))),
+        namedtype.NamedType('msgAuthoritativeEngineBoots', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(0, 2147483647))),
+        namedtype.NamedType('msgAuthoritativeEngineTime', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(0, 2147483647))),
         namedtype.NamedType('msgUserName', univ.OctetString().subtype(subtypeSpec=constraint.ValueSizeConstraint(0, 32))),
         namedtype.NamedType('msgAuthenticationParameters', univ.OctetString()),
         namedtype.NamedType('msgPrivacyParameters', univ.OctetString())
@@ -42,7 +42,7 @@ class SnmpUSMSecurityModel(AbstractSecurityModel):
         AbstractSecurityModel.__init__(self)
         self.__timeline = {}
         self.__timelineExpQueue = {}
-        self.__expirationTimer = 0L
+        self.__expirationTimer = 0
 
     def __getUserInfo(
         self, mibInstrumController, securityEngineID, securityName
@@ -328,7 +328,7 @@ class SnmpUSMSecurityModel(AbstractSecurityModel):
                     ( snmpEngineBoots, snmpEngineTime, None ),
                     dataToEncrypt
                     )
-            except error.StatusInformation, statusInformation:
+            except error.StatusInformation as statusInformation:
                 raise
 
             securityParameters.setComponentByPosition(5, privParameters)
@@ -373,7 +373,7 @@ class SnmpUSMSecurityModel(AbstractSecurityModel):
                 authenticatedWholeMsg = authHandler.authenticateOutgoingMsg(
                     usmUserAuthKeyLocalized, wholeMsg
                     )
-            except error.StatusInformation, statusInformation:
+            except error.StatusInformation as statusInformation:
                 raise
             
             debug.logger & debug.flagSM and debug.logger('__generateRequestOrResponseMsg: auth outgoing msg')
@@ -663,7 +663,7 @@ class SnmpUSMSecurityModel(AbstractSecurityModel):
 
             # 3.2.7a
             if msgAuthoritativeEngineID == snmpEngineID:
-                if snmpEngineBoots == 2147483647L or \
+                if snmpEngineBoots == 2147483647 or \
                    snmpEngineBoots != msgAuthoritativeEngineBoots or \
                    abs(idleTime + int(snmpEngineTime) - \
                        int(msgAuthoritativeEngineTime)) > 150:
@@ -694,7 +694,7 @@ class SnmpUSMSecurityModel(AbstractSecurityModel):
                     debug.logger & debug.flagSM and debug.logger('processIncomingMsg: stored timeline msgAuthoritativeEngineBoots %s msgAuthoritativeEngineTime %s for msgAuthoritativeEngineID %s' % (msgAuthoritativeEngineBoots, msgAuthoritativeEngineTime, msgAuthoritativeEngineID))
                     
                 # 3.2.7b.2
-                if snmpEngineBoots == 2147483647L or \
+                if snmpEngineBoots == 2147483647 or \
                    msgAuthoritativeEngineBoots < snmpEngineBoots or \
                    msgAuthoritativeEngineBoots == snmpEngineBoots and \
                    abs(idleTime + int(snmpEngineTime) - \
@@ -744,7 +744,7 @@ class SnmpUSMSecurityModel(AbstractSecurityModel):
                 scopedPDU, rest = decoder.decode(
                     decryptedData, asn1Spec=scopedPduSpec
                     )
-            except PyAsn1Error, why:
+            except PyAsn1Error as why:
                debug.logger & debug.flagSM and debug.logger('processIncomingMsg: PDU decoder failed %s' % why)                
                raise error.StatusInformation(
                    errorIndication = 'decryptionError'

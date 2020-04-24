@@ -644,8 +644,8 @@ The test system interface port bound to such a probe complies with the ``RtpPort
 			thread.stop()
 
 
-TWO_TO_THE_48TH = 2L<<48
-TWO_TO_THE_32ND = 2L<<32
+TWO_TO_THE_48TH = 2<<48
+TWO_TO_THE_32ND = 2<<32
 
 class SendingThread(threading.Thread):
 	def __init__(self, probe, *args):

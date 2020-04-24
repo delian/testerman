@@ -197,7 +197,7 @@ class Visitor:
 			return (",\n%s"% self.spaces ()).join (slist)
 
 		mainstr = visit_list (node.elt_list)
-		if node.ext_list <> None:
+		if node.ext_list is not None:
 			extstr = visit_list (node.ext_list)
 		else:
 			extstr = None
@@ -234,7 +234,7 @@ class Visitor:
 		self.output ("('%s',%s,%s,%d,%s)" % (identstr, tagstr,typstr.replace('-', '_'), optflag, repr(node.default)))
 	def visitNamedType (self, node):
 		typstr = self.visit_saving (node.typ)
-		if node.ident <> None:
+		if node.ident is not None:
 			identstr = node.ident
 		else:
 			if hasattr (node.typ, 'val'):

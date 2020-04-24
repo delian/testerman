@@ -422,7 +422,7 @@ class Agent(Nodes.ConnectingNode):
 				# Other scheme
 				self.response(transactionId, 505, "Not supported")			
 
-		except ProbeException, e:
+		except ProbeException as e:
 			self.response(transactionId, 516, "Probe error", str(e) + "\n" + Nodes.getBacktrace())
 
 		except Exception as e:

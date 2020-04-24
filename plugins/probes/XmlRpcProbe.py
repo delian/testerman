@@ -36,7 +36,7 @@ class ServerProxy(xmlrpclib.ServerProxy):
 		import urllib
 		type, uri = urllib.splittype(uri)
 		if type not in ("http", "https"):
-			raise IOError, "unsupported XML-RPC protocol"
+			raise IOError("unsupported XML-RPC protocol")
 		self.__host, self.__handler = urllib.splithost(uri)
 		if not self.__handler:
 			self.__handler = "/RPC2"
@@ -111,7 +111,7 @@ class XmlRpcClientProbe(ProbeImplementationManager.ProbeImplementation):
 			else:
 				ret = f(args)
 			event = ('response', ret)
-		except xmlrpclib.Fault, e:
+		except xmlrpclib.Fault as e:
 			event = ('fault', { 'code': e.faultCode, 'string': e.faultString })
 		# Raise other exceptions if needed
 		

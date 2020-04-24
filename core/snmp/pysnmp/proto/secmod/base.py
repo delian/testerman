@@ -2,7 +2,7 @@ from pysnmp.proto import error
 
 class AbstractSecurityModel:
     securityModelID = None
-    __stateReference = 0L
+    __stateReference = 0
     def __init__(self):
         self.__cacheEntries = {}
 

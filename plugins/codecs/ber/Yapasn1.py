@@ -178,7 +178,7 @@ def encode_tag_ber(tag, orig_flags = None):
 	(flags, val) = tag
 	# Constructed encoding is property of original tag, not of
 	# implicit tag override
-	if orig_flags <> None:
+	if orig_flags is not None:
 		flags = flags | (orig_flags & CONS_FLAG)
 	extra = 0
 	if val >=0x1F:
@@ -270,8 +270,8 @@ def read_base128(buf):
 
 
 def extract_bits(val, lo_bit, hi_bit):
-	tmp = (val & (~0L << (lo_bit))) >> lo_bit
-	tmp = tmp & ((1L << (hi_bit - lo_bit + 1)) - 1)
+	tmp = (val & (~0 << (lo_bit))) >> lo_bit
+	tmp = tmp & ((1 << (hi_bit - lo_bit + 1)) - 1)
 	return tmp
 
 def set_bit(val, bit):
@@ -621,7 +621,7 @@ class IntegerSyntaxNode(SyntaxNode):
 			while val != term_cond:
 				val, res = val >> 8, (val & 0xFF)
 				l.append(res)
-			if (l[-1] & 0x80 <> 0) ^ last_hi:
+			if (l[-1] & 0x80 != 0) ^ last_hi:
 				l.append(last_hi * 0xFF)
 		l.reverse()
 		return ''.join(map(chr, l))

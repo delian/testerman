@@ -14,7 +14,7 @@ random.seed()
 
 class Des(base.AbstractEncryptionService):
     serviceID = (1, 3, 6, 1, 6, 3, 10, 1, 2, 2) # usmDESPrivProtocol
-    _localInt = long(random.random()*0xffffffffL)
+    _localInt = long(random.random()*0xffffffff)
     # 8.1.1.1
     def __getEncryptionKey(self, privKey, snmpEngineBoots):
         desKey = privKey[:8]
@@ -32,7 +32,7 @@ class Des(base.AbstractEncryptionService):
             self._localInt>>8&0xff,
             self._localInt&0xff
             ]
-        if self._localInt == 0xffffffffL:
+        if self._localInt == 0xffffffff:
             self._localInt = 0
         else:
             self._localInt = self._localInt + 1

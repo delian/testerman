@@ -580,11 +580,11 @@ class TcpPacketizerClientThread(threading.Thread):
 					if tmp >= 0:
 						timeout = min(timeout, tmp)
 
-			except EOFError, e:
+			except EOFError as e:
 				self.trace("Disconnected by peer.")
 				raise e # We'll reconnect.
 
-			except socket.error, e:
+			except socket.error as e:
 				self.trace("Low level error: " + str(e))
 				raise e # We'll reconnect
 
@@ -643,11 +643,11 @@ class TcpPacketizerClientThread(threading.Thread):
 						# Not ready. Will perform a new attempt on next main loop iteration
 						break
 
-			except EOFError, e:
+			except EOFError as e:
 				self.trace("Disconnected by peer.")
 				raise e # We'll reconnect.
 
-			except socket.error, e:
+			except socket.error as e:
 				self.trace("Low level error: " + str(e))
 				raise e # We'll reconnect
 

@@ -65,7 +65,7 @@ snmpTargetParamsName = MibTableColumn((1, 3, 6, 1, 6, 3, 12, 1, 3, 1, 1), SnmpAd
 if mibBuilder.loadTexts: snmpTargetParamsName.setDescription("The locally arbitrary, but unique identifier associated\nwith this snmpTargetParamsEntry.")
 snmpTargetParamsMPModel = MibTableColumn((1, 3, 6, 1, 6, 3, 12, 1, 3, 1, 2), SnmpMessageProcessingModel()).setMaxAccess("readcreate")
 if mibBuilder.loadTexts: snmpTargetParamsMPModel.setDescription("The Message Processing Model to be used when generating\nSNMP messages using this entry.")
-snmpTargetParamsSecurityModel = MibTableColumn((1, 3, 6, 1, 6, 3, 12, 1, 3, 1, 3), SnmpSecurityModel().subtype(subtypeSpec=constraint.ValueRangeConstraint(1, 2147483647L))).setMaxAccess("readcreate")
+snmpTargetParamsSecurityModel = MibTableColumn((1, 3, 6, 1, 6, 3, 12, 1, 3, 1, 3), SnmpSecurityModel().subtype(subtypeSpec=constraint.ValueRangeConstraint(1, 2147483647))).setMaxAccess("readcreate")
 if mibBuilder.loadTexts: snmpTargetParamsSecurityModel.setDescription("The Security Model to be used when generating SNMP\nmessages using this entry.  An implementation may\nchoose to return an inconsistentValue error if an\nattempt is made to set this variable to a value\nfor a security model which the implementation does\nnot support.")
 snmpTargetParamsSecurityName = MibTableColumn((1, 3, 6, 1, 6, 3, 12, 1, 3, 1, 4), SnmpAdminString()).setMaxAccess("readcreate")
 if mibBuilder.loadTexts: snmpTargetParamsSecurityName.setDescription("The securityName which identifies the Principal on\nwhose behalf SNMP messages will be generated using\nthis entry.")

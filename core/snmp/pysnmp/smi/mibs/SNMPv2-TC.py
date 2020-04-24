@@ -43,7 +43,7 @@ class TextualConvention:
             elif t == 'd':
                 try:
                     return '%.*f' % (int(f), float(value)/pow(10, int(f)))
-                except StandardError, why:
+                except StandardError as why:
                     raise error.SmiError(
                         'float num evaluation error: %s' % why
                     )
@@ -78,7 +78,7 @@ class TextualConvention:
                     d = d[1:]
                 try:
                     octetLength = int(octetLength)
-                except StandardError, why:
+                except StandardError as why:
                     raise error.SmiError(
                         'Bad octet length: %s' % octetLength
                         )                    
@@ -111,13 +111,13 @@ class TextualConvention:
                     if displayFormat == 'a' or displayFormat == 't':
                         r = r + v[:octetLength]
                     elif displayFormat in ('x', 'd', 'o'):
-                        n = 0L; vv = v[:octetLength]
+                        n = 0; vv = v[:octetLength]
                         while vv:
                             n = n << 8
                             try:
                                 n = n | ord(vv[0])
                                 vv = vv[1:]
-                            except StandardError, why:
+                            except StandardError as why:
                                 raise error.SmiError(
                                     'Display format eval failure: %s: %s'
                                     % (vv, why)
@@ -153,7 +153,7 @@ class TextualConvention:
 #         elif self.bits:
 #             try:
 #                 return self.bits[value]
-#             except StandardError, why:
+#             except StandardError as why:
 #                 raise error.SmiError(
 #                     'Enumeratin resolution failure for %s: %s' % (self, why)
 #                     )
@@ -180,7 +180,7 @@ class TruthValue(Integer, TextualConvention):
     namedValues = namedval.NamedValues(('true', 1), ('false', 2))
     
 class TestAndIncr(Integer, TextualConvention):
-    subtypeSpec = Integer.subtypeSpec+constraint.ValueRangeConstraint(0, 2147483647L)
+    subtypeSpec = Integer.subtypeSpec+constraint.ValueRangeConstraint(0, 2147483647)
     defaultValue = 0
     def smiWrite(self, name, value, idx):
         if value != self:
@@ -314,7 +314,7 @@ class RowStatus(Integer, TextualConvention):
 class TimeStamp(TimeTicks, TextualConvention): pass
 
 class TimeInterval(Integer, TextualConvention):
-    subtypeSpec = Integer.subtypeSpec+constraint.ValueRangeConstraint(0, 2147483647L)
+    subtypeSpec = Integer.subtypeSpec+constraint.ValueRangeConstraint(0, 2147483647)
 
 class DateAndTime(TextualConvention, OctetString):
     subtypeSpec = OctetString.subtypeSpec+constraint.ValueSizeConstraint(8, 11)

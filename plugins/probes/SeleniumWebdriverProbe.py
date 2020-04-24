@@ -240,14 +240,14 @@ The test system interface port bound to such a probe complies with the ``Seleniu
 	def _isElementPresent(self, target):
 		try:
 			self._getWebelement(target)
-		except NoSuchElementException, e:
+		except NoSuchElementException as e:
 			return False
 		return True
 
 	def _isAlertPresent(self):
 		try:
 			self.driver.switch_to_alert()
-		except NoAlertPresentException, e:
+		except NoAlertPresentException as e:
 			return False
 		return True
 

@@ -310,7 +310,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 			return False
 
 		try:
-			os.makedirs(path, 0755)
+			os.makedirs(path, mode=0o755)
 		except:
 			# already exists only ?...
 			pass
@@ -526,7 +526,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 		profilesdir = "%s.profiles" % filename
 
 		try:
-			os.makedirs(profilesdir, 0755)
+			os.makedirs(profilesdir, mode=0o755)
 		except:
 			pass
 

@@ -348,7 +348,7 @@ class SvnBackend(FileSystemBackend.FileSystemBackend):
 			return False
 
 		try:
-			os.makedirs(path, 0755)
+			os.makedirs(path, mode=0o755)
 		except:
 			# already exists only ?...
 			pass
@@ -508,7 +508,7 @@ class SvnBackend(FileSystemBackend.FileSystemBackend):
 
 		c = pysvn.Client()
 		try:
-			os.makedirs(profilesdir, 0755)
+			os.makedirs(profilesdir, mode=0o755)
 			c.add(profilesdir)
 			# May fail if already added - we ignore the exception
 			c.checkin([profilesdir], "Added profiles directory for file %s" % localname)

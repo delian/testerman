@@ -217,7 +217,7 @@ OBJECT-TYPE\n\
      self.getReference())
         
 class MibTree(ObjectType):
-    branchVersionId = 0L    # increments on tree structure change XXX
+    branchVersionId = 0    # increments on tree structure change XXX
     maxAccess = 'not-accessible'
     def __init__(self, name, syntax=None):
         ObjectType.__init__(self, name, syntax)

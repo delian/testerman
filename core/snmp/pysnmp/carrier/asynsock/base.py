@@ -14,7 +14,7 @@ class AbstractSocketTransport(asyncore.dispatcher):
         if sock is None:
             try:
                 sock = socket.socket(self.sockFamily, self.sockType)
-            except socket.error, why:
+            except socket.error as why:
                 raise error.CarrierError('socket() failed: %s' % why)
         if sockMap is None:
             # The socket map is managed by the AsynsockDispatcher on

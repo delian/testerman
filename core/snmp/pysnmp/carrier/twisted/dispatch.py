@@ -28,7 +28,7 @@ class TwistedDispatcher(AbstractTransportDispatcher):
         if not reactor.running:
             try:
                 reactor.run()
-            except Exception, why:
+            except Exception as why:
                 raise error.CarrierError(why)
 
     # jobstarted/jobfinished might be okay as-is

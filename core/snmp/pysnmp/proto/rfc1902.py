@@ -5,12 +5,12 @@ from pysnmp.proto import rfc1155, error
 
 class Integer(univ.Integer):
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        -2147483648L, 2147483647L
+        -2147483648, 2147483647
         )
 
 class Integer32(univ.Integer):
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        -2147483648L, 2147483647L
+        -2147483648, 2147483647
         )
     
 class OctetString(univ.OctetString):
@@ -49,7 +49,7 @@ class Counter32(univ.Integer):
         tag.Tag(tag.tagClassApplication, tag.tagFormatSimple, 0x01)
         )
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        0, 4294967295L
+        0, 4294967295
         )
 
 class Gauge32(univ.Integer):
@@ -57,7 +57,7 @@ class Gauge32(univ.Integer):
         tag.Tag(tag.tagClassApplication, tag.tagFormatSimple, 0x02)
         )
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        0, 4294967295L
+        0, 4294967295
         )
 
 class Unsigned32(univ.Integer):
@@ -65,7 +65,7 @@ class Unsigned32(univ.Integer):
         tag.Tag(tag.tagClassApplication, tag.tagFormatSimple, 0x02)
         )
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        0, 4294967295L
+        0, 4294967295
         )
 
 class TimeTicks(univ.Integer):
@@ -73,7 +73,7 @@ class TimeTicks(univ.Integer):
         tag.Tag(tag.tagClassApplication, tag.tagFormatSimple, 0x03)
         )
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        0, 4294967295L
+        0, 4294967295
         )
 
 class Opaque(univ.OctetString):
@@ -86,7 +86,7 @@ class Counter64(univ.Integer):
         tag.Tag(tag.tagClassApplication, tag.tagFormatSimple, 0x06)
         )
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        0, 18446744073709551615L
+        0, 18446744073709551615
         )
 
 class Bits(univ.OctetString):

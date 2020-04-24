@@ -11,14 +11,14 @@ class UdpTwistedTransport(DgramTwistedTransport):
     def openClientMode(self, iface=''):
         try:
             self._lport = reactor.listenUDP(0, self, iface)
-        except Exception, why:
+        except Exception as why:
             raise error.CarrierError(why)
         return self
 
     def openServerMode(self, iface=None):
         try:
             self._lport = reactor.listenUDP(iface[1], self, iface[0])
-        except Exception, why:
+        except Exception as why:
             raise error.CarrierError(why)
         return self
 

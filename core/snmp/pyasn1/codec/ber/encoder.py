@@ -160,7 +160,7 @@ class ObjectIdentifierEncoder(AbstractItemEncoder):
             if subid > -1 and subid < 128:
                 # Optimize for the common case
                 octets.append(chr(subid & 0x7f))
-            elif subid < 0 or subid > 0xFFFFFFFFL:
+            elif subid < 0 or subid > 0xFFFFFFFF:  # 0xFFFFFFFFL
                 raise error.PyAsn1Error(
                     'SubId overflow %s in %s' % (subid, value)
                     )

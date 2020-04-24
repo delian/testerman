@@ -525,7 +525,7 @@ class WModuleDocumentEditor(WDocumentEditor):
 			if displayNoError:
 				QMessageBox.information(self, getClientName(), "No syntax problem was found in this module.", QMessageBox.Ok)
 			return True
-		except SyntaxError, e:
+		except SyntaxError as e:
 			self.activeEditor.highlight(e.lineno - 1)
 			self.activeEditor.goTo(e.lineno - 1, e.offset)
 			CommonWidgets.userError(self, "Syntax error on line %s: <br />%s" % (str(e.lineno), e.msg))
@@ -863,7 +863,7 @@ class WAtsDocumentEditor(WDocumentEditor):
 			if displayNoError:
 				QMessageBox.information(self, getClientName(), "No syntax problem was found in this ATS.", QMessageBox.Ok)
 			return 1
-		except SyntaxError, e:
+		except SyntaxError as e:
 			self.activeEditor.highlight(e.lineno - 1)
 			self.activeEditor.goTo(e.lineno - 1, e.offset)
 			CommonWidgets.userError(self, "Syntax error on line %s: <br />%s" % (str(e.lineno), e.msg))

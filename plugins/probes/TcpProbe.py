@@ -372,7 +372,7 @@ The test system interface port bound to such a probe complies with the ``Transpo
 				ca_certs = cafile, cert_reqs=(cafile is not None and ssl.CERT_REQUIRED or ssl.CERT_NONE))
 
 			return s
-		except ssl.SSLError, e:
+		except ssl.SSLError as e:
 			raise Exception("SSL Error: %s" % e)
 		finally:
 			if keyfile:

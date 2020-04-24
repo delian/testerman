@@ -11,14 +11,14 @@ class UnixTwistedTransport(DgramTwistedTransport):
     def openClientMode(self, iface=''):
         try:
             self._lport = reactor.connectUNIXDatagram(iface, self)
-        except Exception, why:
+        except Exception as why:
             raise error.CarrierError(why)
         return self
 
     def openServerMode(self, iface=None):
         try:
             self._lport = reactor.listenUNIXDatagram(iface, self)
-        except Exception, why:
+        except Exception as why:
             raise error.CarrierError(why)
         
         return self

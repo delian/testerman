@@ -50,7 +50,7 @@ class Counter(univ.Integer):
         tag.Tag(tag.tagClassApplication, tag.tagFormatSimple, 0x01)
         )
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        0, 4294967295L
+        0, 4294967295
         )
 
 class NetworkAddress(univ.Choice):
@@ -63,7 +63,7 @@ class Gauge(univ.Integer):
         tag.Tag(tag.tagClassApplication, tag.tagFormatSimple, 0x02)
         )
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        0, 4294967295L
+        0, 4294967295
         )
 
 class TimeTicks(univ.Integer):
@@ -71,7 +71,7 @@ class TimeTicks(univ.Integer):
         tag.Tag(tag.tagClassApplication, tag.tagFormatSimple, 0x03)
         )
     subtypeSpec = univ.Integer.subtypeSpec+constraint.ValueRangeConstraint(
-        0, 4294967295L
+        0, 4294967295
         )
 
 class Opaque(univ.OctetString):

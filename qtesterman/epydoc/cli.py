@@ -681,7 +681,7 @@ def main(options, names):
         elif options.action == 'pdf': stages += [60,50]
         elif options.action == 'check': stages += [10]
         elif options.action == 'pickle': stages += [10]
-        else: raise ValueError, '%r not supported' % options.action
+        else: raise ValueError('%r not supported' % options.action)
         if options.parse and not options.introspect:
             del stages[1] # no merging
         if options.introspect and not options.parse:
@@ -931,7 +931,7 @@ def write_latex(docindex, options, format):
                 e.out = re.sub(r'(?sm)\s*Type X to quit.*', '', e.out)
                 e.out = re.sub(r'(?sm)^! Emergency stop.*', '', e.out)
             log.error("%s failed: %s" % (running, (e.out+e.err).lstrip()))
-        except OSError, e:
+        except OSError as e:
             log.error("%s failed: %s" % (running, e))
     finally:
         os.chdir(oldpath)

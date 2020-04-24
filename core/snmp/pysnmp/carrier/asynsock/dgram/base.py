@@ -30,14 +30,14 @@ class DgramSocketTransport(AbstractSocketTransport):
         if iface is not None:
             try:
                 self.socket.bind(iface)
-            except socket.error, why:
+            except socket.error as why:
                 raise error.CarrierError('bind() failed: %s' % (why,))
         return self
     
     def openServerMode(self, iface):
         try:
             self.socket.bind(iface)
-        except socket.error, why:
+        except socket.error as why:
             raise error.CarrierError('bind() failed: %s' % (why,))
         self._iface = iface
         return self
@@ -55,11 +55,11 @@ class DgramSocketTransport(AbstractSocketTransport):
         debug.logger & debug.flagIO and debug.logger('handle_write: transportAddress %s outgoingMessage %s' % (transportAddress, repr(outgoingMessage)))
         try:
             self.socket.sendto(outgoingMessage, transportAddress)
-        except socket.error, why:
+        except socket.error as why:
             if sockErrors.has_key(why[0]):
                 debug.logger & debug.flagIO and debug.logger('handle_write: ignoring socket error %s' % (why,))
             else:
-                raise socket.error, why
+                raise socket.error(why)
             
     def readable(self): return 1
     def handle_read(self):
@@ -72,11 +72,11 @@ class DgramSocketTransport(AbstractSocketTransport):
             else:
                 self._cbFun(self, transportAddress, incomingMessage)
                 return
-        except socket.error, why:
+        except socket.error as why:
             if sockErrors.has_key(why[0]):
                 debug.logger & debug.flagIO and debug.logger('handle_read: known socket error %s' % (why,))
                 sockErrors[why[0]] and self.handle_close()
                 return
             else:
-                raise socket.error, why
+                raise socket.error(why)
     def handle_close(self): pass # no datagram connection

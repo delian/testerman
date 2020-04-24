@@ -57,7 +57,7 @@ def createPackageFile(path):
 				getLogger().debug("Adding directory %s..." % relpath)
 				tarinfo = tarfile.TarInfo(relpath)
 				tarinfo.type = tarfile.DIRTYPE
-				tarinfo.mode = 0755
+				tarinfo.mode = 0o755
 				tarinfo.uid = os.getuid()
 				tarinfo.gid = os.getgid()
 				tarinfo.mtime = time.time()
@@ -69,7 +69,7 @@ def createPackageFile(path):
 				getLogger().debug("Adding file %s..." % relname)
 				tarinfo = tarfile.TarInfo(relname)
 				tarinfo.type = tarfile.AREGTYPE
-				tarinfo.mode = 0644
+				tarinfo.mode = 0o644
 				tarinfo.uid = os.getuid()
 				tarinfo.gid = os.getgid()
 				tarinfo.mtime = time.time()

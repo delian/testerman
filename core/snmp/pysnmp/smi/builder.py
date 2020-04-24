@@ -135,7 +135,7 @@ class MibBuilder:
     defaultCoreMibs = 'pysnmp.smi.mibs.instances:pysnmp.smi.mibs'
     defaultMiscMibs = 'pysnmp_mibs'
     def __init__(self):
-        self.lastBuildId = self._autoName = 0L
+        self.lastBuildId = self._autoName = 0
         sources = []
         for m in string.split(
             os.environ.get('PYSNMP_MIB_PKGS', self.defaultCoreMibs), ':'
@@ -195,7 +195,7 @@ class MibBuilder:
                 debug.logger & debug.flagBld and debug.logger('loadModules: trying %s at %s' % (modName, mibSource))
                 try:
                     modData, sfx = mibSource.read(modName)
-                except IOError, why:
+                except IOError as why:
                     debug.logger & debug.flagBld and debug.logger('loadModules: read %s from %s failed: %s' % (modName, mibSource, why))
                     continue
 
@@ -213,7 +213,7 @@ class MibBuilder:
 
                 try:
                     exec(modData, g)
-                except StandardError, why:
+                except StandardError as why:
                     del self.__modPathsSeen[modPath]
                     raise error.SmiError(
                         'MIB module \"%s\" load error: %s' % (modPath, why)

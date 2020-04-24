@@ -35,9 +35,9 @@ class IntegerDecoder(AbstractDecoder):
             raise error.PyAsn1Error('Empty substrate')
         octets = map(ord, substrate)
         if octets[0] & 0x80:
-            value = -1L
+            value = -1     # -1L
         else:
-            value = 0L
+            value = 0      # 0L
         for octet in octets:
             value = value << 8 | octet
         value = self._valueFilter(value)
@@ -363,7 +363,7 @@ class Decoder:
                 tagId = t&0x1F
                 substrate = substrate[1:]
                 if tagId == 0x1F:
-                    tagId = 0L
+                    tagId = 0 # 0L
                     while 1:
                         if not substrate:
                             raise error.SubstrateUnderrunError(

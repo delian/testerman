@@ -3,14 +3,14 @@ from pysnmp.proto import error
 
 class AbstractMessageProcessingModel:
     messageProcessingModelID = None
-    __stateReference = __msgID = 0L
+    __stateReference = __msgID = 0 # 0L
     def __init__(self):
         self.__msgIdIndex = {}
         self.__stateReferenceIndex = {}
         self.__sendPduHandleIdx = {}
         # Message expiration mechanics
         self.__expirationQueue = {}
-        self.__expirationTimer = 0L
+        self.__expirationTimer = 0 # 0L
     
     def prepareOutgoingMessage(
         self,

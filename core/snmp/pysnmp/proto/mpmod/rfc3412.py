@@ -27,15 +27,15 @@ class ScopedPduData(univ.Choice):
     
 class HeaderData(univ.Sequence):
     componentType = namedtype.NamedTypes(
-        namedtype.NamedType('msgID', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(0, 2147483647L))),
-        namedtype.NamedType('msgMaxSize', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(484, 2147483647L))),
+        namedtype.NamedType('msgID', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(0, 2147483647))),
+        namedtype.NamedType('msgMaxSize', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(484, 2147483647))),
         namedtype.NamedType('msgFlags', univ.OctetString().subtype(subtypeSpec=constraint.ValueSizeConstraint(1, 1))),
-        namedtype.NamedType('msgSecurityModel', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(1, 2147483647L)))
+        namedtype.NamedType('msgSecurityModel', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(1, 2147483647)))
         )
 
 class SNMPv3Message(univ.Sequence):
     componentType = namedtype.NamedTypes(
-         namedtype.NamedType('msgVersion', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(0, 2147483647L))),
+         namedtype.NamedType('msgVersion', univ.Integer().subtype(subtypeSpec=constraint.ValueRangeConstraint(0, 2147483647))),
          namedtype.NamedType('msgGlobalData', HeaderData()),
          namedtype.NamedType('msgSecurityParameters', univ.OctetString()),
          namedtype.NamedType('msgData', ScopedPduData())
@@ -58,7 +58,7 @@ class SnmpV3MessageProcessingModel(AbstractMessageProcessingModel):
         AbstractMessageProcessingModel.__init__(self)
         self.__engineIDs = {}
         self.__engineIDsExpQueue = {}
-        self.__expirationTimer = 0L
+        self.__expirationTimer = 0
         
     # 7.1.1a
     def prepareOutgoingMessage(
@@ -398,7 +398,7 @@ class SnmpV3MessageProcessingModel(AbstractMessageProcessingModel):
                 scopedPDU,
                 securityStateReference
                 )
-        except error.StatusInformation, statusInformation:
+        except error.StatusInformation as statusInformation:
             # 7.1.8.b            
             raise
 
@@ -489,7 +489,7 @@ class SnmpV3MessageProcessingModel(AbstractMessageProcessingModel):
                 msg
                 )
             debug.logger & debug.flagMP and debug.logger('prepareDataElements: SM succeeded')
-        except error.StatusInformation, statusInformation:
+        except error.StatusInformation as statusInformation:
             debug.logger & debug.flagMP and debug.logger('prepareDataElements: SM failed, statusInformation %s' % statusInformation)
             if statusInformation.has_key('errorIndication'):
                 # 7.2.6a

@@ -107,7 +107,7 @@ def extract_docstrings(code, names, logger):
 		visitor.preorder(mod, visitor, None)
 		res = visitor.getResults()
 		del mod, visitor
-	except SyntaxError, e:
+	except SyntaxError as e:
 		logger.warning("Syntax error, file not parsed: %s", str(e))
 	gc.collect()
 	

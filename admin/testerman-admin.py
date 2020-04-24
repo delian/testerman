@@ -86,7 +86,7 @@ class IaClient(TestermanNodes.ConnectingNode):
 
 def makedir(path):
 	if not os.path.exists(path):
-		os.makedirs(path, mode = 0755)
+		os.makedirs(path, mode = 0o755)
 
 class RootContext(SIS.CommandContext):
 	def __init__(self):

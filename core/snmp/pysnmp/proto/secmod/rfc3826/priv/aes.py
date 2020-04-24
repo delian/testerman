@@ -16,7 +16,7 @@ random.seed()
 
 class Aes(base.AbstractEncryptionService):
     serviceID = (1, 3, 6, 1, 6, 3, 10, 1, 2, 4) # usmAesCfb128Protocol
-    _localInt = long(random.random()*0xffffffffffffffffL)
+    _localInt = long(random.random()*0xffffffffffffffff)
     # 3.1.2.1
     def __getEncryptionKey(self, privKey, snmpEngineBoots, snmpEngineTime):
         salt = [
@@ -30,7 +30,7 @@ class Aes(base.AbstractEncryptionService):
             self._localInt&0xff
             ]
         
-        if self._localInt == 0xffffffffffffffffL:
+        if self._localInt == 0xffffffffffffffff:
             self._localInt = 0
         else:
             self._localInt = self._localInt + 1
