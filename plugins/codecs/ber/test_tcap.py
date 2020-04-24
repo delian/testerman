@@ -33,47 +33,47 @@ def test():
 
 		# Decoding
 		# Buf -> ASN
-		print 80*'-'
+		print (80*'-')
 		dec = asn1.decode(pdu, buf)
-		print "Buffer -> ASN:"
-		print repr(dec)
+		print ("Buffer -> ASN:")
+		print (repr(dec))
 		# ASN -> Testerman
-		print 80*'-'
-		print "ASN -> Testerman:"
+		print (80*'-')
+		print ("ASN -> Testerman:")
 		testermanDec = BerAdapter.toTesterman(dec)
-		print repr(testermanDec)
-	#	print 80*'-'
-	#	print "ASN -> Testerman (pretty printed):"
+		print (repr(testermanDec))
+	#	print (80*'-')
+	#	print ("ASN -> Testerman (pretty printed):")
 	#	BerAdapter.prettyprint(testermanDec)
-		print 80*'-'
-		print
+		print (80*'-')
+		print ()
 
 		# Testerman -> ASN
-		print 80*'-'
-		print "Testerman -> ASN:"
+		print (80*'-')
+		print ("Testerman -> ASN:")
 		dec = BerAdapter.fromTesterman(testermanDec)
-		print repr(dec)
+		print (repr(dec))
 
 		# First re-encoding
-		print 80*'-'
-		print "Re-encoded buffer:"
+		print (80*'-')
+		print ("Re-encoded buffer:")
 		# .encode() outputs an array.array
 		bufbuf = asn1.encode(pdu, dec).tostring()
-		print binascii.hexlify(bufbuf)
-		print "Re-encoded buffer type: %s" % bufbuf.__class__.__name__
-		print "Initial buffer:"
-		print binascii.hexlify(buf)
-		print "Initial buffer type: %s" % buf.__class__.__name__
-		print "Re-decoded:"
+		print (binascii.hexlify(bufbuf))
+		print ("Re-encoded buffer type: %s" % bufbuf.__class__.__name__)
+		print ("Initial buffer:")
+		print (binascii.hexlify(buf))
+		print ("Initial buffer type: %s" % buf.__class__.__name__)
+		print ("Re-decoded:")
 		decdec = asn1.decode(pdu, bufbuf)
-		print decdec
+		print (decdec)
 		bufbufbuf = asn1.encode(pdu, decdec).tostring()
-		print "Re-re-encoded:"
-		print binascii.hexlify(bufbufbuf)
-		print "Previously re-encoded buffer:"
-		print binascii.hexlify(bufbuf)
-		print "Initial buffer:"
-		print binascii.hexlify(buf)
+		print ("Re-re-encoded:")
+		print (binascii.hexlify(bufbufbuf))
+		print ("Previously re-encoded buffer:")
+		print (binascii.hexlify(bufbuf))
+		print ("Initial buffer:")
+		print (binascii.hexlify(buf))
 
 def test_old():
 	for buf, pdu in [ (binascii.unhexlify(x), y) for (x, y) in [ 
@@ -83,47 +83,47 @@ def test_old():
 
 		# Decoding
 		# Buf -> ASN
-		print 80*'-'
+		print (80*'-')
 		dec = asn1.decode(pdu, buf)
-		print "Buffer -> ASN:"
-		print repr(dec)
+		print ("Buffer -> ASN:")
+		print (repr(dec))
 		# ASN -> Testerman
-		print 80*'-'
-		print "ASN -> Testerman:"
+		print (80*'-')
+		print ("ASN -> Testerman:")
 		testermanDec = BerAdapter.toTesterman(dec)
 		print repr(testermanDec)
-	#	print 80*'-'
-	#	print "ASN -> Testerman (pretty printed):"
+	#	print (80*'-')
+	#	print ("ASN -> Testerman (pretty printed):")
 	#	BerAdapter.prettyprint(testermanDec)
-		print 80*'-'
-		print
+		print (80*'-')
+		print ()
 
 		# Testerman -> ASN
-		print 80*'-'
-		print "Testerman -> ASN:"
+		print (80*'-')
+		print ("Testerman -> ASN:")
 		dec = BerAdapter.fromTesterman(testermanDec)
-		print repr(dec)
+		print (repr(dec))
 
 		# First re-encoding
-		print 80*'-'
-		print "Re-encoded buffer:"
+		print (80*'-')
+		print ("Re-encoded buffer:")
 		# .encode() outputs an array.array
 		bufbuf = asn1.encode(pdu, dec).tostring()
-		print binascii.hexlify(bufbuf)
-		print "Re-encoded buffer type: %s" % bufbuf.__class__.__name__
-		print "Initial buffer:"
-		print binascii.hexlify(buf)
-		print "Initial buffer type: %s" % buf.__class__.__name__
-		print "Re-decoded:"
+		print (binascii.hexlify(bufbuf))
+		print ("Re-encoded buffer type: %s" % bufbuf.__class__.__name__)
+		print ("Initial buffer:")
+		print (binascii.hexlify(buf))
+		print ("Initial buffer type: %s" % buf.__class__.__name__)
+		print ("Re-decoded:")
 		decdec = asn1.decode(pdu, bufbuf)
-		print decdec
+		print (decdec)
 		bufbufbuf = asn1.encode(pdu, decdec).tostring()
-		print "Re-re-encoded:"
-		print binascii.hexlify(bufbufbuf)
-		print "Previously re-encoded buffer:"
-		print binascii.hexlify(bufbuf)
-		print "Initial buffer:"
-		print binascii.hexlify(buf)
+		print ("Re-re-encoded:")
+		print (binascii.hexlify(bufbufbuf))
+		print ("Previously re-encoded buffer:")
+		print (binascii.hexlify(bufbuf))
+		print ("Initial buffer:")
+		print (binascii.hexlify(buf))
 
 def test2():
 	"""
@@ -131,43 +131,43 @@ def test2():
 	"""
 	
 	t = binascii.unhexlify("301ba009040791002615110100a103010101a209040791261010101010")
-	print repr(asn1.decode(asn1.ANY, t))
+	print (repr(asn1.decode(asn1.ANY, t)))
 	t = binascii.unhexlify("30158007910026151101008101ff820791261010101010")
-	print repr(asn1.decode(asn1.ANY, t))
+	print (repr(asn1.decode(asn1.ANY, t)))
 	return
 	
 	
-	print "Sequence encoding (TCMessage):"
+	print ("Sequence encoding (TCMessage):")
 	s =  asn1.StructBase(otid = '\xff\x00')
 	m = ('begin', s)
 	buf = asn1.encode(TcapAsn.TCMessage, m).tostring()
-	print binascii.hexlify(buf)
+	print (binascii.hexlify(buf))
 
-	print "Tuple encoding (OPERATION):"
+	print ("Tuple encoding (OPERATION):")
 	m = ('localValue', 10)
 	buf = asn1.encode(TcapAsn.OPERATION, m).tostring()
-	print binascii.hexlify(buf)
+	print (binascii.hexlify(buf))
 	
-	print "Octstring encoding (Dialog1):"
+	print ("Octstring encoding (Dialog1):")
 	m = '\xff\x00'
 	buf = asn1.encode(TcapAsn.Dialog1, m).tostring()
-	print binascii.hexlify(buf)
+	print (binascii.hexlify(buf))
 
-	print "OID encoding (in OPERATION.globalValue):"
+	print ("OID encoding (in OPERATION.globalValue):")
 	oid = '1.2.3.4.5.65.7'
 	if BerAdapter.isOid(oid):
 		oid = asn1.OidVal([int(x) for x in oid.split('.')])
 	m = ('globalValue', oid)
 	buf = asn1.encode(TcapAsn.OPERATION, m).tostring()
-	print binascii.hexlify(buf)
+	print (binascii.hexlify(buf))
 	
-#	print "EXTERNAL encoding (DialoguePortion):"
+#	print ("EXTERNAL encoding (DialoguePortion):")
 #	m = asn1.EXTERNAL
 #	a = asn1.ANY
 #	m.direct_reference = asn1.OidVal([int(x) for x in '1.2.3.4.5'.split('.')])
 #	m.encoding = ('single-ASN1-type', a)
 #	buf = asn1.encode(TcapAsn.Parameter, m).tostring()
-#	print binascii.hexlify(buf)
+#	print (binascii.hexlify(buf))
 
 if __name__ == '__main__':
 	test()

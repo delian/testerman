@@ -88,14 +88,14 @@ def main():
 	for line in lines:
 		ret = command_to_prototype(line)
 		if ret:
-			print "Added new command choice: " + ret
+			print ("Added new command choice: " + ret)
 
 	# Display a dict that will be used to define selenium commands prototype in the probe	
-	print repr(commands)
+	print (repr(commands))
 	
-	print
+	print ()
 	# Display what will be used to document the probe
-	print to_ttcn3(commands)
+	print (to_ttcn3(commands))
 	
 
 if __name__ == '__main__':

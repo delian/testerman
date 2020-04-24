@@ -1661,13 +1661,13 @@ class DummyLogger:
 		pass
 	
 	def critical(self, txt):
-		print "%s - CRITICAL - %s" % (self.formatTimestamp(time.time()), txt)
+		print ("%s - CRITICAL - %s" % (self.formatTimestamp(time.time()), txt))
 	
 	def warning(self, txt):
-		print "%s - WARNING - %s" % (self.formatTimestamp(time.time()), txt)
+		print ("%s - WARNING - %s" % (self.formatTimestamp(time.time()), txt))
 
 	def error(self, txt):
-		print "%s - ERROR - %s" % (self.formatTimestamp(time.time()), txt)
+		print ("%s - ERROR - %s" % (self.formatTimestamp(time.time()), txt))
 
 class WsClient:
 	"""
@@ -1831,11 +1831,11 @@ def updateComponent(proxy, basepath, component, currentVersion = None, branches 
 
 	if not updates:
 		# No updates available - nothing to do
-		print "No updates available on this server."
+		print ("No updates available on this server.")
 		return False
 
-	print "Available updates:"
-	print "\n".join([ "%s (%s)" % (x['version'], x['branch']) for x in updates])
+	print ("Available updates:")
+	print ("\n".join([ "%s (%s)" % (x['version'], x['branch']) for x in updates]))
 
 	# Versions rules
 	# A.B.C < A+n.b.c
@@ -1848,7 +1848,7 @@ def updateComponent(proxy, basepath, component, currentVersion = None, branches 
 		newerVersion = updates[0]['version']
 		url = updates[0]['url']
 		branch = updates[0]['branch']
-		print "Newer version available: %s" % newerVersion
+		print ("Newer version available: %s" % newerVersion)
 
 		ret = QMessageBox.question(None, "Update manager", "A new QTesterman Client version is available on the server:\n%s (%s)\nDo you want to update now ?" % (newerVersion, branch), QMessageBox.Yes, QMessageBox.No)
 		if ret == QMessageBox.Yes:
@@ -1984,11 +1984,11 @@ def main():
 	app.setOrganizationName("Testerman")
 	app.setApplicationName("QTesterman")
 
-	print "Preparing to install QTesterman..."
+	print ("Preparing to install QTesterman...")
 	installationDialog = WInstallationDialog(None)
 	
 	if installationDialog.exec_() != QDialog.Accepted:
-		print "Installation cancelled by user."
+		print ("Installation cancelled by user.")
 		sys.exit(0)
 
 	url = str(installationDialog.getServerUrl().toAscii())

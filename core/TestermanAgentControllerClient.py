@@ -403,7 +403,7 @@ def finalize():
 
 if __name__ == "__main__":
 	initialize("test", ("127.0.0.1", 8087))
-	print "Getting registered probes..."
-	print str(instance().getRegisteredProbes())
+	print ("Getting registered probes...")
+	print (str(instance().getRegisteredProbes()))
 	finalize()
 	

@@ -341,7 +341,7 @@ if __name__ == '__main__':
 		start = time.time()
 		f(l1, l2)
 		stop = time.time()
-		print "%s: %s" % (f, stop-start)
+		print ("%s: %s" % (f, stop-start))
 	
 	
 else: 

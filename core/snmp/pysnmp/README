@@ -70,13 +70,13 @@ errorIndication, errorStatus, \
     )
 
 if errorIndication: # SNMP engine errors
-    print errorIndication
+    print (errorIndication)
 else:
     if errorStatus: # SNMP agent errors
-        print '%s at %s\n' % (errorStatus, varBinds[int(errorIndex)-1])
+        print ('%s at %s\n' % (errorStatus, varBinds[int(errorIndex)-1]))
     else:
         for varBind in varBinds: # SNMP agent values
-            print '%s = %s' % varBind
+            print ('%s = %s' % varBind)
 
 8X---------------- cut here --------------------
 

@@ -205,10 +205,10 @@ class UpdateMetadataWrapper:
 			if version == componentVersion and component == componentName:
 				if toBranch:
 					e.attributes['branch'] = toBranch
-					print "Component %s %s switched from %s to %s" % (component, version, branch, toBranch)
+					print ("Component %s %s switched from %s to %s" % (component, version, branch, toBranch))
 				if toUrl:
 					e.attributes['url'] = toUrl
-					print "Component %s %s updated, now serving %s" % (component, version, toUrl)
+					print ("Component %s %s updated, now serving %s" % (component, version, toUrl))
 				
 		f = open(self._filename, 'w')
 		f.write(doc.toprettyxml())

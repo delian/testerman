@@ -39,7 +39,7 @@ class Visitor:
 	def finish (self):
 		self.output_assignments ()
 		self.output_pyquotes ()
-		print self.text
+		print (self.text)
 	def spaces (self):
 		return " " * (4 * self.indent_lev)
 	def indent (self):
@@ -257,10 +257,10 @@ class Visitor:
 def parse_and_output (s, fn, defined_dict, tags_def):
 	ast = compiler.yacc.parse (s)
 	time_str = time.strftime("%a, %d %b %Y %H:%M:%S +0000", time.gmtime())
-	print """# Auto-generated at %s
+	print ("""# Auto-generated at %s
 # with the following command line:
 # %s --%s %s
-import Yapasn1 as asn1""" % (time_str, sys.argv[0], tags_def, fn)
+import Yapasn1 as asn1""" % (time_str, sys.argv[0], tags_def, fn))
 	for module in ast:
 		assert (module.type == 'Module')
 		visit_instance = Visitor (defined_dict, fn, 0, tags_def.upper())
@@ -271,11 +271,11 @@ import Yapasn1 as asn1""" % (time_str, sys.argv[0], tags_def, fn)
 
 
 def usage():
-	print "Usage:"
-	print " %s --explicit|--implicit <files> ..."
-	print 
-	print "Generates a Yapasn1-compatible syntax tree definition file, using"
-	print "either EXPLICIT or IMPLICIT default tags"
+	print ("Usage:")
+	print (" %s --explicit|--implicit <files> ...")
+	print ()
+	print ("Generates a Yapasn1-compatible syntax tree definition file, using")
+	print ("either EXPLICIT or IMPLICIT default tags")
 	sys.exit(1)
 
 if __name__ == '__main__':

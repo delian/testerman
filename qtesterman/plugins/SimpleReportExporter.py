@@ -404,7 +404,7 @@ class ReportExporter(Plugin.ReportExporter):
 		output = self._applyTemplate(templateFilename, context)
 		
 		if not outputFilename:
-			print output
+			print (output)
 		else:
 			try:
 				f = open(outputFilename, 'w')

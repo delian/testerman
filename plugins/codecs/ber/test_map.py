@@ -32,34 +32,34 @@ def test_map():
 #		("626a48042f3b46026b3a2838060700118605010101a02d602b80020780a109060704000001001302be1a2818060704000001010101a00da00b80099656051124006913f66c26a12402010102013b301c04010f040eaa180da682dd6c31192d36bbdd468007917267415827f2", TcapAsn.TCMessage),
 	]:
 		encoded = o(encoded)
-		print "Decoding..."
+		print ("Decoding...")
 		decoded = asn1.decode(pdu, encoded)
-		print
-		print "Decoded:"
-		print repr(decoded)
-		print
-		print "Re-encoding..."
+		print ()
+		print ("Decoded:")
+		print (repr(decoded))
+		print ()
+		print ("Re-encoding...")
 		reencoded = asn1.encode(pdu, decoded)
-		print
-		print "Re-encoded:"	
-		print oo(reencoded)
-		print "Original:"
-		print oo(encoded)
+		print ()
+		print ("Re-encoded:")
+		print (oo(reencoded))
+		print ("Original:")
+		print (oo(encoded))
 		# The reencoded is probably different from the original due to construct and length forms variants, so we can't compare them
-		print
-		print "Re-decoding..."
+		print ()
+		print ("Re-decoding...")
 		redecoded = asn1.decode(pdu, reencoded)
-		print
-		print "Redecoded:"
-		print repr(redecoded)
+		print ()
+		print ("Redecoded:")
+		print (repr(redecoded))
 		assert(redecoded == decoded)
-		print "Re-re-encoding..."
+		print ("Re-re-encoding...")
 		rereencoded = asn1.encode(pdu, redecoded)
-		print
-		print "Re-re-encoded:"
-		print oo(rereencoded)
-		print "Previous iteration:"
-		print oo(reencoded)
+		print ()
+		print ("Re-re-encoded:")
+		print (oo(rereencoded))
+		print ("Previous iteration:")
+		print (oo(reencoded))
 		assert(rereencoded == reencoded)
 
 
@@ -103,18 +103,18 @@ def test_sample():
 		]}
 	
 	pdu = PersonnelRecord
-	print "Encoded:"
+	print ("Encoded:")
 	encoded = asn1.encode(pdu, decoded)
-	print oo(encoded)
-	print "Decoded:"
+	print (oo(encoded))
+	print ("Decoded:")
 	redecoded = asn1.decode(pdu, encoded)
-	print repr(redecoded)
+	print (repr(redecoded))
 	assert(redecoded == decoded)
-	print "Re-encoded:"	
+	print ("Re-encoded:")
 	reencoded = asn1.encode(pdu, redecoded)
-	print oo(reencoded)
-	print "Original:"
-	print oo(encoded)
+	print (oo(reencoded))
+	print ("Original:")
+	print (oo(encoded))
 	assert(encoded == reencoded)
 				
 

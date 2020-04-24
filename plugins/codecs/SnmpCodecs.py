@@ -151,9 +151,9 @@ if __name__ == '__main__':
 	getResponse2cNoSuchObject = \
 		"302602010104067075626c6963a2190204031cd52c020100020100300b300906052a030405068000"
 
-	print 80*'-'
-	print "Codec unit tests"
-	print 80*'-'
+	print (80*'-')
+	print ("Codec unit tests")
+	print (80*'-')
 	samples = [	
 		('snmp.v1', trap1),
 		('snmp.v1', getRequest1),
@@ -169,16 +169,16 @@ if __name__ == '__main__':
 	]
 
 	for pdu, s in samples:
-		print
-		print 80*'-'
-		print "Testing: %s" % s
+		print ()
+		print (80*'-')
+		print ("Testing: %s" % s)
 		s = binascii.unhexlify(s)
 		(decoded, summary) = CodecManager.decode(pdu, s)
-		print "Decoded: %s\nSummary: %s" % (decoded, summary)
+		print ("Decoded: %s\nSummary: %s" % (decoded, summary))
 		(reencoded, summary) = CodecManager.encode(pdu, decoded)
-		print "Reencoded: %s\nSummary: %s" % (binascii.hexlify(reencoded), summary)
-		print "Original : %s" % binascii.hexlify(s)
+		print ("Reencoded: %s\nSummary: %s" % (binascii.hexlify(reencoded), summary))
+		print ("Original : %s" % binascii.hexlify(s))
 		assert(s == reencoded)
 		(redecoded, summary) = CodecManager.decode(pdu, reencoded)
-		print "Decoded: %s\nSummary: %s" % (redecoded, summary)
+		print ("Decoded: %s\nSummary: %s" % (redecoded, summary))
 		assert(redecoded == decoded)

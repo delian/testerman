@@ -242,16 +242,16 @@ if __name__ == '__main__':
 	logging.basicConfig(level = logging.DEBUG, format = '%(asctime)s.%(msecs)03d %(thread)d %(levelname)-8s %(name)-20s %(message)s', datefmt = '%Y%m%d %H:%M:%S')
 	xmlMetadata = extractMetadata(sample)
 	if xmlMetadata:
-		print "Extracted:\n%s" % xmlMetadata
+		print ("Extracted:\n%s" % xmlMetadata)
 		m = parseMetadata(xmlMetadata)
 		if m:
-			print "Parsed:\n%s" % m.parameters
+			print ("Parsed:\n%s" % m.parameters)
 			for p in m.getDefaultSessionDict().items():
-				print "%s: %s" % p
-			print m.getSignature()
-			print
-			print m.getGroups()
-			print
-			print m.toDict()
+				print ("%s: %s" % p)
+			print (m.getSignature())
+			print ()
+			print (m.getGroups())
+			print ()
+			print (m.toDict())
 		
 		

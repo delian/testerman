@@ -462,7 +462,7 @@ class TestermanCliClient:
 		"""
 		ret = self.__client.getRegisteredProbes() + self.__client.getRegisteredAgents()
 		header = [ ('uri', 'uri'), ('type', 'type'), ('contact', 'location'), ('user-agent', 'version') ]
-		print prettyPrintDictList(header, ret)
+		print (prettyPrintDictList(header, ret))
 
 	def monitor(self, uri):
 		"""
@@ -534,40 +534,40 @@ class TestermanCliClient:
 		"""
 		Sends a signal to a job.
 		"""
-		print "Sending signal %s to %s..." % (signal, jobId)
+		print ("Sending signal %s to %s..." % (signal, jobId))
 		self.__client.sendSignal(jobId, signal)
 
 	def deployProbe(self, agentName, probeName, probeType):
 		"""
 		Deploys a new probe probe:probeName@agentName
 		"""
-		print "Deploying probe..."
+		print ("Deploying probe...")
 		ret = self.__client.deployProbe(agentName, probeName, probeType)
-		print str(ret)
+		print (str(ret))
 
 	def undeployProbe(self, agentName, probeName):
 		"""
 		Undeploys probe:probeName@agentName
 		"""
-		print "Undeploying probe..."
+		print ("Undeploying probe...")
 		ret = self.__client.undeployProbe(agentName, probeName)
-		print str(ret)
+		print (str(ret))
 
 	def restartAgent(self, agentName):
 		"""
 		Restarts the agent agent:agentName
 		"""
-		print "Restarting agent..."
+		print ("Restarting agent...")
 		ret = self.__client.restartAgent(agentName)
-		print str(ret)
+		print (str(ret))
 
 	def updateAgent(self, agentName, branch = None, version = None):
 		"""
 		Requests the agent agent:agentName to update
 		"""
-		print "Updating agent..."
+		print ("Updating agent...")
 		ret = self.__client.updateAgent(agentName, branch, version)
-		print str(ret)
+		print (str(ret))
 
 	def getLog(self, jobId, expandLogs):
 		"""
@@ -593,20 +593,20 @@ class TestermanCliClient:
 		Prints the dependencies for a given file (module/ats/campaign)
 		identified by path in the *repository*.
 		"""
-		print "Getting dependencies for %s..." % path
+		print ("Getting dependencies for %s..." % path)
 		ret = self.__client.getDependencies("/repository/%s" % path, recursive)
-		print "File dependencies:"
-		print "\n".join(ret)
+		print ("File dependencies:")
+		print ("\n".join(ret))
 	
 	def extractPackage(self, path, filename):
 		"""
 		Extract/export a package from the repository.
 		"""
 		if not filename:
-			print "Sorry, missing output filename"
+			print ("Sorry, missing output filename")
 			return
 		
-		print "Extracting %s to %s..." % (path, filename)
+		print ("Extracting %s to %s..." % (path, filename))
 		try:
 			contents = self.__client.exportPackage("/repository/%s" % path)
 			if contents is None:
@@ -614,7 +614,7 @@ class TestermanCliClient:
 			f = open(filename, 'wb')
 			f.write(contents)
 			f.close()
-			print "%s created." % filename
+			print ("%s created." % filename)
 		except Exception as e:
 			self.log("Sorry, unable to extract package: %s" % str(e))
 
@@ -623,10 +623,10 @@ class TestermanCliClient:
 		Import the package filename to path
 		"""
 		if not filename:
-			print "Sorry, missing input filename"
+			print ("Sorry, missing input filename")
 			return
 		
-		print "Importing %s to %s..." % (filename, path)
+		print ("Importing %s to %s..." % (filename, path))
 		try:
 			f = open(filename, 'r')
 			contents = f.read()
@@ -635,7 +635,7 @@ class TestermanCliClient:
 			ret = self.__client.importPackageFile(contents, "/repository/%s" % path)
 			if not ret:
 				raise Exception("Unable to import package (no error provided)")
-			print "%s correctly imported as %s" % (filename, path)
+			print ("%s correctly imported as %s" % (filename, path))
 		except Exception as e:
 			self.log("Sorry, unable to import package: %s" % str(e))
 
@@ -720,7 +720,7 @@ def main():
 	(options, args) = parser.parse_args()
 	
 	if not options.serverUrl:
-		print "Error: missing server URL. You may use either -s, --server, or set the environment variable TESTERMAN_SERVER."
+		print ("Error: missing server URL. You may use either -s, --server, or set the environment variable TESTERMAN_SERVER.")
 		sys.exit(1)
 	
 	# Logger initialization
@@ -740,7 +740,7 @@ def main():
 			try:
 				options.scheduledDate = time.mktime(time.strptime(options.scheduledDate, '%Y%m%d-%H%M'))
 			except:
-				print "Invalid date/time format. Please see the inline documentation (--help)."
+				print ("Invalid date/time format. Please see the inline documentation (--help).")
 				return RETCODE_EXECUTION_ERROR
 
 		if options.atsFilename or options.atsPath or options.campaignFilename or options.campaignPath or options.runUri:
@@ -748,7 +748,7 @@ def main():
 			try:
 				session = loadSessionParameters(options.sessionParametersFilename, options.sessionParameters)
 			except Exception as e:
-				print str(e)
+				print (str(e))
 				return RETCODE_EXECUTION_ERROR
 		
 			client.startXc()
@@ -801,7 +801,7 @@ def main():
 		elif options.logJobId:
 			log = client.getLog(int(options.logJobId), options.expandLogs)
 			if log:
-				print log
+				print (log)
 				return 0
 			else:
 				return 1
@@ -845,7 +845,7 @@ def main():
 			parser.print_help()
 			
 	except Exception as e:
-		print str(e)
+		print (str(e))
 		return 1
 	
 

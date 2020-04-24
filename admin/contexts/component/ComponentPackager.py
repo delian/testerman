@@ -99,7 +99,7 @@ def createPackage(sources, filename, baseDir = "", excluded = []):
 	try:
 		for entry in sources:
 			for obj in glob.glob(entry):
-#				print "Copying %s to %s ..." % (obj, tmpdir)
+#				print ("Copying %s to %s ..." % (obj, tmpdir))
 				if os.path.isdir(obj):
 					shutil.copytree(obj, tmpdir + "/" + os.path.basename(obj))
 				else:
@@ -110,7 +110,7 @@ def createPackage(sources, filename, baseDir = "", excluded = []):
 		for name in walk([tmpdir + '/*'], isExcluded):
 			t.add(name, arcname = name.replace(tmpdir, baseDir), recursive = False) # strip the tmpdir from the archive name
 		t.close()
-#		print "archive %s created." % filename
+#		print ("archive %s created." % filename)
 
 		# Purge the temp dir
 		shutil.rmtree(tmpdir)
@@ -175,6 +175,6 @@ def getPackageInfo(sourceRoot):
 
 	
 if __name__ == "__main__":
-	print getPackageInfo("/home/seb/dev/testerman/trunk/qtesterman")
+	print (getPackageInfo("/home/seb/dev/testerman/trunk/qtesterman"))
 
 

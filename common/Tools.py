@@ -269,8 +269,8 @@ def daemonize(pidFilename = None, stdout = None, stderr = None, displayPid = Fal
 		
 		# Display some info before closing all std fds
 		if displayPid:
-			print "Server started as daemon (pid %d)" % os.getpid()
-			print "Use kill -SIGINT %d to stop the server when needed." % os.getpid()
+			print ("Server started as daemon (pid %d)" % os.getpid())
+			print ("Use kill -SIGINT %d to stop the server when needed." % os.getpid())
 
 		# UMask
 		os.umask(0)

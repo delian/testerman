@@ -361,17 +361,17 @@ Content-Length: 0
 	]
 
 	for (label, decode_f, encode_f, samples) in sets:
-		print "======== %s =======" % label
+		print ("======== %s =======" % label)
 		for s in samples:
 			(_, decoded, summary) = decode_f(s)
-			print decoded
-			print "Summary: %s" % summary
+			print (decoded)
+			print ("Summary: %s" % summary)
 			(reencoded, summary) = encode_f(decoded)
-			print
-			print "Reencoded: %s\nSummary: %s" % (reencoded, summary)
-			print "Original : %s" % s
+			print ()
+			print ("Reencoded: %s\nSummary: %s" % (reencoded, summary))
+			print ("Original : %s" % s)
 			# assert (s == reencoded)
-			print
+			print ()
 
 
 	

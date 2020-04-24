@@ -902,7 +902,7 @@ def main():
 		if configFile: cm.read(configFile)
 		if usersFile: cm.read(usersFile, autoRegister = True)
 	except Exception as e:
-		print str(e)
+		print (str(e))
 		return 1
 
 
@@ -937,7 +937,7 @@ def main():
 		pidfile = cm.get("testerman.var_root") + "/wcs.pid"
 		cm.set_actual("wcs.pid_filename", pidfile)
 
-#	print Tools.formatTable([ ('key', 'Name'), ('format', 'Type'), ('dynamic', 'Dynamic'), ('default', 'Default value'), ('user', 'User value'), ('actual', 'Actual value')], cm.getVariables(), order = "key")
+#	print (Tools.formatTable([ ('key', 'Name'), ('format', 'Type'), ('dynamic', 'Dynamic'), ('default', 'Default value'), ('user', 'User value'), ('actual', 'Actual value')], cm.getVariables(), order = "key"))
 
 	# Logger initialization
 	if cm.get("wcs.debug"):

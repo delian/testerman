@@ -312,28 +312,28 @@ if __name__ == "__main__":
 	def oo(x):
 		return binascii.hexlify(x)
 	
-	print 80*'-'
-	print "TBCD Codec unit tests"
-	print 80*'-'
+	print (80*'-')
+	print ("TBCD Codec unit tests")
+	print (80*'-')
 	samples = [
 		('\x21\xf3', "123"),
 		('\x21\x43', "1234"),
 	]
 
 	for e, d in samples:
-		print
-		print 80*'-'
+		print ()
+		print (80*'-')
 		(encoded, _) = CodecManager.encode('tbcd', d)
-		print "encoded: %s (%s)" % (repr(encoded), oo(encoded))
+		print ("encoded: %s (%s)" % (repr(encoded), oo(encoded)))
 		assert(encoded == e)
 		(decoded, _) = CodecManager.decode('tbcd', e)
-		print "decoded: %s" % repr(decoded)
+		print ("decoded: %s" % repr(decoded))
 		assert(decoded == d)
 
-	print
-	print 80*'-'
-	print "GSM AddressString Codec unit tests"
-	print 80*'-'
+	print ()
+	print (80*'-')
+	print ("GSM AddressString Codec unit tests")
+	print (80*'-')
 	samples = [
 		('\x80\x21\xf3', { 'digits': "123", 'numberingPlanIndicator': 'unknown', 'natureOfAddress': 'unknown' }),
 		('\x91\x21\x43', { 'digits': "1234", 'numberingPlanIndicator': 'isdn', 'natureOfAddress': 'international' }),
@@ -341,31 +341,31 @@ if __name__ == "__main__":
 	]
 
 	for e, d in samples:
-		print
-		print 80*'-'
+		print ()
+		print (80*'-')
 		(encoded, _) = CodecManager.encode('gsm.AddressString', d)
-		print "encoded: %s (%s)" % (repr(encoded), oo(encoded))
+		print ("encoded: %s (%s)" % (repr(encoded), oo(encoded)))
 		assert(encoded == e)
 		(decoded, _) = CodecManager.decode('gsm.AddressString', e)
-		print "decoded: %s" % repr(decoded)
+		print ("decoded: %s" % repr(decoded))
 		assert(decoded == d)
 
 
-	print
-	print 80*'-'
-	print "7-bit packed Codec unit tests"
-	print 80*'-'
+	print ()
+	print (80*'-')
+	print ("7-bit packed Codec unit tests")
+	print (80*'-')
 	tests = [
 		('hellohello', o("e8329bfd4697d9ec37")),
 	]
 	
 	for d, c in tests:
-		print "Testing '%s':" % d
+		print ("Testing '%s':" % d)
 		e = encode_7bitpacked('hellohello')
-		print "Encoded:  %s" % oo(e)
-		print "Expected: %s" % oo(c)
+		print ("Encoded:  %s" % oo(e))
+		print ("Expected: %s" % oo(c))
 		assert(e == c)
 		rd = decode_7bitpacked(c)
-		print "Decoded:  %s" % rd
-		print "Expected: %s" % d
+		print ("Decoded:  %s" % rd)
+		print ("Expected: %s" % d)
 		assert(d == rd)

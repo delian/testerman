@@ -196,7 +196,7 @@ def decode_tag_ber(buf):
 	Returns the read tag and the number of consumed bytes.
 	"""
 	if trace_debug:
-		print "DEBUG: decoding tag from %s" % binascii.hexlify(buf)
+		print ("DEBUG: decoding tag from %s" % binascii.hexlify(buf))
 	i = 0
 	c = ord(buf[i])
 	flags = c & 0xe0
@@ -445,7 +445,7 @@ class SyntaxNode:
 		Checks the length.
 		"""
 		if trace_extraction:
-			print "%s: extracting element from %s" % (str(self), binascii.hexlify(buf))
+			print ("%s: extracting element from %s" % (str(self), binascii.hexlify(buf)))
 		(tag, tagbytes) = decode_tag_ber(buf)
 		buf = buf[tagbytes:]
 		(length, lenbytes) = decode_len_ber(buf)
@@ -466,7 +466,7 @@ class SyntaxNode:
 		totalbytes = tagbytes + lenbytes + len(content)		
 		
 		if trace_extraction:
-			print "%s: extracted element %s, %s bytes consumed, len %s:\n%s" % (str(self), tag_str(tag), totalbytes, len(content), binascii.hexlify(content))
+			print ("%s: extracted element %s, %s bytes consumed, len %s:\n%s" % (str(self), tag_str(tag), totalbytes, len(content), binascii.hexlify(content)))
 		return (tag, content, totalbytes)
 		
 	def decode_ber(self, tag, buf, context):
@@ -891,17 +891,17 @@ class SequenceSyntaxNode(SyntaxNode):
 				i += 1
 				if sn.match_tag(tag):
 					if trace_decoding:
-						print "%s: found field '%s', decoding..." % (str(self), name)
+						print ("%s: found field '%s', decoding..." % (str(self), name))
 					ret[name] = sn.decode_ber(tag, content, context)
 					if trace_decoding:
-						print "%s: field '%s' decoded" % (str(self), name)
+						print ("%s: field '%s' decoded" % (str(self), name))
 					found = True
 					last_field_index = last_field_index + i # Make sure we detect the field only once and in the correct order.
 					break
 
 			if not found:
 				if trace_decoding:
-					print("%s: INFO: consumed an unexpected field in sequence, tag %s" % (str(self), tag_str(tag)))
+					print ("%s: INFO: consumed an unexpected field in sequence, tag %s" % (str(self), tag_str(tag)))
 		
 		# Check if this is satisfying or not
 		for name, sn, optional, default in self._fields:
@@ -912,7 +912,7 @@ class SequenceSyntaxNode(SyntaxNode):
 					# Create the default value (if available) so that the application sees it
 					ret[name] = default
 					if trace_decoding:
-						print "%s: field '%s' not present on the wire, filled with its default value %s" % (str(self), name, repr(default))
+						print ("%s: field '%s' not present on the wire, filled with its default value %s" % (str(self), name, repr(default)))
 		# OK
 		return ret
 	
@@ -928,7 +928,7 @@ class SequenceSyntaxNode(SyntaxNode):
 				except Exception as e:
 					raise BerEncodingError("%s: unable to encode field '%s' in sequence: %s" % (str(self), name, str(e)))
 				if trace_encoding:
-					print "%s: field '%s' encoded in sequence:\n%s" % (str(self), name, binascii.hexlify(buf[-1]))
+					print ("%s: field '%s' encoded in sequence:\n%s" % (str(self), name, binascii.hexlify(buf[-1])))
 			elif not optional:
 				# NB: default values are not encoded.
 				raise BerEncodingError("%s: missing mandatory field '%s' in sequence" % (str(self), name))
@@ -1025,7 +1025,7 @@ class ChoiceSyntaxNode(SyntaxNode):
 				# Found corresponding choice
 				c = sn.encode_ber(value, context)
 				if trace_encoding:
-					print "%s: choice branch '%s' encoded as:\n%s" % (str(self), name, binascii.hexlify(c))
+					print ("%s: choice branch '%s' encoded as:\n%s" % (str(self), name, binascii.hexlify(c)))
 				# encoded, with the choice tag.
 				# Now add our explicit tag if any
 				if self._explicit_tag:
@@ -1060,12 +1060,12 @@ class ObjectIdentifierSyntaxNode(SyntaxNode):
 		for val in ids[2:]:
 			encoded.append(encode_base128(val))
 		if trace_encoding:
-			print "%s: Encoded OID:\n%s" % (str(self), binascii.hexlify(''.join(encoded)))
+			print ("%s: Encoded OID:\n%s" % (str(self), binascii.hexlify(''.join(encoded))))
 		return ''.join(encoded)
 	
 	def decode_content_ber(self, tag, buf, context):
 		if trace_decoding:
-			print "%s: Decoding OID:\n%s" % (str(self), binascii.hexlify(buf))
+			print ("%s: Decoding OID:\n%s" % (str(self), binascii.hexlify(buf)))
 		a, b = divmod(ord(buf[0]), 40)
 		oid =  [ a, b ]
 		start = 1
@@ -1196,7 +1196,7 @@ import copy
 def TYPE(tag, syntaxNode):
 	# creates a copy of the syntax node to turns into a particular tagged syntax node
 	if trace_debug:
-		print "DEBUG: tagging %s with %s..." % (syntaxNode, tag)
+		print ("DEBUG: tagging %s with %s..." % (syntaxNode, tag))
 	sn = copy.deepcopy(syntaxNode)
 	explicit, flags, value = tag
 	if explicit:

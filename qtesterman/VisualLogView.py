@@ -724,7 +724,7 @@ class TestCaseActor(QGraphicsItemGroup):
 
 		self.dashPen = QPen(QColor(200, 200, 200), 2, Qt.DotLine, Qt.RoundCap)
 
-		#print "DEBUG: creating actor %s" % name
+		#print ("DEBUG: creating actor %s" % name)
 		self.titleText = QGraphicsSimpleTextItem(name)
 		self.titleText.setZValue(10)
 #		self.titleText.setFont(self.mainFont)
@@ -983,7 +983,7 @@ class TestCaseScene(QGraphicsScene):
 		"""
 		(timestamp, status) = domElement.attribute("timestamp").toFloat()
 		if not status:
-#			print "TestCaseScene: Invalid log event: incorrect timestamp"
+#			print ("TestCaseScene: Invalid log event: incorrect timestamp")
 			return None
 		
 		element = domElement.tagName()
@@ -1011,7 +1011,7 @@ class TestCaseScene(QGraphicsScene):
 			if element == "tc-created":
 				actor = domElement.attribute("id")
 				self.__addActor(actor)
-#				print "Added actor %s" % repr(actor)
+#				print ("Added actor %s" % repr(actor))
 			elif element == "tc-started":
 				actor = domElement.attribute("id")
 				behaviour = domElement.attribute("behaviour")
@@ -1155,7 +1155,7 @@ class TestCaseScene(QGraphicsScene):
 		"""
 		Draw an arrow between fromActor to toActor, at level yOffset
 		"""
-#		print "Adding sent message %s -> %s at %s " % (str(fromActor), str(toActor), str(yPos))
+#		print ("Adding sent message %s -> %s at %s " % (str(fromActor), str(toActor), str(yPos)))
 		if not self.__actors.has_key(fromActor):
 			# We missed something, let's recover (very convenient for system and <SUT> actors as well...
 			self.__addActor(fromActor)
@@ -1220,7 +1220,7 @@ class WClickableGraphicsView(QGraphicsView):
 	def mousePressEvent(self, event):
 		item = self.itemAt(event.pos())
 		if item:
-			#print "Item available: " + unicode(item)
+			#print ("Item available: " + unicode(item))
 			# Crash if this is a text item... so we turned all QGraphicsTextItem into QGraphicsSimpleTextItem,
 			# no problem anymore. Looks like a problem with the focus flags of the QGraphicsTextItem.
 			# (after a google search)

@@ -201,7 +201,7 @@ def t_NEWLINE(t):
     t.lineno += t.value.count("\n")
 
 def t_error(t):
-    print "Error", repr(t.value[:100]), t.lineno
+    print ("Error", repr(t.value[:100]), t.lineno)
     raise LexError
 
     
@@ -1087,14 +1087,14 @@ yacc.yacc ()
 
 def calc_dependencies (node, dict, trace = 0):
     if not hasattr (node, '__dict__'):
-        if trace: print "#returning, node=", node
+        if trace: print ("#returning, node=", node)
         return
     if node.type == 'Type_Ref': # XXX
         dict [node.name] = 1
-        if trace: print "#Setting", node.name
+        if trace: print ("#Setting", node.name)
         return
     for (a, val) in node.__dict__.items ():
-        if trace: print "# Testing node ", node, "attr", a, " val", val
+        if trace: print ("# Testing node ", node, "attr", a, " val", val)
         if a[0] == '_':
             continue
         elif isinstance (val, type ([])):
@@ -1110,7 +1110,7 @@ def testlex (s, fn, dict):
         token = lexer.token ()
         if not token:
             break
-        print token
+        print (token)
 
 import sys
 
@@ -1119,6 +1119,6 @@ if __name__ == '__main__':
     for fn in sys.argv [1:]:
         f = open (fn, "r")
         ast = yacc.parse (f.read())
-        print map (str, ast)
+        print (map (str, ast))
         lexer.lineno = 1
 

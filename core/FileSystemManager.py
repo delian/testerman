@@ -326,7 +326,7 @@ class FileSystemManager:
 		if not self.attributes(resourcepath):
 			newfile = True
 		
-		print "DEBUG: new profile (%s): %s" % (resourcepath, newfile)
+		print ("DEBUG: new profile (%s): %s" % (resourcepath, newfile))
 
 		try:
 			backend.writeprofile(adjusted, profilename, content, username = username)

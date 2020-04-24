@@ -71,7 +71,7 @@ class IncompleteMessageException(Exception): pass
 def decodeParameters(data):
 	remainingBytes = len(data)
 	unpacker = xdrlib.Unpacker(data)
-	print "DEBUG: decoding parameters from %s (len = %s)" % (binascii.hexlify(data), remainingBytes)
+	print ("DEBUG: decoding parameters from %s (len = %s)" % (binascii.hexlify(data), remainingBytes))
 	ret = []		
 	while remainingBytes >= 8:
 		(bytes, parameter) = decodeParameter(unpacker, remainingBytes)
@@ -159,7 +159,7 @@ class Message:
 		
 		# The length includes the header (ie 8 bytes) and padding.
 		length = unpacker.unpack_uint()
-		print "DEBUG: header %s, class %s, type %s, length %s" % (self.version, self.messageClass, self.messageType, length)
+		print ("DEBUG: header %s, class %s, type %s, length %s" % (self.version, self.messageClass, self.messageType, length))
 		if length < 8 or length % 4:
 			raise InvalidMessageException("Invalid message length")
 	
@@ -235,7 +235,7 @@ class Parameter:
 		# So let's compute the actual parameter length, in bytes,
 		# i.e. the padded length
 		paddedLength = (length+3) & ~3
-		print "DEBUG: decoding parameter: tag %s, length %s, padded length %s, remaining bytes %s" % (self.tag, length, paddedLength, bytes)
+		print ("DEBUG: decoding parameter: tag %s, length %s, padded length %s, remaining bytes %s" % (self.tag, length, paddedLength, bytes))
 		if bytes < paddedLength:
 			# Invalid because in this context we'll never get more bytes: the message length was correct.
 			raise InvalidMessageException("Invalid length: missing bytes in parameter tag %s: available %s, expected %s" % (self.tag, paddedLength, bytes))
@@ -372,7 +372,7 @@ class GlobalTitleSubCodec(SubCodec):
 	}
 	"""
 	def decode(self, data):
-		print "DEBUG: GT raw data: %s" % binascii.hexlify(data)
+		print ("DEBUG: GT raw data: %s" % binascii.hexlify(data))
 		unpacker = xdrlib.Unpacker(data)
 		gti = unpacker.unpack_uint() & 0xff
 		
@@ -384,8 +384,8 @@ class GlobalTitleSubCodec(SubCodec):
 		nbDigits = (info >> 24) & 0xff
 		paddedDigitLen = (nbDigits / 2 + 1)&~1
 		
-		print "DEBUG: GT: tt %s, np %s, ton %s, nb digits %s, digit bytes %s" % (translationType,
-		numberingPlan, natureOfAddress, nbDigits, paddedDigitLen)
+		print ("DEBUG: GT: tt %s, np %s, ton %s, nb digits %s, digit bytes %s" % (translationType,
+			numberingPlan, natureOfAddress, nbDigits, paddedDigitLen))
 		# read padded number of semi-bytes
 		pos = unpacker.get_position()
 		tbcdDigits = unpacker.get_buffer()[pos:pos + paddedDigitLen]
@@ -682,8 +682,8 @@ CodecManager.registerCodecClass('sua', SuaCodec)
 
 
 if __name__ == '__main__':
-	print "SUA Codec unit tests"
-	print 80*'-'
+	print ("SUA Codec unit tests")
+	print (80*'-')
 	samples = [	
 	# SUA ASP active / Load-share, routing context 300	
 	"0100040100000018000b000800000002000600080000012c",
@@ -694,14 +694,14 @@ if __name__ == '__main__':
 	]
 
 	for s in samples:
-		print "Testing: %s" % s
+		print ("Testing: %s" % s)
 		s = binascii.unhexlify(s)
 		(_, consumed, decoded, summary) = CodecManager.incrementalDecode('sua', s)
-		print "Decoded: %s\nSummary: %s" % (decoded, summary)
-		print "Consumed %s bytes ouf of %s" % (consumed, len(s))
+		print ("Decoded: %s\nSummary: %s" % (decoded, summary))
+		print ("Consumed %s bytes ouf of %s" % (consumed, len(s)))
 		(reencoded, summary) = CodecManager.encode('sua', decoded)
-		print "Reencoded: %s\nSummary: %s" % (binascii.hexlify(reencoded), summary)
-		print "Original : %s" % binascii.hexlify(s)
+		print ("Reencoded: %s\nSummary: %s" % (binascii.hexlify(reencoded), summary))
+		print ("Original : %s" % binascii.hexlify(s))
 		assert(s == reencoded)
 	
 			

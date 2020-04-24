@@ -144,20 +144,20 @@ if __name__ == '__main__':
 """
 
 	for codec in [ 'xer.lite', 'xer.noprolog', 'xer.iso', 'xer.canonical' ]:
-		print "%s %s %s" % (40*'=', codec, 40*'=')
-		print "decoded with %s:" % codec
+		print ("%s %s %s" % (40*'=', codec, 40*'='))
+		print ("decoded with %s:" % codec)
 		(decoded, _) = CodecManager.decode(codec, sample)
-		print decoded
-		print
-		print "re-encoded with %s:" % codec
+		print (decoded)
+		print ()
+		print ("re-encoded with %s:" % codec)
 		(reencoded, _) = CodecManager.encode(codec, decoded)
-		print
-		print reencoded
-		print "re-decoded with %s:" % codec
+		print ()
+		print (reencoded)
+		print ("re-decoded with %s:" % codec)
 		(redecoded, _) = CodecManager.decode(codec,reencoded)
-		print redecoded
+		print (redecoded)
 		assert(decoded == redecoded)
-		print
+		print ()
 
 
 	

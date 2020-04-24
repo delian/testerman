@@ -47,7 +47,7 @@ def icon(resource):
 
 
 def log(txt):
-	print txt
+	print (txt)
 
 
 ################################################################################
@@ -173,7 +173,7 @@ class OutlineAstVisitor(compiler.visitor.ASTVisitor):
 #			if not line:
 #				line = 1 << 31
 #			item._toLine = line - 1
-#			print ">> DEBUG: node %s: from %s to %s" % (item._label, item._fromLine, item._toLine)
+#			print (">> DEBUG: node %s: from %s to %s" % (item._label, item._fromLine, item._toLine))
 
 
 class WOutlineTreeWidget(QTreeWidget):

@@ -1078,7 +1078,7 @@ def main():
 		try:
 			cm.read(configFile)
 		except Exception as e:
-			print str(e)
+			print (str(e))
 			return 1
 
 
@@ -1106,7 +1106,7 @@ def main():
 		cm.set_actual("tacs.pid_filename", pidfile)
 
 
-#	print Tools.formatTable([ ('key', 'Name'), ('format', 'Type'), ('dynamic', 'Dynamic'), ('default', 'Default value'), ('user', 'User value'), ('actual', 'Actual value')], cm.getVariables(), order = "key")
+#	print (Tools.formatTable([ ('key', 'Name'), ('format', 'Type'), ('dynamic', 'Dynamic'), ('default', 'Default value'), ('user', 'User value'), ('actual', 'Actual value')], cm.getVariables(), order = "key"))
 
 	# Logger initialization
 	level = cm.get("tacs.debug") and logging.DEBUG or logging.INFO
@@ -1138,7 +1138,7 @@ def main():
 	except KeyboardInterrupt:	
 		getLogger().info("Shutting down Testerman Agent Controller Server...")
 	except Exception as e:
-		print "Unable to start server: " + str(e)
+		print ("Unable to start server: " + str(e))
 		getLogger().critical("Unable to start server: " + str(e))
 
 	if controller:

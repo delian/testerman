@@ -1128,9 +1128,9 @@ class WMainWindow(QMainWindow):
 ################################################################################
 
 def usage(txt = None):
-	if txt: print txt
-	print "Usage: " + sys.argv[0] + " [options]"
-	print """General options are:
+	if txt: print (txt)
+	print ("Usage: " + sys.argv[0] + " [options]")
+	print ("""General options are:
 -v, --version         display version info and exit
 -h, --help            display this help and exit
     --debug           debug mode
@@ -1154,10 +1154,10 @@ Standalone log analyzer mode:
                       use PARAMETERS as export parameters. The format is
                       key=value[,key=value]*, where the possible keys and
                       values depend on the selected PLUGIN type
-"""
+""")
 
 def showVersion():
-	print "This is %s %s" % (getClientName(), getClientVersion())
+	print ("This is %s %s" % (getClientName(), getClientVersion()))
 
 def runFullClient(defaultUrl, defaultUsername):
 	"""
@@ -1423,9 +1423,9 @@ def run():
 			import gc
 			gc.set_debug(gc.DEBUG_STATS)
 #			gc.set_debug(gc.DEBUG_LEAK)
-			print "Current GC settings: " + str(gc.get_threshold())
+			print ("Current GC settings: " + str(gc.get_threshold()))
 			gc.set_threshold(10, 1, 1)
-			print "Current GC state: " + str(gc.isenabled())
+			print ("Current GC state: " + str(gc.isenabled()))
 
 	# Export mode
 	if logFilename and exportPluginName:

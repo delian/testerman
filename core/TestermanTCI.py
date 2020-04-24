@@ -109,7 +109,7 @@ class IlClient(Nodes.ConnectingNode):
 			self.sendNotification(0, notification)
 		except Exception:
 			# Logging fallback to stderr
-			print >> sys.stdout, "WARNING: unable to send LOG notification: " + getBacktrace()
+			print ("WARNING: unable to send LOG notification: " + getBacktrace(), file=sys.stdout)
 
 ##################################################################################
 # A fake Il Client that write logs locally instead of sending log notifications
@@ -130,7 +130,7 @@ class LocalIlClient:
 			
 		self.mutex.acquire()
 		if self.logFilename == '-':
-			print xml
+			print (xml)
 		else:
 			try:
 				f = open(self.logFilename, 'a')

@@ -483,9 +483,9 @@ class CGIXMLRPCRequestHandler(SimpleXMLRPCDispatcher):
 
         response = self._marshaled_dispatch(request_text)
 
-        print 'Content-Type: text/xml'
-        print 'Content-Length: %d' % len(response)
-        print
+        print ('Content-Type: text/xml')
+        print ('Content-Length: %d' % len(response))
+        print ()
         sys.stdout.write(response)
 
     def handle_get(self):
@@ -505,10 +505,10 @@ class CGIXMLRPCRequestHandler(SimpleXMLRPCDispatcher):
              'message' : message,
              'explain' : explain
             }
-        print 'Status: %d %s' % (code, message)
-        print 'Content-Type: text/html'
-        print 'Content-Length: %d' % len(response)
-        print
+        print ('Status: %d %s' % (code, message)))
+        print ('Content-Type: text/html')
+        print ('Content-Length: %d' % len(response))
+        print ()
         sys.stdout.write(response)
 
     def handle_request(self, request_text = None):

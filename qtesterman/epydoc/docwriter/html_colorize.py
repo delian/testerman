@@ -902,7 +902,7 @@ _FOOT = '</body></html>'
 if __name__=='__main__':
     #s = PythonSourceColorizer('../apidoc.py', 'epydoc.apidoc').colorize()
     s = PythonSourceColorizer('/tmp/fo.py', 'epydoc.apidoc').colorize()
-    #print s
+    #print (s)
     import codecs
     f = codecs.open('/home/edloper/public_html/color3.html', 'w', 'ascii', 'xmlcharrefreplace')
     f.write(_HDR+'<pre id="py-src-top" class="py-src">'+s+'</pre>'+_FOOT)

@@ -132,11 +132,11 @@ def getInstance():
 
 if __name__ == '__main__':
 	def usage():
-		print"""Usage:
+		print ("""Usage:
   %(name)s get <filename> <keypath>
   %(name)s set <filename> <keypath> <value>
 
-  where keypath is a xpath query.""" % dict(name = sys.argv[0])
+  where keypath is a xpath query.""" % dict(name = sys.argv[0]))
 	
 	if len(sys.argv) < 3:
 		usage()
@@ -147,20 +147,20 @@ if __name__ == '__main__':
 		if op == 'set':
 			ret = getInstance().setValue(filename = sys.argv[2], keypath = sys.argv[3], value = sys.argv[4])
 			if ret:
-				print "Value set."
+				print ("Value set.")
 				status = 0
 			else:
-				print "Unable to set value."
+				print ("Unable to set value.")
 				status = 1
 		else:
 			value = getInstance().getValue(filename = sys.argv[2], keypath = sys.argv[3])
-			print value
+			print (value)
 			if value is None:
 				status = 1
 			else:
 				status = 0
 	except Exception as e:
-		print "Configuration script exception: %s" % str(e)
+		print ("Configuration script exception: %s" % str(e))
 		status = 1
 	sys.exit(status)
 

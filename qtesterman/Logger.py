@@ -50,7 +50,7 @@ class QLoggingStream(QObject):
 		"""
 		data = data.strip()
 		# Copy to stdout
-		print data
+		print (data)
 		# Then emit our signal
 		QObject.emit(self, SIGNAL('loggingEvent(const QString &)'), QString(data))
 

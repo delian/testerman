@@ -67,29 +67,29 @@ if __name__ == '__main__':
 	sendRoutingInfoForSMArg = \
 	"30158007910026151101008101ff820791261010101010"
 	
-	print 80*'-'
-	print "MAP (Phase 2+) Codec unit tests"
-	print 80*'-'
+	print (80*'-')
+	print ("MAP (Phase 2+) Codec unit tests")
+	print (80*'-')
 	samples = [	
 		('RoutingInfoForSM-Arg', sendRoutingInfoForSMArg),
 	]
 
 	for pdu, s in samples:
-		print
-		print 80*'-'
-		print "Testing: %s" % s
+		print ()
+		print (80*'-')
+		print ("Testing: %s" % s)
 		s = binascii.unhexlify(s)
 		(decoded, summary) = CodecManager.decode('map.%s' % pdu, s)
-		print "Decoded: %s\nSummary: %s" % (decoded, summary)
+		print ("Decoded: %s\nSummary: %s" % (decoded, summary))
 		(reencoded, summary) = CodecManager.encode('map.%s' % pdu, decoded)
-		print "Reencoded: %s\nSummary: %s" % (binascii.hexlify(reencoded), summary)
-		print "Original : %s" % binascii.hexlify(s)
+		print ("Reencoded: %s\nSummary: %s" % (binascii.hexlify(reencoded), summary))
+		print ("Original : %s" % binascii.hexlify(s))
 		assert(s == reencoded)
 	
 
-	print
-	print 80*'-'
-	print "Direct encoding testing"
+	print ()
+	print (80*'-')
+	print ("Direct encoding testing")
 	# Explicit encoding test
 	sriSmRes = { 
 		'imsi': '\x91\x10\x32\x54',
@@ -98,11 +98,11 @@ if __name__ == '__main__':
 			'networkNode-Number': '\x91\x22\x22\x22\x22\x22',
 		}
 	}
-	print "Encoding sendRoutingInfoForSM Res:"
+	print ("Encoding sendRoutingInfoForSM Res:")
 	encoded, summary = CodecManager.encode('map.RoutingInfoForSM-Res', sriSmRes)
-	print binascii.hexlify(encoded)
+	print (binascii.hexlify(encoded))
 	decoded, summary = CodecManager.decode('map.RoutingInfoForSM-Res', encoded)
-	print "Redecoded sendRoutingInfoForSM Res:"
-	print repr(decoded)
+	print ("Redecoded sendRoutingInfoForSM Res:")
+	print (repr(decoded))
 	assert(decoded == sriSmRes)
 	

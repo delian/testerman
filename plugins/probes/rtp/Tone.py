@@ -35,5 +35,5 @@ if __name__ == '__main__':
 		tone = int(sys.argv[1])
 	
 
-	print "8 bit, sample rate %s, tone %s: " % (sampleRate, tone)
-	print repr(''.join(generateTone(sampleRate, tone)))
+	print ("8 bit, sample rate %s, tone %s: " % (sampleRate, tone))
+	print (repr(''.join(generateTone(sampleRate, tone))))

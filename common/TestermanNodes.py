@@ -594,7 +594,7 @@ class TcpPacketizerServerThread(threading.Thread):
 					self.__main_receive_send_loop()
 				except Exception as e:
 					# This means that the stream was broken
-					print str(e)
+					print (str(e))
 					self.trace(str(e))
 					self.stop()
 
@@ -624,7 +624,7 @@ class TcpPacketizerServerThread(threading.Thread):
 				current_time = time.time()
 
 				if self.socket in e:
-					print "eee"
+					print ("eee")
 					raise EOFError("Socket select error: disconnecting")
 
 				if self.socket in r:

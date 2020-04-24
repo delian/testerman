@@ -138,7 +138,7 @@ def main():
 	logger = logging.getLogger()
 	ret = extract_docstring(src, options.name, logger)
 	if ret:
-		print ret
+		print (ret)
 
 	sys.exit(0)
 	

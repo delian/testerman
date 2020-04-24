@@ -160,16 +160,16 @@ def loadCertificates(filenames):
 			try:
 				ski = cert.get_ext('subjectKeyIdentifier').get_value()
 			except:
-				print "DEBUG: no SKI found in certificate %s - not referencing" % filename
+				print ("DEBUG: no SKI found in certificate %s - not referencing" % filename)
 				continue
 			# The SKI is something like AB:01:7C ...
 			# let's turn it into a buffer string
 			ski = binascii.unhexlify(ski.replace(':', ''))
 
 			CertificatesBySki[ski] = cert
-			print "DEBUG: certificate for '%s' loaded" % cert.get_subject().as_text()
+			print ("DEBUG: certificate for '%s' loaded" % cert.get_subject().as_text())
 		except Exception as e:
-			print "DEBUG: unable to load certificate %s (%s)" % (filename, str(e))
+			print ("DEBUG: unable to load certificate %s (%s)" % (filename, str(e)))
 
 def loadCertificate(filename):
 	global CertificatesBySki
@@ -178,11 +178,11 @@ def loadCertificate(filename):
 		pem = f.read()
 		f.close()
 		cert = M2.X509.load_cert_string(pem)
-		print "DEBUG: certificate for '%s' loaded" % cert.get_subject().as_text()
+		print ("DEBUG: certificate for '%s' loaded" % cert.get_subject().as_text())
 		try:
 			ski = cert.get_ext('subjectKeyIdentifier').get_value()
 		except:
-			print "DEBUG: no SKI found in certificate %s - not referencing" % filename
+			print ("DEBUG: no SKI found in certificate %s - not referencing" % filename)
 			return cert
 		# The SKI is something like AB:01:7C ...
 		# let's turn it into a buffer string
@@ -192,7 +192,7 @@ def loadCertificate(filename):
 		return cert
 
 	except Exception as e:
-		print "DEBUG: unable to load certificate %s (%s)" % (filename, str(e))
+		print ("DEBUG: unable to load certificate %s (%s)" % (filename, str(e)))
 		return None	
 
 def loadKey(filename):
@@ -201,10 +201,10 @@ def loadKey(filename):
 		pem = f.read()
 		f.close()
 		key = M2.EVP.load_key_string(pem)
-		print "DEBUG: key loaded"
+		print ("DEBUG: key loaded")
 		return key
 	except Exception as e:
-		print "DEBUG: unable to load key %s (%s)" % (filename, str(e))
+		print ("DEBUG: unable to load key %s (%s)" % (filename, str(e)))
 		return None	
 
 def loadKeyFromPem(pem):
@@ -248,7 +248,7 @@ def getCertificate(signatureXPathContext, certificatesDb):
 	if not skiNodes:
 		raise Exception("No X.509 Certificate Subject Key Identifier found - other tokens are not supported for now")
 	if len(skiNodes) > 1:
-		print "FIXME: multiple SKI nodes found. Only using the first one."
+		print ("FIXME: multiple SKI nodes found. Only using the first one.")
 	skiNode = skiNodes[0]
 	
 	encoding = skiNode.prop('EncodingType')
@@ -359,8 +359,8 @@ def verifyMessage(doc, certificatesDb):
 
 	keyInfo = xpc.xpathEval('./ds:KeyInfo')
 
-#	print "DEBUG: signedInfo: %s" % signedInfo
-#	print "DEBUG: signature value: %s" % signatureValue
+#	print ("DEBUG: signedInfo: %s" % signedInfo)
+#	print ("DEBUG: signature value: %s" % signatureValue)
 	
 
 	# Signed Elements verification
@@ -374,11 +374,11 @@ def verifyMessage(doc, certificatesDb):
 		digestAlgorithm = xpc.xpathEval('./ds:DigestMethod/@Algorithm')[0].content
 		digestValue = base64.decodestring(xpc.xpathEval('./ds:DigestValue/text()')[0].content)
 	
-#		print "Signed reference:"
-#		print "URI: %s" % uri
-#		print "Transform: %s" % transformAlgorithm
-#		print "Digest Algorithm: %s" % digestAlgorithm
-#		print "Digest Value: %s" % base64.encodestring(digestValue)
+#		print ("Signed reference:")
+#		print ("URI: %s" % uri)
+#		print ("Transform: %s" % transformAlgorithm)
+#		print ("Digest Algorithm: %s" % digestAlgorithm)
+#		print ("Digest Value: %s" % base64.encodestring(digestValue))
 
 		# Select the node corresponding to the uri
 		if not uri.startswith('#'):
@@ -402,7 +402,7 @@ def verifyMessage(doc, certificatesDb):
 		if digest != digestValue:
 			raise Exception("Digest values differ for URI %s (computed: %s, expected: %s)" % (uri, base64.encodestring(digest), base64.encodestring(digestValue)))
 		
-#		print "DEBUG: reference %s has not been altered." % uri
+#		print ("DEBUG: reference %s has not been altered." % uri)
 	
 
 	# Now, let's take care of the signature.
@@ -424,10 +424,10 @@ def verifyMessage(doc, certificatesDb):
 		signature = signatureValue, text = transformedSignedInfo)
 	
 	if verified:
-		print "This message has been verified as signed by %s." % cert.get_subject().as_text()
+		print ("This message has been verified as signed by %s." % cert.get_subject().as_text())
 		return cert
 	else:
-		print "This message has NOT been signed by the claimed certificate."
+		print ("This message has NOT been signed by the claimed certificate.")
 		return None
 
 
@@ -584,14 +584,14 @@ def signMessage(doc, cert, privkey, tbsElements = [],
 ###############################################################################
 
 def usage():
-	print "Usage:"
-	print "Verify a signed SOAP message:"
-	print " %s verify <message.xml> [<cert.pem>]+" % sys.argv[0]
-	print " (wildcards accepted for certificates) - signature verification based on SKI)"
-	print
-	print "Sign a SOAP message:"
-	print " %s sign <message.xml> <privkey.pem> <cert.pem>" % sys.argv[0]
-	print
+	print ("Usage:")
+	print ("Verify a signed SOAP message:")
+	print (" %s verify <message.xml> [<cert.pem>]+" % sys.argv[0])
+	print (" (wildcards accepted for certificates) - signature verification based on SKI)")
+	print ()
+	print ("Sign a SOAP message:")
+	print (" %s sign <message.xml> <privkey.pem> <cert.pem>" % sys.argv[0])
+	print ()
 
 if __name__ == '__main__':
 	import sys
@@ -620,7 +620,7 @@ if __name__ == '__main__':
 			print("WARNING: No soap:body to sign.")
 		signedMessage = signMessage(doc, cert, privkey, tbsElements = tbs)
 		ret = signedMessage.serialize(encoding = 'utf-8', format = 0)
-		print ret
+		print (ret)
 
 	else:
 		usage()

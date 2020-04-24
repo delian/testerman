@@ -391,18 +391,18 @@ def autotest():
 	nonLeafCounters = [ 'server', 'server.requests', 'maxclients' ]
 	
 	for c in leafCounters:
-		print "%s: %s" % (c, str(cm.get(c)))
+		print ("%s: %s" % (c, str(cm.get(c))))
 		
 	for c in leafCounters:
 		cm.inc(c)
 
-	print		
+	print ()		
 	for c in leafCounters:
-		print "%s: %s" % (c, str(cm.get(c)))
+		print ("%s: %s" % (c, str(cm.get(c))))
 
-	print		
+	print ()		
 	for c in nonLeafCounters:
-		print "%s: %s" % (c, str(cm.get(c)))
+		print ("%s: %s" % (c, str(cm.get(c))))
 
 	for c in leafCounters:
 		cm.dec(c)
@@ -413,13 +413,13 @@ def autotest():
 	cm.inc('server.requests.pass')
 	cm.inc('server.requests.newstate')
 
-	print		
+	print ()		
 	for c in leafCounters:
-		print "%s: %s" % (c, str(cm.get(c)))
+		print ("%s: %s" % (c, str(cm.get(c))))
 
-	print		
+	print ()		
 	for c in nonLeafCounters:
-		print "%s: %s" % (c, str(cm.get(c)))
+		print ("%s: %s" % (c, str(cm.get(c))))
 	
 
 	c = cm.addCounter('server.running.job.ats')
@@ -440,23 +440,23 @@ def autotest():
 	
 
 	# A complete summary
-	print
+	print ()
 	allCounters = cm.getAllLeafValues().items()
 	allCounters.sort()
 	for e in allCounters:
-		print "%s: %d" % e
+		print ("%s: %d" % e)
 
-	print
+	print ()
 	c = 'server.running.job.ats'
-	print "%s: %s" % (c, str(cm.get(c)))
+	print ("%s: %s" % (c, str(cm.get(c))))
 	c = 'server.running.job'
-	print "%s: %s" % (c, str(cm.get(c)))
+	print ("%s: %s" % (c, str(cm.get(c))))
 	c = 'server.running.job.ats._max'
-	print "%s: %s" % (c, str(cm.get(c)))
+	print ("%s: %s" % (c, str(cm.get(c))))
 	c = 'server.running.job.campaign._max'
-	print "%s: %s" % (c, str(cm.get(c)))
+	print ("%s: %s" % (c, str(cm.get(c))))
 	c = 'server.running.job._max'
-	print "%s: %s" % (c, str(cm.get(c)))
+	print ("%s: %s" % (c, str(cm.get(c))))
 	
 if __name__ == '__main__':
 	autotest()

@@ -86,9 +86,9 @@ if __name__ == '__main__':
 	dialoguePDU = \
 	"601aa109060704000001001902be0d280ba009a00780059691214365"
 
-	print 80*'-'
-	print "TCAP (ITU-T) Codec unit tests"
-	print 80*'-'
+	print (80*'-')
+	print ("TCAP (ITU-T) Codec unit tests")
+	print (80*'-')
 	samples = [	
 		('tcap', tcapBegin),
 		('tcap', tcapBegin2),
@@ -96,16 +96,16 @@ if __name__ == '__main__':
 	]
 
 	for pdu, s in samples:
-		print
-		print 80*'-'
-		print "Testing: %s" % s
+		print ()
+		print (80*'-')
+		print ("Testing: %s" % s)
 		s = binascii.unhexlify(s)
 		(decoded, summary) = CodecManager.decode(pdu, s)
-		print "Decoded: %s\nSummary: %s" % (decoded, summary)
+		print ("Decoded: %s\nSummary: %s" % (decoded, summary))
 		(reencoded, summary) = CodecManager.encode(pdu, decoded)
-		print "Reencoded: %s\nSummary: %s" % (binascii.hexlify(reencoded), summary)
-		print "Original : %s" % binascii.hexlify(s)
+		print ("Reencoded: %s\nSummary: %s" % (binascii.hexlify(reencoded), summary))
+		print ("Original : %s" % binascii.hexlify(s))
 #		assert(s == reencoded) # Cannot always work due to default value decoding/reencoding
 		(redecoded, summary) = CodecManager.decode(pdu, reencoded)
-		print "Decoded: %s\nSummary: %s" % (redecoded, summary)
+		print ("Decoded: %s\nSummary: %s" % (redecoded, summary))
 		assert(redecoded == decoded)

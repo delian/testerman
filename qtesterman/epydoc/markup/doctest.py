@@ -211,7 +211,7 @@ class DoctestColorizer:
     
     def subfunc(self, match):
         other, text = match.group(1, 2)
-        #print 'M %20r %20r' % (other, text) # <- for debugging
+        #print ('M %20r %20r' % (other, text) # <- for debugging)
         if other:
             other = '\n'.join([self.markup(line, 'other')
                                for line in other.split('\n')])

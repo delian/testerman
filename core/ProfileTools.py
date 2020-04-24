@@ -85,7 +85,7 @@ def test():
   <parameter name="PX_UNICODE_STRING">hello ça marche</parameter>
  </parameters>
 </profile>"""
-	print str(parseProfile(xml))
+	print (str(parseProfile(xml)))
 
 if __name__ == '__main__':
 	test()

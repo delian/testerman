@@ -201,14 +201,14 @@ class HttpRequestCodec(CodecManager.IncrementalCodec):
 			# Chunked based
 			# The chunksize is on a single line, in hexa
 			try:
-#				print "DEBUG: initial chunk size line: %s" % repr(lines[i])
+#				print ("DEBUG: initial chunk size line: %s" % repr(lines[i]))
 				if not lines[i].strip():
 					return self.needMoreData() # Let's wait for the chunk size in a next payload
 				chunkSize = int(lines[i].strip(), 16)
-#				print "DEBUG: initial chunk size: %s" % chunkSize
+#				print ("DEBUG: initial chunk size: %s" % chunkSize)
 				
 				remainingPayload = '\r\n'.join(lines[i+1:])
-#				print "DEBUG: remaining payload: " + repr(remainingPayload)
+#				print ("DEBUG: remaining payload: " + repr(remainingPayload))
 				
 				while chunkSize != 0:
 					# OK, let's start consuming our chunk, exactly chunkSize characters,
@@ -218,8 +218,8 @@ class HttpRequestCodec(CodecManager.IncrementalCodec):
 						return self.needMoreData()
 					ret['body'] += chunk
 					
-#					print "DEBUG: added chunk:" + repr(chunk)
-#					print "DEBUG: now the body is: " + repr(ret['body'])
+#					print ("DEBUG: added chunk:" + repr(chunk))
+#					print ("DEBUG: now the body is: " + repr(ret['body']))
 					
 					# Now check that we have an empty line
 					remainingPayload = remainingPayload[chunkSize:]
@@ -234,7 +234,7 @@ class HttpRequestCodec(CodecManager.IncrementalCodec):
 					else:
 						chunkSize = int(lines[1].strip(), 16)
 					remainingPayload = '\r\n'.join(lines[2:])
-#					print "DEBUG: remaining payload: " + repr(remainingPayload)
+#					print ("DEBUG: remaining payload: " + repr(remainingPayload))
 
 			except IndexError:
 				return self.needMoreData()
@@ -430,14 +430,14 @@ class HttpResponseCodec(CodecManager.IncrementalCodec):
 			# Chunked based
 			# The chunksize is on a single line, in hexa
 			try:
-#				print "DEBUG: initial chunk size line: %s" % repr(lines[i])
+#				print ("DEBUG: initial chunk size line: %s" % repr(lines[i]))
 				if not lines[i].strip():
 					return self.needMoreData() # Let's wait for the chunk size in a next payload
 				chunkSize = int(lines[i].strip(), 16)
-#				print "DEBUG: initial chunk size: %s" % chunkSize
+#				print ("DEBUG: initial chunk size: %s" % chunkSize)
 				
 				remainingPayload = '\r\n'.join(lines[i+1:])
-#				print "DEBUG: remaining payload: " + repr(remainingPayload)
+#				print ("DEBUG: remaining payload: " + repr(remainingPayload))
 				
 				while chunkSize != 0:
 					# OK, let's start consuming our chunk, exactly chunkSize characters,
@@ -447,8 +447,8 @@ class HttpResponseCodec(CodecManager.IncrementalCodec):
 						return self.needMoreData()
 					ret['body'] += chunk
 					
-#					print "DEBUG: added chunk:" + repr(chunk)
-#					print "DEBUG: now the body is: " + repr(ret['body'])
+#					print ("DEBUG: added chunk:" + repr(chunk))
+#					print ("DEBUG: now the body is: " + repr(ret['body']))
 					
 					# Now check that we have an empty line
 					remainingPayload = remainingPayload[chunkSize:]
@@ -463,7 +463,7 @@ class HttpResponseCodec(CodecManager.IncrementalCodec):
 					else:
 						chunkSize = int(lines[1].strip(), 16)
 					remainingPayload = '\r\n'.join(lines[2:])
-#					print "DEBUG: remaining payload: " + repr(remainingPayload)
+#					print ("DEBUG: remaining payload: " + repr(remainingPayload))
 
 			except IndexError:
 				return self.needMoreData()
@@ -524,21 +524,21 @@ and this is the second one
 0
 """
 
-	print 80*'-'
-	print "HTTP Codec unit tests"
-	print 80*'-'
+	print (80*'-')
+	print ("HTTP Codec unit tests")
+	print (80*'-')
 	samples = [	
 		('http.response', '\r\n'.join(httpResponse10.splitlines())),
 		('http.response', '\r\n'.join(httpResponse11.splitlines())),
 	]
 
 	for codec, s in samples:
-		print
-		print 80*'-'
-		print "Testing:\n%s" % s
+		print ()
+		print (80*'-')
+		print ("Testing:\n%s" % s)
 		(_, _, decoded, summary) = CodecManager.incrementalDecode(codec, s, complete = True)
-		print "Decoded:\n%s\nSummary: %s" % (decoded, summary)
+		print ("Decoded:\n%s\nSummary: %s" % (decoded, summary))
 		(reencoded, summary) = CodecManager.encode(codec, decoded)
-		print "Reencoded:\n%s\nSummary: %s" % (reencoded, summary)
-		print "Original :\n%s" % s
+		print ("Reencoded:\n%s\nSummary: %s" % (reencoded, summary))
+		print ("Original :\n%s" % s)
 

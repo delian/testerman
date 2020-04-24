@@ -504,21 +504,21 @@ if __name__ == '__main__':
 	
 	tpduSmsDeliver = "04039177f70010901091215571406fd3373b2c4fcf41311828168bc562b1582c168bc562b1582c168bc562b1582c168bc562b1582c168bc562b1582c168bc562b1582c168bc562b1582c168bc562b1582c168bc562b1582c168bc562b1582c168bc562b1582c168bc562b1584c36a3d500"
 	
-	print 80*'-'
-	print "SMS TPDU SM-TL Codec unit tests"
-	print 80*'-'
+	print (80*'-')
+	print ("SMS TPDU SM-TL Codec unit tests")
+	print (80*'-')
 	samples = [	
 		('sms.tpdu.SMS-DELIVER', tpduSmsDeliver),
 	]
 
 	for pdu, s in samples:
-		print
-		print 80*'-'
-		print "Testing: %s" % s
+		print ()
+		print (80*'-')
+		print ("Testing: %s" % s)
 		s = o(s)
 		(decoded, summary) = CodecManager.decode(pdu, s)
-		print "Decoded: %s\nSummary: %s" % (decoded, summary)
+		print ("Decoded: %s\nSummary: %s" % (decoded, summary))
 		(reencoded, summary) = CodecManager.encode(pdu, decoded)
-		print "Reencoded: %s\nSummary: %s" % (oo(reencoded), summary)
-		print "Original : %s" % oo(s)
+		print ("Reencoded: %s\nSummary: %s" % (oo(reencoded), summary))
+		print ("Original : %s" % oo(s))
 		assert(s == reencoded)

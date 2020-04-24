@@ -260,7 +260,7 @@ class DictWrapper:
 			else:
 				raise KeyError(name)
 		except Exception as e:
-			print str(e)
+			print (str(e))
 
 
 if __name__ == '__main__':
@@ -286,6 +286,6 @@ if __name__ == '__main__':
 
 	pds = TaggedDocstring()
 	pds.parse(sample)
-	print str(pds)
+	print (str(pds))
 
 

@@ -327,7 +327,7 @@ class ANSI (term):
 #        self.cursor_home()
 #        for c in write_text:
 #            self.write_ch (c)
-#        print str(self)
+#        print (str(self))
 #
 #if __name__ == '__main__':
 #    t = ANSI(6,65)

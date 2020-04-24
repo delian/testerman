@@ -111,7 +111,7 @@ def generateResource(filename, name, mode):
 		ret += "# Embedding format: %s\n" % mode
 		ret += nameToId(name) + " = \\\n" + data + "\n"
 	except Exception as e:
-		print "Unable to import resource from %s: " % filename + str(e)
+		print ("Unable to import resource from %s: " % filename + str(e))
 		return None
 	
 	return ret

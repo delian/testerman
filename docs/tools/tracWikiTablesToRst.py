@@ -115,8 +115,8 @@ test = """
 
 
 table = parseTWTable(test)
-print toRstTable(table)
-print
-print toRstCsvTable(table)
+print (toRstTable(table))
+print ()
+print (toRstCsvTable(table))
 
 			

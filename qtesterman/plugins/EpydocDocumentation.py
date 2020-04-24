@@ -58,7 +58,7 @@ except:
 
 
 def log(txt):
-	print txt
+	print (txt)
 
 
 CACHE_INDEX_FILENAME = "cache.index"
@@ -369,7 +369,7 @@ class WPluginConfiguration(Plugin.WPluginConfiguration):
 		# and click "clean". For instance, it would be trivial to delete a complete Program Files (or windows...) directory without this 
 		# additional suffix.
 		documentationCache = os.path.normpath(unicode(self.documentationCacheLineEdit.text()) + "/docCache")
-		print "DEBUG: cleaning " + unicode(documentationCache) + "..."
+		print ("DEBUG: cleaning " + unicode(documentationCache) + "...")
 		shutil.rmtree(documentationCache, ignore_errors = True)
 		userInformation(self, "Documentation cache directory cleaned up.")
 

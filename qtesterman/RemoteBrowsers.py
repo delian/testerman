@@ -366,7 +366,7 @@ class WRemoteFileListWidget(QListWidget):
 		"""
 		p = os.path.normpath(unicode(path))
 		p = p.replace('\\', '/') # keep / as sep as we use the server convention
-#		print "DEBUG: setting path to %s..." % p
+#		print ("DEBUG: setting path to %s..." % p)
 		# Restrict to base path
 		# FIXME - this allows something like /repository2 if /repository is the base path
 		if not p.startswith(self._basePath):
@@ -375,7 +375,7 @@ class WRemoteFileListWidget(QListWidget):
 		self.refresh()
 
 	def createFolder(self):
-#		print "DEBUG: creating a new folder in %s..." % self.getPath()
+#		print ("DEBUG: creating a new folder in %s..." % self.getPath())
 		(name, status) = QInputDialog.getText(self, "New folder", "Folder name:")
 		while status and not validateDirectoryName(name):
 			# Display some error message
@@ -598,7 +598,7 @@ class BaseWidgetItem(QTreeWidgetItem):
 		basepath, _ = os.path.split(self._path)
 		self._path = "%s/%s" % (basepath, basename)
 		self.setText(0, basename)
-#		print "DEBUG: new file path: %s" % self._path
+#		print ("DEBUG: new file path: %s" % self._path)
 
 	def isAts(self):
 		return isinstance(self, AtsWidgetItem)
@@ -900,7 +900,7 @@ class DirWidgetItem(ExpandableWidgetItem):
 		# Delta deletion or addition
 		reason = notification.getHeader('Reason')
 		name = notification.getHeader('File-Name')
-#		print "DEBUG: file event notification on uri %s: '%s' %s" % (notification.getUri(), name, reason)
+#		print ("DEBUG: file event notification on uri %s: '%s' %s" % (notification.getUri(), name, reason))
 		if reason == 'deleted':
 			# name, which is an item in this folder, has been deleted.
 			# Find it and delete it.
@@ -916,7 +916,7 @@ class DirWidgetItem(ExpandableWidgetItem):
 			self.addFetchedChildItems([{'name': name, 'type': applicationType}])
 		elif reason == 'renamed':
 			newname = notification.getHeader('File-New-Name')
-#			print "DEBUG: file event notification on uri %s: '%s' %s to '%s'" % (notification.getUri(), name, reason, newname)
+#			print ("DEBUG: file event notification on uri %s: '%s' %s to '%s'" % (notification.getUri(), name, reason, newname))
 			if newname:
 				for i in range(0, self.childCount()):
 					item = self.child(i)
@@ -1077,7 +1077,7 @@ class ExecutionLogsWidgetItem(ExpandableWidgetItem):
 				if entry['type'] == 'log':
 					ret.append('%s/%s' % (archivePath, entry['name']))
 		except Exception as e:
-			print "DEBUG: " + str(e)
+			print ("DEBUG: " + str(e))
 		return ret
 
 	def addFetchedChildItems(self, data):
@@ -1149,7 +1149,7 @@ class ProfilesDirWidgetItem(ExpandableWidgetItem):
 				if entry['type'] == 'profile':
 					ret.append('%s/%s' % (self._path, entry['name']))
 		except Exception as e:
-			print "DEBUG: " + str(e)
+			print ("DEBUG: " + str(e))
 		return ret
 
 	def addFetchedChildItems(self, data):
@@ -1192,7 +1192,7 @@ class ProfilesDirWidgetItem(ExpandableWidgetItem):
 		# Delta deletion or addition
 		reason = notification.getHeader('Reason')
 		name = notification.getHeader('File-Name')
-#		print "DEBUG: file event notification on uri %s: '%s' %s" % (notification.getUri(), name, reason)
+#		print ("DEBUG: file event notification on uri %s: '%s' %s" % (notification.getUri(), name, reason))
 		if reason == 'deleted':
 			# name, which is an item in this folder, has been deleted.
 			# Find it and delete it.
@@ -1207,7 +1207,7 @@ class ProfilesDirWidgetItem(ExpandableWidgetItem):
 			self.addFetchedChildItems([name])
 		elif reason == 'renamed':
 			newname = notification.getHeader('File-New-Name')
-#			print "DEBUG: file event notification on uri %s: '%s' %s to '%s'" % (notification.getUri(), name, reason, newname)
+#			print ("DEBUG: file event notification on uri %s: '%s' %s to '%s'" % (notification.getUri(), name, reason, newname))
 			if newname:
 				for i in range(0, self.childCount()):
 					item = self.child(i)
@@ -1560,7 +1560,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 		# Delta deletion or addition
 		reason = notification.getHeader('Reason')
 		name = notification.getHeader('File-Name')
-#		print "DEBUG: file event notification on uri %s: '%s' %s" % (notification.getUri(), name, reason)
+#		print ("DEBUG: file event notification on uri %s: '%s' %s" % (notification.getUri(), name, reason))
 		if reason == 'deleted':
 			# name, which is an item in this folder, has been deleted.
 			# Find it and delete it.
@@ -1576,7 +1576,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 			self.addFetchedChildItems([{'name': name, 'type': applicationType}])
 		elif reason == 'renamed':
 			newname = notification.getHeader('File-New-Name')
-#			print "DEBUG: file event notification on uri %s: '%s' %s to '%s'" % (notification.getUri(), name, reason, newname)
+#			print ("DEBUG: file event notification on uri %s: '%s' %s to '%s'" % (notification.getUri(), name, reason, newname))
 			if newname:
 				for i in range(0, node.childCount()):
 					item = node.child(i)
@@ -1710,7 +1710,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 
 	def _deleteProfile(self, item):
 		url = item.getUrl()
-		print "DEBUG: url: %s" % unicode(url.path())
+		print ("DEBUG: url: %s" % unicode(url.path()))
 		if url:
 			dialog = CommonWidgets.WUserQuestion("Delete profile", "Are you sure you want to delete the profile %s ?" % item.getBasename(), parent = self)
 			if dialog.exec_() == QDialog.Accepted:
@@ -1756,7 +1756,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 
 	def _createDirectory(self, item):
 		path = item.getUrl().path()
-#		print "DEBUG: creating a new folder in %s..." % path
+#		print ("DEBUG: creating a new folder in %s..." % path)
 		(name, status) = QInputDialog.getText(self, "New folder", "Folder name:")
 		while status and not validateDirectoryName(name):
 			# Display some error message
@@ -1773,7 +1773,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 
 	def _exportPackage(self, item):
 		path = item.getUrl().path()
-#		print "DEBUG: exporting package from %s..." % path
+#		print ("DEBUG: exporting package from %s..." % path)
 
 		settings = QSettings()
 		directory = settings.value('lastVisitedDirectory', QVariant("")).toString()
@@ -1852,7 +1852,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 
 	def _createProfile(self, item):
 		associatedScriptPath = item.parent().getUrl().path()
-#		print "DEBUG: creating a new profile associated to %s..." % associatedScriptPath
+#		print ("DEBUG: creating a new profile associated to %s..." % associatedScriptPath)
 		(name, status) = QInputDialog.getText(self, "New profile", "Profile name:")
 		while status and not validateDirectoryName(name):
 			# Display some error message
@@ -1884,7 +1884,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 			# We assume a source list containing only one URL (single selection only)
 			# Will require some clean up one day.
 			for url in sources:
-		#			print "DEBUG: copying %s to %s..." % (url.path(), destination)
+		#			print ("DEBUG: copying %s to %s..." % (url.path(), destination))
 				src = unicode(url.path())
 				srcBasename = os.path.split(src)[1]
 				dst = unicode(destination)
@@ -1938,7 +1938,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 			# Will require some clean up one day.
 			url = sources[0]
 
-		#		print "DEBUG: importing %s to %s..." % (url.path(), destination)
+		#		print ("DEBUG: importing %s to %s..." % (url.path(), destination))
 			src = unicode(url.path())
 			srcBasename = os.path.split(src)[1]
 			dst = unicode(destination)
@@ -2018,7 +2018,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 			for i in range(len(sources)):
 				src = sources[i]
 				dst = destinations[i]
-#				print "DEBUG: copying %s to %s..." % (src, dst)
+#				print ("DEBUG: copying %s to %s..." % (src, dst))
 				progress.setLabelText("Copying %s to %s..." % (src, dst))
 				QApplication.instance().processEvents()
 				self.getClient().copy(src, dst)
@@ -2041,7 +2041,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 		@type  destination: QString (path)
 		"""
 		for url in sources:
-#			print "DEBUG: moving %s to %s..." % (url.path(), destination)
+#			print ("DEBUG: moving %s to %s..." % (url.path(), destination))
 			self.getClient().move(unicode(url.path()), unicode(destination))
 
 	def _renameItem(self, item, currentName, newName):
@@ -2054,7 +2054,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 		@raises: Exception in case of an error.
 		"""
 		path = unicode(item.getUrl().path())
-#		print "DEBUG: renaming %s from %s to %s..." % (path, currentName, newName)
+#		print ("DEBUG: renaming %s from %s to %s..." % (path, currentName, newName))
 
 		if not validateFileName(newName):
 			raise Exception("The following characters are forbidden in a file name:\n%s" % ', '.join([x for x in RESTRICTED_NAME_CHARACTERS]))
@@ -2146,7 +2146,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 			return
 		url = item.getUrl()
 		if url:
-#			print "DEBUG: opening url %s..." % url.toString()
+#			print ("DEBUG: opening url %s..." % url.toString())
 			self.emit(SIGNAL('openUrl(const QUrl&)'), url)
 
 
@@ -2249,10 +2249,10 @@ if __name__ == "__main__":
 #		browser = WRemoteFileDialog(client, '/repository', '/sandbox')
 #		browser.show()
 
-#		print "Save file: %s" % getSaveFilename(client, defaultExtension = "ats", filter_ = [ "ats" ])
+#		print ("Save file: %s" % getSaveFilename(client, defaultExtension = "ats", filter_ = [ "ats" ]))
 	except Exception as e:
 		import TestermanNodes
-		print TestermanNodes.getBacktrace()
+		print (TestermanNodes.getBacktrace())
 		client.stopXc()
 		raise Exception(TestermanNodes.getBacktrace())
 		

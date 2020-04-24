@@ -422,7 +422,7 @@ class RootContext(SIS.CommandContext):
 					return val['value']
 			return -1
 		except Exception:
-#			print SIS.getBacktrace()
+#			print (SIS.getBacktrace())
 			return -1
 
 	def tacsStatus(self):
@@ -448,7 +448,7 @@ class RootContext(SIS.CommandContext):
 					return val['value']
 			return -1
 		except Exception:
-#			print SIS.getBacktrace()
+#			print (SIS.getBacktrace())
 			return -1
 	
 	def status(self):
@@ -503,13 +503,13 @@ def main():
 
 
 	if not options.target:
-		print """
+		print ("""
 Missing mandatory target. Please use -t <testerman_home> or -t <server_url>,
 for instance:
   testerman-admin -t http://server:8080
   testerman-admin -t /path/to/testerman/installation
 
-or set the TESTERMAN_ADMIN_TARGET environment variable."""
+or set the TESTERMAN_ADMIN_TARGET environment variable.""")
 		sys.exit(1)
 
 
@@ -536,17 +536,17 @@ or set the TESTERMAN_ADMIN_TARGET environment variable."""
 				elif variable['key'] == 'tacs.port':
 					tacs_port = variable['actual']
 		except:
-			print "Sorry, cannot find a running Testerman server at %s." % serverUrl
+			print ("Sorry, cannot find a running Testerman server at %s." % serverUrl)
 			sys.exit(2)
 
 		if not docroot or not tacs_ip or not tacs_port:
-			print "Sorry, the Testerman server running at %s cannot be managed (missing a mandatory configuration variable)."
+			print ("Sorry, the Testerman server running at %s cannot be managed (missing a mandatory configuration variable).")
 			sys.exit(2)
 		
 		os.environ["TESTERMAN_DOCROOT"] = docroot
 		os.environ["TESTERMAN_TACS"] = "%s:%s" % (tacs_ip, tacs_port)
 
-		print "Found running Testerman server, using document root: %s" % docroot
+		print ("Found running Testerman server, using document root: %s" % docroot)
 
 		# Forced docroot overrides the autodetection
 		if options.docroot:
@@ -563,7 +563,7 @@ or set the TESTERMAN_ADMIN_TARGET environment variable."""
 		try:
 			cm.read("%s/conf/testerman.conf" % home)
 		except Exception as e:
-			print "Invalid Testerman target - cannot find or read %s/conf/testerman.conf file." % home
+			print ("Invalid Testerman target - cannot find or read %s/conf/testerman.conf file." % home)
 			sys.exit(2)
 
 		# Detect settings from the configuration file
@@ -587,13 +587,13 @@ or set the TESTERMAN_ADMIN_TARGET environment variable."""
 				if variable['key'] == 'testerman.testerman_home':
 					runningHome = expandPath(variable['value'])
 					if home != runningHome:
-						print "WARNING: another Testerman server is already running using the configured URL (%s), located in %s" % (serverUrl, runningHome)
+						print ("WARNING: another Testerman server is already running using the configured URL (%s), located in %s" % (serverUrl, runningHome))
 					break
 			for variable in client.getVariables("ts")['persistent']:
 				if variable['key'] == 'testerman.document_root':
 					runningDocroot = expandPath(variable['actual'])
 					if docroot != runningDocroot:
-						print "WARNING: a Testerman server is already running using the configured URL (%s), but using a different document root (%s) as the one that will be managed by this session (%s)" % (serverUrl, runningDocroot, docroot)
+						print ("WARNING: a Testerman server is already running using the configured URL (%s), but using a different document root (%s) as the one that will be managed by this session (%s)" % (serverUrl, runningDocroot, docroot))
 					break
 		except:
 			pass
@@ -613,7 +613,7 @@ or set the TESTERMAN_ADMIN_TARGET environment variable."""
 		try:
 			ret = adminShell.execute(args)
 		except Exception as e:
-			print str(e)
+			print (str(e))
 			ret = 3
 		sys.exit(ret)
 
@@ -622,10 +622,10 @@ or set the TESTERMAN_ADMIN_TARGET environment variable."""
 		try:
 			adminShell.run()
 		except SIS.ShellExit:
-			print
+			print ()
 			sys.exit(0)
 		except KeyboardInterrupt:
-			print
+			print ()
 			sys.exit(0)
 	
 

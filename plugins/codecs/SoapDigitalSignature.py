@@ -315,25 +315,25 @@ if __name__ == '__main__':
 	
 	for codec in [ 'ds' ]:
 		for sample in [ sampleEnv ]:
-			print "%s %s %s" % (40*'=', codec, 40*'=')
-			print "signed with %s:" % codec
+			print ("%s %s %s" % (40*'=', codec, 40*'='))
+			print ("signed with %s:" % codec)
 			(signed, summary) = CodecManager.encode(codec, sample)
-			print
-			print "Summary: %s" % summary
-			print
-			print signed
-			print
-			print "verifying signature with %s:" % codec
+			print ()
+			print ("Summary: %s" % summary)
+			print ()
+			print (signed)
+			print ()
+			print ("verifying signature with %s:" % codec)
 			(output, summary) = CodecManager.decode(codec,signed)
 			verified = output['message']
 			signedBy = output['signedBy']
-			print verified
-			print
+			print (verified)
+			print ()
 			assert(signedBy[0] == 'certificate')
 			assert(signedBy[1].strip() == DEFAULT_SIGNING_CERTIFICATE.strip())
-			print
-			print "Summary: %s" % summary
+			print ()
+			print ("Summary: %s" % summary)
 			assert(signed == verified)
-			print
+			print ()
 	
 	

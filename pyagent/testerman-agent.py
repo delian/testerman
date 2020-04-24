@@ -62,8 +62,8 @@ def daemonize(pidFilename = None, stdout = None, stderr = None, displayPid = Fal
 		
 		# Display some info before closing all std fds
 		if displayPid:
-			print "Agent started as daemon (pid %d)" % os.getpid()
-			print "Use kill -SIGINT %d to stop the agent when needed." % os.getpid()
+			print ("Agent started as daemon (pid %d)" % os.getpid())
+			print ("Use kill -SIGINT %d to stop the agent when needed." % os.getpid())
 
 		# UMask
 		os.umask(0)

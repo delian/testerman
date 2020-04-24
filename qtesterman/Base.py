@@ -50,7 +50,7 @@ def formatTimestamp(timestamp):
 	return time.strftime("%Y%m%d %H:%M:%S", time.localtime(timestamp))  + ".%3.3d" % int((timestamp * 1000) % 1000) #str(time.ctime())
 
 #def log(txt):
-#	print "%s - " % formatTimestamp(time.time()) + txt
+#	print ("%s - " % formatTimestamp(time.time()) + txt)
 
 def log(txt):
 	logging.getLogger().info(txt)

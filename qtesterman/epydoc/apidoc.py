@@ -57,7 +57,7 @@ class DottedName:
     a dotted name can be accessed using the indexing operator:
 
         >>> name = DottedName('epydoc', 'api_doc', 'DottedName')
-        >>> print name
+        >>> print (name)
         epydoc.apidoc.DottedName
         >>> name[1]
         'api_doc'
@@ -137,7 +137,7 @@ class DottedName:
         Return the dotted name as a string formed by joining its
         identifiers with periods:
 
-            >>> print DottedName('epydoc', 'api_doc', DottedName')
+            >>> print (DottedName('epydoc', 'api_doc', DottedName'))
             epydoc.apidoc.DottedName
         """
         return '.'.join(self._identifiers)

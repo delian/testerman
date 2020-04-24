@@ -70,7 +70,7 @@ class ThreadSafeServerProxy(xmlrpclib.ServerProxy):
 
 	def __getattr__(self, name):
 		# magic method dispatcher
-#		print self.__request
+#		print (self.__request)
 		return _SafeThreadMethod(lambda methodname, params: xmlrpclib.ServerProxy.__request(self, methodname, params), name, self.__lock)
 	
 
@@ -90,13 +90,13 @@ class DummyLogger:
 		pass
 	
 	def critical(self, txt):
-		print "%s - CRITICAL - %s" % (self.formatTimestamp(time.time()), txt)
+		print ("%s - CRITICAL - %s" % (self.formatTimestamp(time.time()), txt))
 	
 	def warning(self, txt):
-		print "%s - WARNING - %s" % (self.formatTimestamp(time.time()), txt)
+		print ("%s - WARNING - %s" % (self.formatTimestamp(time.time()), txt))
 
 	def error(self, txt):
-		print "%s - ERROR - %s" % (self.formatTimestamp(time.time()), txt)
+		print ("%s - ERROR - %s" % (self.formatTimestamp(time.time()), txt))
 
 
 
@@ -1345,5 +1345,5 @@ if __name__ == "__main__":
 	# Another basic test - not automated this time...
 	#import sys
 	#c = Client("test", "ClientTester/1.0", sys.argv[1])
-	#print str(c.getRegisteredProbes())
+	#print (str(c.getRegisteredProbes()))
 	

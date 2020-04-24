@@ -167,7 +167,7 @@ def getChildrenPids(pid, includeParent = False):
 		except:
 			pass
 	
-#	print "DEBUG: list of current process ids: " + str(pids)
+#	print ("DEBUG: list of current process ids: " + str(pids))
 	
 	# Now let's construct the tree for the looked up pid
 	if includeParent:
@@ -184,7 +184,7 @@ def getChildrenPids(pid, includeParent = False):
 				if pid_ not in ppids: ppids.append(pid_)
 				if pid_ not in ret: ret.append(pid_)
 	
-#	print "DEBUG: global list of children: " + str(ret)
+#	print ("DEBUG: global list of children: " + str(ret))
 	return ret
 
 def killChildren():
@@ -195,7 +195,7 @@ def killChildren():
 	"""
 	for pid in getChildrenPids(os.getpid(), includeParent = False):
 		try:
-			print "DEBUG: %d killing %d..." % (os.getpid(), pid)
+			print ("DEBUG: %d killing %d..." % (os.getpid(), pid))
 			os.kill(pid, signal.SIGKILL)
 		except:
 			pass

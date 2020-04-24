@@ -88,18 +88,18 @@ def checkAndUpdateComponent(proxy, destinationPath, component, currentVersion = 
 
 	if not updates:
 		# No updates available - nothing to do
-		print "No updates available on this server."
+		print ("No updates available on this server.")
 		return False
 
-	print "Available updates:"
-	print "\n".join([ "%s (%s)" % (x['version'], x['branch']) for x in updates])
+	print ("Available updates:")
+	print ("\n".join([ "%s (%s)" % (x['version'], x['branch']) for x in updates]))
 
 	# Let's check if we have a better version than the current one
 	if not currentVersion or (TestermanClient.compareVersions(currentVersion, updates[0]['version']) < 0):
 		newerVersion = updates[0]['version']
 		url = updates[0]['url']
 		branch = updates[0]['branch']
-		print "Newer version available: %s" % newerVersion
+		print ("Newer version available: %s" % newerVersion)
 		
 		ret = QMessageBox.question(None, "Update manager", "A new QTesterman Client version is available on the server:\n%s (%s)\nDo you want to update now ?" % (newerVersion, branch), QMessageBox.Yes, QMessageBox.No)
 		if ret == QMessageBox.Yes:
@@ -133,18 +133,18 @@ def getNewVersionInfo(proxy, component, currentVersion = None, branches = [ "sta
 
 	if not updates:
 		# No updates available - nothing to do
-		print "No updates available on this server."
+		print ("No updates available on this server.")
 		return None
 
-	print "Available updates:"
-	print "\n".join([ "%s (%s)" % (x['version'], x['branch']) for x in updates])
+	print ("Available updates:")
+	print ("\n".join([ "%s (%s)" % (x['version'], x['branch']) for x in updates]))
 
 	# Let's check if we have a better version than the current one
 	if not currentVersion or (TestermanClient.compareVersions(currentVersion < updates[0]['version']) < 0):
 		newerVersion = updates[0]['version']
 		url = updates[0]['url']
 		branch = updates[0]['branch']
-		print "Newer version available: %s" % newerVersion
+		print ("Newer version available: %s" % newerVersion)
 		return (newerVersion, branch, url)
 
 	return None

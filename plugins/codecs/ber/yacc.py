@@ -267,7 +267,7 @@ class Parser:
 
             # --! DEBUG
             if debug > 1:
-                print 'state', state
+                print ('state', state)
             # --! DEBUG
 
             if not lookahead:
@@ -290,7 +290,7 @@ class Parser:
 
             # --! DEBUG
             if debug > 1:
-                print 'action', t
+                print ('action', t)
             # --! DEBUG
 
             if t is not None:
@@ -2423,7 +2423,7 @@ def lr_parse_table(method):
                                 st_actionp[a] = p
 
             except StandardError,e:
-               print sys.exc_info()
+               print (sys.exc_info())
                raise YaccError, "Hosed in lr_parse_table"
 
         # Print the actions associated with each terminal
@@ -2486,7 +2486,7 @@ def lr_parse_table(method):
 
 def lr_write_tables(modulename=tab_module,outputdir=''):
     if isinstance(modulename, types.ModuleType):
-        print >>sys.stderr, "Warning module %s is inconsistent with the grammar (ignored)" % modulename
+        print ("Warning module %s is inconsistent with the grammar (ignored)" % modulename, file=sys.stderr)
         return
 
     basemodulename = modulename.split(".")[-1]
@@ -2600,8 +2600,8 @@ del _lr_goto_items
         f.close()
 
     except IOError,e:
-        print >>sys.stderr, "Unable to create '%s'" % filename
-        print >>sys.stderr, e
+        print ("Unable to create '%s'" % filename, file=sys.stderr)
+        print (e, file=sys.stderr)
         return
 
 def lr_read_tables(module=tab_module,optimize=0):
@@ -2698,7 +2698,7 @@ def yacc(method=default_lr, debug=yaccdebug, module=None, tabmodule=tab_module, 
         global Errorfunc
         Errorfunc = ef
     else:
-        print >>sys.stderr, "yacc: Warning. no p_error() function is defined."
+        print ("yacc: Warning. no p_error() function is defined.", file=sys.stderr)
 
     # If running in optimized mode.  We're going to read tables instead
 
@@ -2743,7 +2743,7 @@ def yacc(method=default_lr, debug=yaccdebug, module=None, tabmodule=tab_module, 
                     v1 = [x.split(".") for x in v]
                     Requires[r] = v1
                 except StandardError:
-                    print >>sys.stderr, "Invalid specification for rule '%s' in require. Expected a list of strings" % r
+                    print ("Invalid specification for rule '%s' in require. Expected a list of strings" % r, file=sys.stderr)
 
 
         # Build the dictionary of terminals.  We a record a 0 in the
@@ -2751,12 +2751,12 @@ def yacc(method=default_lr, debug=yaccdebug, module=None, tabmodule=tab_module, 
         # used in the grammar
 
         if 'error' in tokens:
-            print >>sys.stderr, "yacc: Illegal token 'error'.  Is a reserved word."
+            print ("yacc: Illegal token 'error'.  Is a reserved word.", file=sys.stderr)
             raise YaccError,"Illegal token name"
 
         for n in tokens:
             if Terminals.has_key(n):
-                print >>sys.stderr, "yacc: Warning. Token '%s' multiply defined." % n
+                print ("yacc: Warning. Token '%s' multiply defined." % n, file=sys.stderr)
             Terminals[n] = [ ]
 
         Terminals['error'] = [ ]
@@ -2847,7 +2847,7 @@ def yacc(method=default_lr, debug=yaccdebug, module=None, tabmodule=tab_module, 
                     f.write(_vf.getvalue())
                     f.close()
                 except IOError,e:
-                    print >>sys.stderr, "yacc: can't create '%s'" % debugfile,e
+                    print ("yacc: can't create '%s'" % debugfile,e, file=sys.stderr)
 
     # Made it here.   Create a parser object and set up its internal state.
     # Set global parse() method to bound method of parser object.

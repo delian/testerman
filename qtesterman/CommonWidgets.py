@@ -492,7 +492,7 @@ class WSciFind(QWidget):
 		if (self.firstSearch or self.forwardSearch != forward) or not forward:
 			# The index should be the selection.indexFrom, if a selection is done.
 			# So we cannot leave the default index (the current cursor position, at the end of the selection)
-#			print "DEBUG: selection: " + str(self.scintilla.getSelection())
+#			print ("DEBUG: selection: " + str(self.scintilla.getSelection()))
 			(lineFrom, indexFrom, lineTo, indexTo) = self.scintilla.getSelection()
 			if forward and not self.forwardSearch:
 				indexFrom = indexTo
@@ -1108,7 +1108,7 @@ class WTemplateView(QTreeWidget):
 			dialog.exec_()
 
 		except Exception as e:
-			print str(e)
+			print (str(e))
 
 
 ###############################################################################

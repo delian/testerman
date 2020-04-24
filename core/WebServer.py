@@ -720,13 +720,13 @@ class WebSocketApplication:
 					maskingKey = self.buf[index:index+4]
 					index += 4
 
-#				print 80*"#"
-#				print "Ws Frame:"
-#				print "final: %s" % bool(fin)
-#				print "opcode: %x" % opcode
-#				print "length: %s" % length
-#				print "masked: %s" % bool(mask)
-#				print "maskingKey: %s" % repr(maskingKey)
+#				print (80*"#")
+#				print ("Ws Frame:")
+#				print ("final: %s" % bool(fin))
+#				print ("opcode: %x" % opcode)
+#				print ("length: %s" % length)
+#				print ("masked: %s" % bool(mask))
+#				print ("maskingKey: %s" % repr(maskingKey))
 
 				# No extension negotiated. What remains is the payload.
 				payload = self.buf[index:index+length]

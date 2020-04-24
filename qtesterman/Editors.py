@@ -534,7 +534,7 @@ class WModuleDocumentEditor(WDocumentEditor):
 
 	def prepareDocumentationPluginsMenu(self):
 		self.documentationPluginsMenu.clear()
-		print "DEBUG: yoyo"
+		print ("DEBUG: yoyo")
 		for action in getDocumentationPluginActions(self.model, self.model.getDocumentType(), self):
 			log("adding action in plugin contextual menu..." + unicode(action.text()))
 			self.documentationPluginsMenu.addAction(action)
@@ -1699,7 +1699,7 @@ class WPythonCodeEditor(sci.QsciScintilla):
 		if not (wheelEvent.modifiers() & Qt.ControlModifier):
 			return sci.QsciScintilla.wheelEvent(self, wheelEvent)
 		delta = wheelEvent.delta()
-#		print "DEBUG: delta: " + str(delta)
+#		print ("DEBUG: delta: " + str(delta))
 		if delta < 0:
 			self.zoomOut(1) # does nothing when the text was already set with a currentFont ???!
 		else:

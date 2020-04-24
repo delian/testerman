@@ -407,7 +407,7 @@ class WJobTreeWidget(QTreeWidget):
 			else:
 				parent = self._items.get(parentId, None)
 			if not parent:
-				print "DEBUG: missing parent %s to create job node for job id %s" % (parentId, id_)
+				print ("DEBUG: missing parent %s to create job node for job id %s" % (parentId, id_))
 				return
 			# We create a new item
 			item = JobItem(jobInfo)
@@ -514,7 +514,7 @@ class WJobTreeWidget(QTreeWidget):
 		try:
 			self._client.sendSignal(jobId, signal)	
 		except Exception as e:
-			print "DEBUG: " + str(e)
+			print ("DEBUG: " + str(e))
 
 	def _viewLog(self, jobId):
 		self.emit(SIGNAL('showLog(int)'), jobId)	

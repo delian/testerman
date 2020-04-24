@@ -31,15 +31,15 @@ class PlaintextWriter:
             else:
                 assert 0, ('%s not handled yet' % api_doc.__class__)
         except Exception as e:
-            print '\n\n'
-            print ''.join(result)
+            print ('\n\n')
+            print (''.join(result))
             raise
 
         return ''.join(result)
 
     def write_module(self, out, mod_doc):
         #for n,v in mod_doc.variables.items():
-        #    print n, `v.value`, `v.value.value`
+        #    print (n, `v.value`, `v.value.value`)
         
         # The cannonical name of the module.
         out(self.section('Module Name'))

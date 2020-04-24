@@ -1164,7 +1164,7 @@ class WLogViewer(QWidget):
 			# FIXME: need a correct support now that the test case view is a tree
 			if self.testCaseView.currentItem():
 				previousSelectedItemIndex = self.testCaseView.currentItem().getIndexPath()
-#				print "DEBUG: saved UI context: %s" % previousSelectedItemIndex
+#				print ("DEBUG: saved UI context: %s" % previousSelectedItemIndex)
 			self.testCaseView.clearLog()
 			self.rawView.clearLog()
 			for view in self.reportViews:
@@ -1208,7 +1208,7 @@ class WLogViewer(QWidget):
 
 		# UI Context restoration
 		if previousSelectedItemIndex is not None:
-#			print "DEBUG: restoring UI context from: %s" % previousSelectedItemIndex
+#			print ("DEBUG: restoring UI context from: %s" % previousSelectedItemIndex)
 			self.testCaseView.setCurrentItemAtIndexPath(previousSelectedItemIndex)
 
 	def closeEvent(self, event):

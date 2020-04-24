@@ -1366,7 +1366,7 @@ class AgentInstaller(ConnectingNode):
 			self.getLogger().debug("Updates file:\n%s" % updates)
 		except Exception as e:
 			self.getLogger().warning("Unable to fetch update metadata from TACS")
-			print getBacktrace()
+			print (getBacktrace())
 			return []
 		if updates is None:
 			return []

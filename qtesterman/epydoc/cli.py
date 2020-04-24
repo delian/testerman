@@ -425,14 +425,14 @@ def parse_arguments():
         names = set([n.lower() for n in names])
         for (topic, msg) in HELP_TOPICS.items():
             if topic.lower() in names:
-                print '\n' + msg.rstrip() + '\n'
+                print ('\n' + msg.rstrip() + '\n')
                 sys.exit(0)
         optparser.print_help()
         sys.exit(0)
 
     # Print version message, if requested.
     if options.action == 'version':
-        print version
+        print (version)
         sys.exit(0)
     
     # Process any config files.
@@ -790,7 +790,7 @@ def main(options, names):
     elif options.action == 'pickle':
         write_pickle(docindex, options)
     else:
-        print >>sys.stderr, '\nUnsupported action %s!' % options.action
+        print ('\nUnsupported action %s!' % options.action, file=sys.stderr)
 
     # If we suppressed docstring warnings, then let the user know.
     if logger is not None and logger.suppressed_docstring_warning:
@@ -947,7 +947,7 @@ def write_text(docindex, options):
     log.end_progress()
     if isinstance(s, unicode):
         s = s.encode('ascii', 'backslashreplace')
-    print s
+    print (s)
 
 def check_docs(docindex, options):
     from epydoc.checker import DocChecker
@@ -968,17 +968,17 @@ def cli():
     except SystemExit:
         raise
     except KeyboardInterrupt:
-        print '\n\n'
-        print >>sys.stderr, 'Keyboard interrupt.'
+        print ('\n\n')
+        print ('Keyboard interrupt.', file=sys.stderr)
     except:
         if options.debug: raise
-        print '\n\n'
+        print ('\n\n')
         exc_info = sys.exc_info()
         if isinstance(exc_info[0], basestring): e = exc_info[0]
         else: e = exc_info[1]
-        print >>sys.stderr, ('\nUNEXPECTED ERROR:\n'
-                             '%s\n' % (str(e) or e.__class__.__name__))
-        print >>sys.stderr, 'Use --debug to see trace information.'
+        print ('\nUNEXPECTED ERROR:\n'
+                             '%s\n' % (str(e) or e.__class__.__name__), file=sys.stderr)
+        print ('Use --debug to see trace information.', file=sys.stderr)
         sys.exit(3)
     
 def _profile():
@@ -986,7 +986,7 @@ def _profile():
     if PROFILER == 'hotshot':
         try: import hotshot, hotshot.stats
         except ImportError:
-            print >>sys.stderr, "Could not import profile module!"
+            print ("Could not import profile module!", file=sys.stderr)
             return
         try:
             prof = hotshot.Profile('hotshot.out')
@@ -995,7 +995,7 @@ def _profile():
             pass
         prof.close()
         # Convert profile.hotshot -> profile.out
-        print 'Consolidating hotshot profiling info...'
+        print ('Consolidating hotshot profiling info...')
         hotshot.stats.load('hotshot.out').dump_stats('profile.out')
 
     # Standard 'profile' profiler.
@@ -1006,7 +1006,7 @@ def _profile():
         except ImportError:
             try: from profile import Profile
             except ImportError:
-                print >>sys.stderr, "Could not import profile module!"
+                print ("Could not import profile module!", file=sys.stderr)
                 return
 
         # There was a bug in Python 2.4's profiler.  Check if it's
@@ -1026,7 +1026,7 @@ def _profile():
         prof.dump_stats('profile.out')
 
     else:
-        print >>sys.stderr, 'Unknown profiler %s' % PROFILER
+        print ('Unknown profiler %s' % PROFILER, file=sys.stderr)
         return
     
 ######################################################################
@@ -1217,7 +1217,7 @@ class ConsoleLogger(log.Logger):
             # then make room for the message.
             if self._progress_mode == 'simple-bar':
                 if self._progress is not None:
-                    print
+                    print ()
                     self._progress = None
             if self._progress_mode == 'bar':
                 sys.stdout.write(self.term.CLEAR_LINE)
@@ -1235,7 +1235,7 @@ class ConsoleLogger(log.Logger):
         
         if self._progress_mode == 'list':
             if message:
-                print '[%3d%%] %s' % (100*percent, message)
+                print ('[%3d%%] %s' % (100*percent, message))
                 sys.stdout.flush()
                 
         elif self._progress_mode == 'bar':
@@ -1307,7 +1307,7 @@ class ConsoleLogger(log.Logger):
         self._progress_start_time = time.time()
         self._progress_header = header
         if self._progress_mode != 'hide' and header:
-            print self.term.BOLD + header + self.term.NORMAL
+            print (self.term.BOLD + header + self.term.NORMAL)
 
     def end_progress(self):
         self.progress(1.)
@@ -1317,24 +1317,24 @@ class ConsoleLogger(log.Logger):
                 sys.stdout.write((self.term.CLEAR_EOL + '\n')*2 +
                                  self.term.CLEAR_EOL + self.term.UP*2)
         if self._progress_mode == 'simple-bar':
-            print ']'
+            print (']')
         self._progress = None
         self._task_times.append( (time.time()-self._progress_start_time,
                                   self._progress_header) )
 
     def print_times(self):
-        print
-        print 'Timing summary:'
+        print ()
+        print ('Timing summary:')
         total = sum([time for (time, task) in self._task_times])
         max_t = max([time for (time, task) in self._task_times])
         for (time, task) in self._task_times:
             task = task[:31]
-            print '  %s%s %7.1fs' % (task, '.'*(35-len(task)), time),
+            print ('  %s%s %7.1fs ' % (task, '.'*(35-len(task)), time))
             if self.term.COLS > 55:
-                print '|'+'=' * int((self.term.COLS-53) * time / max_t)
+                print ('|'+'=' * int((self.term.COLS-53) * time / max_t))
             else:
-                print
-        print
+                print ()
+        print ()
 
 class UnifiedProgressConsoleLogger(ConsoleLogger):
     def __init__(self, verbosity, stages, progress_mode=None):

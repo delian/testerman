@@ -274,7 +274,7 @@ class WParametersEditor(QTreeView):
 		for index in self.selectedIndexes():
 			if index.column() == 0:
 				selectedParametersNames.append(unicode(self.model().data(index, Qt.DisplayRole)))
-#		print "selected:\n%s" % "\n".join(selectedParametersNames)
+#		print ("selected:\n%s" % "\n".join(selectedParametersNames))
 		return selectedParametersNames
 
 	def getSelectedParameters(self):
@@ -530,7 +530,7 @@ class WGroupsEditor(QTreeView):
 		for index in self.selectedIndexes():
 			if index.column() == 0:
 				selectedGroupsNames.append(unicode(self.model().data(index, Qt.DisplayRole)))
-#		print "selected:\n%s" % "\n".join(selectedGroupsNames)
+#		print ("selected:\n%s" % "\n".join(selectedGroupsNames))
 		return selectedGroupsNames
 
 	def getSelectedGroups(self):
