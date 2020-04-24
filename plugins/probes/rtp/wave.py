@@ -132,9 +132,9 @@ class Wave_read:
         self._soundpos = 0
         self._file = Chunk(file, bigendian = 0)
         if self._file.getname() != 'RIFF':
-            raise Error, 'file does not start with RIFF id'
+            raise Error('file does not start with RIFF id')
         if self._file.read(4) != 'WAVE':
-            raise Error, 'not a WAVE file'
+            raise Error('not a WAVE file')
         self._fmt_chunk_read = 0
         self._data_chunk = None
         while 1:
@@ -149,14 +149,14 @@ class Wave_read:
                 self._fmt_chunk_read = 1
             elif chunkname == 'data':
                 if not self._fmt_chunk_read:
-                    raise Error, 'data chunk before fmt chunk'
+                    raise Error('data chunk before fmt chunk')
                 self._data_chunk = chunk
                 self._nframes = chunk.chunksize // self._framesize
                 self._data_seek_needed = 0
                 break
             chunk.skip()
         if not self._fmt_chunk_read or not self._data_chunk:
-            raise Error, 'fmt chunk and/or data chunk missing'
+            raise Error('fmt chunk and/or data chunk missing')
 
     def __init__(self, f):
         self._i_opened_the_file = None
@@ -219,11 +219,11 @@ class Wave_read:
         return None
 
     def getmark(self, id):
-        raise Error, 'no marks'
+        raise Error('no marks')
 
     def setpos(self, pos):
         if pos < 0 or pos > self._nframes:
-            raise Error, 'position not in range'
+            raise Error('position not in range')
         self._soundpos = pos
         self._data_seek_needed = 1
 
@@ -273,7 +273,7 @@ class Wave_read:
         sampwidth = struct.unpack('<h', chunk.read(2))[0]
         self._sampwidth = (sampwidth + 7) // 8
 #        else:
-#            # raise Error, 'unknown format: %r' % (wFormatTag,)
+#            # raise Error('unknown format: %r' % (wFormatTag,))
         self._framesize = self._nchannels * self._sampwidth
         self._comptype = 'NONE'
         self._compname = 'not compressed'
@@ -288,4 +288,4 @@ def open(f, mode=None):
     if mode in ('r', 'rb'):
         return Wave_read(f)
     else:
-        raise Error, "mode must be w', or 'wb'"
+        raise Error("mode must be w', or 'wb'")

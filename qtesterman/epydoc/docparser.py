@@ -227,7 +227,7 @@ def parse_docs(filename=None, name=None, context=None, is_script=False):
         # Use a python source version, if possible.
         if not is_script:
             try: filename = py_src_filename(filename)
-            except ValueError, e: raise ImportError('%s' % e)
+            except ValueError as e: raise ImportError('%s' % e)
 
         # Check the cache, first.
         if filename in _moduledoc_cache:
@@ -276,12 +276,12 @@ def parse_docs(filename=None, name=None, context=None, is_script=False):
         # Tokenize & process the contents of the module's source file.
         try:
             process_file(module_doc)
-        except tokenize.TokenError, e:
+        except tokenize.TokenError as e:
             msg, (srow, scol) = e.args
             raise ParseError('Error during parsing: %s '
                              '(%s, line %d, char %d)' %
                              (msg, module_doc.filename, srow, scol))
-        except IndentationError, e:
+        except IndentationError as e:
             raise ParseError('Error during parsing: %s (%s)' %
                              (e, module_doc.filename))
 
@@ -442,7 +442,7 @@ def _get_filename(identifier, path=None):
         fp, filename, (s,m,typ) = imp.find_module(identifier, path)
         if fp is not None: fp.close()
     except ImportError:
-        raise ImportError, 'No Python source file found.'
+        raise ImportError('No Python source file found.')
 
     if typ == imp.PY_SOURCE:
         return filename
@@ -450,21 +450,21 @@ def _get_filename(identifier, path=None):
         # See if we can find a corresponding non-compiled version.
         filename = re.sub('.py\w$', '.py', filename)
         if not os.path.exists(filename):
-            raise ImportError, 'No Python source file found.'
+            raise ImportError('No Python source file found.')
         return filename
     elif typ == imp.PKG_DIRECTORY:
         filename = os.path.join(filename, '__init__.py')
         if not os.path.exists(filename):
             filename = os.path.join(filename, '__init__.pyw')
             if not os.path.exists(filename):
-                raise ImportError, 'No package file found.'
+                raise ImportError('No package file found.')
         return filename
     elif typ == imp.C_BUILTIN:
-        raise ImportError, 'No Python source file for builtin modules.'
+        raise ImportError('No Python source file for builtin modules.')
     elif typ == imp.C_EXTENSION:
-        raise ImportError, 'No Python source file for c extensions.'
+        raise ImportError('No Python source file for c extensions.')
     else:
-        raise ImportError, 'No Python source file found.'
+        raise ImportError('No Python source file found.')
 
 #/////////////////////////////////////////////////////////////////
 #{ File tokenization loop
@@ -629,11 +629,11 @@ def process_file(module_doc):
                     prev_line_doc = process_line(
                         shallow_parse(line_toks), parent_docs, prev_line_doc, 
                         lineno, comments, decorators, encoding)
-                except ParseError, e:
+                except ParseError as e:
                     raise ParseError('Error during parsing: invalid '
                                      'syntax (%s, line %d) -- %s' %
                                      (module_doc.filename, lineno, e))
-                except KeyboardInterrupt, e: raise
+                except KeyboardInterrupt as e: raise
                 except Exception as e:
                     log.error('Internal error during parsing (%s, line '
                               '%s):\n%s' % (module_doc.filename, lineno, e))
@@ -1460,7 +1460,7 @@ def apply_decorator(decorator_name, func_doc):
     elif DEFAULT_DECORATOR_BEHAVIOR == 'opaque':
         return GenericValueDoc(docs_extracted_by='parser')
     else:
-        raise ValueError, 'Bad value for DEFAULT_DECORATOR_BEHAVIOR'
+        raise ValueError('Bad value for DEFAULT_DECORATOR_BEHAVIOR')
 
 def init_arglist(func_doc, arglist):
     if not isinstance(arglist, list) or arglist[0] != (token.OP, '('):

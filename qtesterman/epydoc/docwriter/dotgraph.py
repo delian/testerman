@@ -247,7 +247,7 @@ class DotGraph:
             result, err = run_subprocess((DOT_COMMAND,)+options,
                                          self.to_dotfile())
             if err: log.warning("Graphviz dot warning(s):\n%s" % err)
-        except OSError, e:
+        except OSError as e:
             log.warning("Unable to render Graphviz dot graph:\n%s" % e)
             #log.debug(self.to_dotfile())
             return None
@@ -1258,7 +1258,7 @@ def get_dot_version():
                 _dot_version = [int(x) for x in m.group(1).split('.')]
             else:
                 _dot_version = (0,)
-        except OSError, e:
+        except OSError as e:
             _dot_version = (0,)
         log.info('Detected dot version %s' % _dot_version)
     return _dot_version

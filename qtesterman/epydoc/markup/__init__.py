@@ -163,7 +163,7 @@ def parse(docstring, markup='plaintext', errors=None, **options):
     # If it's a string, then it names a function to import.
     if isinstance(parse_docstring, basestring):
         try: exec('from %s import parse_docstring' % parse_docstring)
-        except ImportError, e:
+        except ImportError as e:
             _parse_warn('Error importing %s for markup language %s: %s' %
                         (parse_docstring, markup, e))
             import epydoc.markup.plaintext as plaintext
@@ -322,7 +322,7 @@ class ParsedDocstring:
         @return: A plaintext fragment that encodes this docstring.
         @rtype: C{string}
         """
-        raise NotImplementedError, 'ParsedDocstring.to_plaintext()'
+        raise NotImplementedError('ParsedDocstring.to_plaintext()')
 
     def index_terms(self):
         """
@@ -453,7 +453,7 @@ class DocstringLinker:
         @rtype: C{string}
         @return: The translated index term.
         """
-        raise NotImplementedError, 'DocstringLinker.translate_indexterm()'
+        raise NotImplementedError('DocstringLinker.translate_indexterm()')
 
     def translate_identifier_xref(self, identifier, label=None):
         """
@@ -470,7 +470,7 @@ class DocstringLinker:
         @rtype: C{string}
         @return: The translated crossreference link.
         """
-        raise NotImplementedError, 'DocstringLinker.translate_xref()'
+        raise NotImplementedError('DocstringLinker.translate_xref()')
 
 ##################################################
 ## ParseError exceptions

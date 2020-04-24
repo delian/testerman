@@ -49,14 +49,14 @@ __all__ = ['Template', 'TemplateError', 'TemplateSyntaxError', 'CachingFileLoade
 ###############################################################################
 # Compatibility for old Pythons & Jython
 ###############################################################################
-try: True
-except NameError:
-    False, True = 0, 1
-try: dict
-except NameError:
-    from UserDict import UserDict
-    class dict(UserDict):
-        def __init__(self): self.data = {}
+#try: True
+#except NameError:
+#    False, True = 0, 1
+#try: dict
+#except NameError:
+#    from UserDict import UserDict
+#    class dict(UserDict):
+#        def __init__(self): self.data = {}
 try: operator.__gt__
 except AttributeError:
     operator.__gt__ = lambda a, b: a > b

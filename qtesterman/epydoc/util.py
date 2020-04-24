@@ -276,7 +276,7 @@ def run_subprocess(cmd, data=None):
             try:
                 to_child.write(data)
             # Guard for a broken pipe error
-            except IOError, e:
+            except IOError as e:
                 raise OSError(e)
         to_child.close()
         out = from_child.read()

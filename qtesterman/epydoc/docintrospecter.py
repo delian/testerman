@@ -863,7 +863,7 @@ def get_value_from_name(name, globs=None):
     # the requested name refers to a builtin.
     try:
         module = _import(name[0])
-    except ImportError, e:
+    except ImportError(e):
         if globs is None: globs = __builtin__.__dict__
         if name[0] in globs:
             try: return _lookup(globs[name[0]], name[1:])
@@ -983,7 +983,7 @@ class _DevNull:
     def readline(self, size=0): return ''
     def readlines(self, sizehint=0): return []
     def seek(self, offset, whence=0): pass
-    def tell(self): return 0L
+    def tell(self): return 0
     def truncate(self, size=0): pass
     def write(self, str): pass
     def writelines(self, sequence): pass

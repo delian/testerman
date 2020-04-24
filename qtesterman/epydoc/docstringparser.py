@@ -241,14 +241,14 @@ def parse_docstring(api_doc, docindex, suppress_warnings=[]):
                 try:
                     process_field(init_api_doc, docindex, field.tag(),
                                     field.arg(), field.body())
-                except ValueError, e: field_warnings.append(str(e))
+                except ValueError as e: field_warnings.append(str(e))
 
     # Process fields
     for field in fields:
         try:
             process_field(api_doc, docindex, field.tag(),
                                field.arg(), field.body())
-        except ValueError, e: field_warnings.append(str(e))
+        except ValueError as e: field_warnings.append(str(e))
 
     # Check to make sure that all type parameters correspond to
     # some documented parameter.
@@ -706,7 +706,7 @@ def process_deffield_field(api_doc, docindex, tag, arg, descr):
         docstring_field = _descr_to_docstring_field(arg, descr)
         docstring_field.varnames.append("__%s__" % arg)
         api_doc.extra_docstring_fields.append(docstring_field)
-    except ValueError, e:
+    except ValueError as e:
         raise ValueError('Bad %s: %s' % (tag, e))
 
 def process_raise_field(api_doc, docindex, tag, arg, descr):
@@ -975,7 +975,7 @@ def _descr_to_identifiers(descr):
     idents = descr.to_plaintext(None).strip()
     idents = re.sub(r'\s+', ' ', idents)
     if not _IDENTIFIER_LIST_REGEXP.match(idents):
-        raise ValueError, 'Bad Identifier list: %r' % idents
+        raise ValueError('Bad Identifier list: %r' % idents)
     rval = re.split('[:;, ] *', idents)
     return rval
     
@@ -984,7 +984,7 @@ def _descr_to_docstring_field(arg, descr):
     descr = descr.to_plaintext(None).strip()
     args = re.split('[:;,] *', descr)
     if len(args) == 0 or len(args) > 3:
-        raise ValueError, 'Wrong number of arguments'
+        raise ValueError('Wrong number of arguments')
     singular = args[0]
     if len(args) >= 2: plural = args[1]
     else: plural = None
