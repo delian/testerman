@@ -304,9 +304,9 @@ def __scanPlugins(paths, label):
 					__import__(m)
 					# Actually, internal level is never activated at this time...
 					TestermanTCI.logInternal("INFO: analyzed %s %s" % (label, m))
-				except Exception, e:
+				except Exception as e:
 					TestermanTCI.logUser("WARNING: unable to import %s %s: %s" % (label, m, str(e)))
-		except Exception, e:
+		except Exception as e:
 			TestermanTCI.logUser("WARNING: unable to scan %s path %s: %s" % (label, path, str(e)))
 
 def __initializeLogger(ilServerIp, ilServerPort, jobId, logFilename, maxPayloadSize):
@@ -381,7 +381,7 @@ __parseArgs()
 try:
 	import TestermanTCI
 	__initializeLogger(ilServerIp = __IlServerIp, ilServerPort = __IlServerPort, jobId = __JobId, logFilename = __LogFilename, maxPayloadSize = __MaxLogPayloadSize)
-except Exception, e:
+except Exception as e:
 	# We can't even log anything. 
 	print("Unable to connect to logging server: %s" % str(e))
 	sys.exit(RETURN_CODE_LOGGER_FAILURE)
@@ -398,7 +398,7 @@ try:
 	import ${adapter_module_name} as Testerman
 	from ${adapter_module_name} import *
 	__initializeTe(__TacsIp, __TacsPort)
-except Exception, e:
+except Exception as e:
 	__Return_Code = RETURN_CODE_INIT_FAILURE
 	TestermanTCI.logUser("Unable to initialize Code TE librairies: %s" % TestermanTCI.getBacktrace())
 	TestermanTCI.logAtsStopped(id_ = __ATS_ID, result = __Return_Code)
@@ -430,7 +430,7 @@ try:
 		f = open(__InputSessionFilename, 'r')
 		inputSession = pickle.loads(f.read())
 		f.close()
-except Exception, e:
+except Exception as e:
 	TestermanTCI.logInternal("Unable to load input session: %s" % str(e))
 
 ##
@@ -466,7 +466,7 @@ try:
 				format = __SCRIPT_METADATA['parameters'][k]['type']
 				try:
 					v = __convert_value(v, format)
-				except Exception, e:
+				except Exception as e:
 					raise Exception("Invalid value for parameter %s: '%s' is not a valid %s value" % (k, v, format))
 
 			Testerman.set_variable(k, v)
@@ -482,7 +482,7 @@ try:
 			default = d['defaultValue']
 			try:
 				v = __convert_value(default, format)
-			except Exception, e:
+			except Exception as e:
 				raise Exception("Invalid default value for parameter %s: '%s' is not a valid %s value" % (k, v, format))
 
 			Testerman.set_variable(k, v)
@@ -527,7 +527,7 @@ except TestermanTtcn3Exception, e:
 	__Return_Code = RETURN_CODE_TTCN3_ERROR
 	__Return_Message = "TTCN-3 like error: %s" % str(TestermanTCI.getBacktrace())
 
-except Exception, e:
+except Exception as e:
 	__Return_Code = RETURN_CODE_TE_ERROR
 	__Return_Message = "Generic exception: %s" % str(TestermanTCI.getBacktrace())
 
@@ -547,7 +547,7 @@ try:
 	f = open(__OutputSessionFilename, 'w')
 	f.write(pickle.dumps(Testerman._get_all_session_variables()))
 	f.close()
-except Exception, e:
+except Exception as e:
 	TestermanTCI.logInternal("Unable to dump current session: %s" % str(e))
 
 

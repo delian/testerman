@@ -167,7 +167,7 @@ The test system interface port bound to such a probe complies with the ``RtspCli
 
 			try:
 				encodedMessage, summary = CodecManager.encode('rtsp.request', message)
-			except Exception, e:
+			except Exception as e:
 				raise ProbeImplementationManager.ProbeException('Invalid request message format: cannot encode RTSP request')
 			
 			# Connect if needed
@@ -179,7 +179,7 @@ The test system interface port bound to such a probe complies with the ``RtspCli
 			self.logSentPayload(summary, encodedMessage, "%s:%s" % self._connection.getpeername())
 			# Now wait for a response asynchronously
 			self.waitResponse(cseq = cseq)
-		except Exception, e:
+		except Exception as e:
 			raise ProbeImplementationManager.ProbeException('Unable to send RTSP request: %s' % str(e))
 			
 	# Specific methods
@@ -259,7 +259,7 @@ class ResponseThread(threading.Thread):
 					try:
 						self._probe.getLogger().debug('data received (bytes %d), decoding attempt...' % len(buf))
 						decodedMessage, summary = CodecManager.decode('rtsp.response', buf, lower_case = (not self._probe['strict_mode']))
-					except Exception, e:
+					except Exception as e:
 						# Incomplete message. Wait for more data.
 						self._probe.getLogger().debug('unable to decode: %s' % str(e))
 						pass
@@ -299,7 +299,7 @@ class ResponseThread(threading.Thread):
 						raise Exception('Incomplete message received, stream interrupted')
 						# .. and we should disconnect, too...
 						
-			except Exception, e:
+			except Exception as e:
 				self._probe.getLogger().error('Error while waiting for rtsp response: %s' % str(e))
 				self._stopEvent.set()
 		if not self._probe['maintain_connection']:

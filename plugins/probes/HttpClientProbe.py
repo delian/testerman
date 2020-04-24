@@ -145,7 +145,7 @@ The test system interface port bound to such a probe complies with the ``HttpCli
 				message['version'] = self['version']
 			try:
 				(encodedMessage, summary) = CodecManager.encode('http.request', message)
-			except Exception, e:
+			except Exception as e:
 				raise ProbeImplementationManager.ProbeException('Invalid request message format: cannot encode HTTP request:\n%s' % ProbeImplementationManager.getBacktrace())
 			
 			# Connect if needed
@@ -157,7 +157,7 @@ The test system interface port bound to such a probe complies with the ``HttpCli
 			self.logSentPayload(summary, encodedMessage, "%s:%s" % self._httpConnection.getpeername())
 			# Now wait for a response asynchronously
 			self.waitResponse()
-		except Exception, e:
+		except Exception as e:
 			raise ProbeImplementationManager.ProbeException('Unable to send HTTP request: %s' % str(e))
 				
 			
@@ -245,7 +245,7 @@ class ResponseThread(threading.Thread):
 						self._probe.logReceivedPayload(summary, buf, fromAddr)
 						self._probe.triEnqueueMsg(decodedMessage, fromAddr)
 						self._stopEvent.set()
-			except Exception, e:
+			except Exception as e:
 				self._probe.getLogger().error('Error while waiting for http response: %s' % str(e))
 				self._stopEvent.set()
 		if not self._probe['maintain_connection']:

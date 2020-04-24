@@ -523,7 +523,7 @@ class GetSet:
 			tmpfile = tempfile.TemporaryFile()
 			try:
 				config.rewrite(skeleton, tmpfile, 0)
-			except Exception, e:
+			except Exception as e:
 				tmpfile.close()
 				raise Exception("Unable to update %s (%s)" % (filename, str(e)))
 			
@@ -540,7 +540,7 @@ class GetSet:
 			f.close()
 
 			return True
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to update %s (%s)" % (filename, str(e)))
 
 	def getValue(self, filename, keypath):
@@ -570,7 +570,7 @@ class GetSet:
 			return None
 		except ConfigParser.NoOptionError:
 			return None
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to get %s in %s (%s)" % (keypath, filename, str(e)))
 		return str(value)
 
@@ -620,7 +620,7 @@ if __name__ == '__main__':
 				status = 1
 			else:
 				status = 0
-	except Exception, e:
+	except Exception as e:
 		print "Configuration script exception: %s" % str(e)
 		status = 1
 	sys.exit(status)

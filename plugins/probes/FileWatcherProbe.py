@@ -218,9 +218,9 @@ class WatchingThread(threading.Thread):
 						if os.path.isfile(filename):
 							self._watchedFiles[filename] = os.stat(filename)
 							self._probe.getLogger().debug("New file %s registered for watching" % filename)
-					except Exception, e:
+					except Exception as e:
 						self._probe.getLogger().debug("Unable to registered file %s: %s" % (filename, str(e)))
-		except Exception, e:
+		except Exception as e:
 			self._probe.getLogger().debug("Error while registered watched files: %s" % str(e))
 
 		# Now, watch for file changes / reset / new files	
@@ -231,9 +231,9 @@ class WatchingThread(threading.Thread):
 					for filename in glob.glob(f):
 						try:
 							self._checkFile(filename)
-						except Exception, e:
+						except Exception as e:
 							self._probe.getLogger().debug("Unable to watch file %s: %s" % (filename, str(e)))
-			except Exception, e:
+			except Exception as e:
 				self._probe.getLogger().debug("Error while watching files: %s" % str(e))
 			self._stopEvent.wait(self._interval)
 	

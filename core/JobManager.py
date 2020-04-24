@@ -141,7 +141,7 @@ def parseParameters(parameters):
 
 			for key, value in map(lambda x: x.split('=', 1), parameters):
 				values[key.decode('utf-8')] = value.decode('utf-8')
-		except Exception, e:
+		except Exception as e:
 			raise Exception('Invalid parameters format (%s)' % str(e))
 	
 	return values 
@@ -691,7 +691,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 					getLogger().info("Killing child process %s..." % pid)
 					try:
 						os.kill(pid, signal.SIGKILL)
-					except Exception, e:
+					except Exception as e:
 						getLogger().error("Unable to kill %d: %s" % (pid, str(e)))
 
 			elif sig == self.SIGNAL_CANCEL and self._tePid:
@@ -718,7 +718,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 			elif sig == self.SIGNAL_ACTION_PERFORMED and state == self.STATE_RUNNING and self._tePid:
 				os.kill(self._tePid, signal.SIGUSR1)
 			
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("%s: unable to handle signal %s: %s" % (str(self), sig, str(e)))
 
 	def cleanup(self):
@@ -727,7 +727,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 		if self._tePreparedPackageDirectory:
 			try:
 				shutil.rmtree(self._tePreparedPackageDirectory, ignore_errors = True)
-			except Exception, e:
+			except Exception as e:
 				getLogger().warning("%s: unable to remove temporary TE package directory '%s': %s" % (str(self), self._tePreparedPackageDirectory, str(e)))
 
 	def prepare(self):
@@ -792,7 +792,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 				recursive = True,
 				sourceFilename = self._path,
 				moduleRootDir = moduleRootDir)
-		except Exception, e:
+		except Exception as e:
 			desc = "unable to resolve dependencies: %s" % str(e)
 			return handleError(25, desc)
 
@@ -811,7 +811,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 
 		try:
 			te = TEFactory.createTestExecutable(self.getName(), self._source, atsDirInTePackage = atsDirInTePackage)
-		except Exception, e:
+		except Exception as e:
 			getLogger().debug("Exception while creating the TE: %s\n%s" % (str(e), Tools.getBacktrace()))
 			return handleError(26, str(e))
 		
@@ -827,7 +827,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 			context = '\n'.join([ "%s: %s" % (x, t[x]) for x in range(e.lineno-5, e.lineno+5)])
 			desc = "syntax/parse error: %s:\n%s\ncontext:\n%s" % (str(e), line, context)
 			return handleError(21, desc)
-		except Exception, e:
+		except Exception as e:
 			desc = "unable to check TE: %s" % (str(e))
 			return handleError(22, desc)
 
@@ -849,7 +849,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 #			os.mkdir(tePackageDirectory)
 			os.mkdir(tePackageDirectory + '/src')
 			os.mkdir(eggInfoDirectory)
-		except Exception, e:
+		except Exception as e:
 			desc = 'unable to create TE package: %s' % (str(e))
 			return handleError(20, desc)
 
@@ -859,7 +859,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 			f = open(teFilename, 'w')
 			f.write(te)
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			desc = 'unable to write TE to "%s": %s' % (teFilename, str(e))
 			return handleError(20, desc)
 
@@ -911,7 +911,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 				f = open(targetFilename, 'w')
 				f.write(depContent)
 				f.close()
-		except Exception, e:
+		except Exception as e:
 			desc = 'unable unable to create dependency %s to "%s": %s' % (filename, targetFilename, str(e))
 			return handleError(20, desc)
 		
@@ -928,7 +928,7 @@ self._baseDirectory, self._tePackageDirectory, self._teCommandLine, self._teFile
 			# Let's copy the dependencies
 			try:
 				shutil.copyfile("%s/%s" % (cm.get_transient('ts.server_root'), coreDep), "%s/src/%s" % (tePackageDirectory, coreDep))
-			except Exception, e:
+			except Exception as e:
 				desc = 'unable unable to copy core dependency %s: %s' % (coreDep, str(e))
 				return handleError(20, desc)
 			
@@ -972,7 +972,7 @@ Platform: UNKNOWN
 			f = open("%s/src/EGG-INFO/SOURCES.txt" % (self._tePreparedPackageDirectory), 'w')
 			f.write('\n'.join(sources))
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			desc = 'unable to write Python egg metadata: %s' % (str(e))
 			return handleError(20, desc)
 		
@@ -996,7 +996,7 @@ Platform: UNKNOWN
 		getLogger().info("%s: cleaning up temporary files..." % (str(self)))
 		try:
 			shutil.rmtree("%s/src" % self._tePreparedPackageDirectory, ignore_errors = True)
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("%s: unable to clean up temporary files after creating egg: %s" % (str(self), str(e)))
 		
 		# OK, we're ready. The egg is waiting as ${self._tePreparedPackagedDirectory}/ats.egg.
@@ -1071,7 +1071,7 @@ Platform: UNKNOWN
 		try:
 			shutil.move(self._tePreparedPackageDirectory, tePackageDirectory)
 			self._tePreparedPackageDirectory = None
-		except Exception, e:
+		except Exception as e:
 			getLogger().error('%s: unable to move prepared TE and its dependencies to their final locations: %s' % (str(self), str(e)))
 			self.setResult(24)
 			self.setState(self.STATE_ERROR)
@@ -1090,7 +1090,7 @@ Platform: UNKNOWN
 			if scriptSignature is None:
 				getLogger().warning('%s: unable to extract script signature from ATS. Missing metadata ?' % (str(self)))
 				scriptSignature = {}
-		except Exception, e:
+		except Exception as e:
 			getLogger().error('%s: unable to extract ATS signature from metadata: %s' % (str(self), str(e)))
 			self.setResult(23)
 			self.setState(self.STATE_ERROR)
@@ -1108,7 +1108,7 @@ Platform: UNKNOWN
 			f = open(inputSessionFilename, 'w')
 			f.write(dumpedInputSession)
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("%s: unable to create input session file: %s" % (str(self), str(e)))
 			self.setResult(24)
 			self.setState(self.STATE_ERROR)
@@ -1153,7 +1153,7 @@ Platform: UNKNOWN
 				os.chdir(tePackageDirectory)
 				os.execve(executable, args, env)
 				# Done with the child.
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("%s: unable to execute TE: %s" % (str(self), str(e)))
 			self._tePid = None
 			self.setResult(23)
@@ -1161,7 +1161,7 @@ Platform: UNKNOWN
 			# Clean input session filename
 			try:
 				os.unlink(inputSessionFilename)
-			except Exception, e:
+			except Exception as e:
 				getLogger().warning("%s: unable to delete input session file: %s" % (str(self), str(e)))
 			return self.getResult()
 
@@ -1195,17 +1195,17 @@ Platform: UNKNOWN
 			self._outputSession = TEFactory.loadSession(f.read())
 			f.close()
 			getLogger().info('%s: output session parameters:\n%s' % (str(self), '\n'.join([ '%s = %s (%s)' % (x, y, repr(y)) for x, y in self._outputSession.items()])))
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("%s: unable to read output session file: %s" % (str(self), str(e)))
 
 		# Clean input & output session filename
 		try:
 			os.unlink(inputSessionFilename)
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("%s: unable to delete input session file: %s" % (str(self), str(e)))
 		try:
 			os.unlink(outputSessionFilename)
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("%s: unable to delete output session file: %s" % (str(self), str(e)))
 		
 		return self.getResult()
@@ -1223,7 +1223,7 @@ Platform: UNKNOWN
 				res = '<?xml version="1.0" encoding="utf-8" ?>\n<ats>\n%s</ats>' % f.read()
 				f.close()
 				return res
-			except Exception, e:
+			except Exception as e:
 				if self.isFinished():
 					# The log was deleted. So raise the exception - we should have been able to read it.
 					raise e
@@ -1359,7 +1359,7 @@ class CampaignJob(Job):
 			else:
 				getLogger().warning("%s: received unhandled signal %s" % (str(self), sig))
 			
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("%s: unable to handle signal %s: %s" % (str(self), sig, str(e)))
 
 	def prepare(self):
@@ -1378,7 +1378,7 @@ class CampaignJob(Job):
 		getLogger().info("%s: parsing..." % str(self))
 		try:
 			self._parse()
-		except Exception, e:
+		except Exception as e:
 			desc = "%s: unable to prepare the campaign: %s" % (str(self), str(e))
 			getLogger().error(desc)
 			self.setResult(25) # Consider a dependency error ?
@@ -1492,7 +1492,7 @@ class CampaignJob(Job):
 			if scriptSignature is None:
 				getLogger().warning('%s: unable to extract script signature from Campaign. Missing metadata ?' % (str(self)))
 				scriptSignature = {}
-		except Exception, e:
+		except Exception as e:
 			getLogger().error('%s: unable to extract Campaign signature from metadata: %s' % (str(self), str(e)))
 			self.setResult(23)
 			self.setState(self.STATE_ERROR)
@@ -1807,7 +1807,7 @@ class JobManager:
 			f = open(queueFilename, 'w')
 			f.write(dump)
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to persist job queue to %s: %s" % (queueFilename, str(e)))
 		self._unlock()
 
@@ -1846,7 +1846,7 @@ class JobManager:
 			global _GeneratorBaseId
 			_GeneratorBaseId = maxId
 			getLogger().info("Continuing job IDs at %s" % maxId)
-		except Exception, e:
+		except Exception as e:
 			getLogger().info("Unable to restore job queue: %s" % str(e))
 #		self._unlock()
 		
@@ -1861,7 +1861,7 @@ class JobManager:
 		# Raises exceptions in case of an error
 		try:
 			job.prepare()
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("JobManager: new job submitted: %s, scheduled to start on %s, unable to initialize" % (str(job), time.strftime("%Y%m%d, at %H:%H:%S", time.localtime(job.getScheduledStartTime()))))
 			# Forward to the caller
 			raise e
@@ -1884,7 +1884,7 @@ class JobManager:
 		self._lock()
 		try:
 			ret = filter(lambda x: (x.getParent() is None) and (x.getState() == Job.STATE_WAITING), self._jobQueue)
-		except Exception, e:
+		except Exception as e:
 			ret = []
 			getLogger().error("JobManager: unable to get jobs waiting for execution: %s" % str(e))	
 		self._unlock()
@@ -2026,6 +2026,6 @@ def finalize():
 		getLogger().info("Killing all jobs...")
 		instance().killAll()
 		instance().persist()
-	except Exception, e:
+	except Exception as e:
 		getLogger().error("Unable to stop the job manager gracefully: %s" % str(e))
 

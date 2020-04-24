@@ -1112,7 +1112,7 @@ class TestCaseScene(QGraphicsScene):
 			log("WARNING: unable to add visual event, possibly missed actor creation event (%s)" % getBacktrace())
 			itemToAdd = None
 
-		except Exception, e:
+		except Exception as e:
 			log("WARNING: unable to add visual event (%s)" % getBacktrace())
 			itemToAdd = None
 
@@ -1333,7 +1333,7 @@ class WVisualTestCaseView(WClickableGraphicsView):
 		try:
 			self.scene().saveToImage(filename)
 			QMessageBox.information(self, getClientName(), "Visual view saved successfully.", QMessageBox.Ok)
-		except Exception, e:
+		except Exception as e:
 			systemError(self, "Unable to save image as %s: %s" % (filename, unicode(e)))
 
 

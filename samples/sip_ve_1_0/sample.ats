@@ -79,7 +79,7 @@ class TC_SIPVE_API_VE2VE(TestCase):
 			if not f_isIdle(controlB, receivedCallId, timeout = 2.0): raise Exception("B is not back to idle")
 			log("A and B are now idle")
 			setverdict(PASS)
-		except Exception, e:
+		except Exception as e:
 			log(str(e))
 			setverdict(FAIL)
 		
@@ -128,7 +128,7 @@ class APP_SIPVE_CALLED_VE(TestCase):
 			if not f_isIdle(controlB, receivedCallId, timeout = 2.0): raise Exception("B is not back to idle")
 			log("B is now idle - it was a pleasure to talk with you")
 			setverdict(PASS)
-		except Exception, e:
+		except Exception as e:
 			log(str(e))
 			setverdict(FAIL)
 		
@@ -193,7 +193,7 @@ class APP_SIPVE_CALLING_VE(TestCase):
 			if not f_isIdle(controlA, callId, timeout = 2.0): raise Exception("A is not back to idle")
 			log("A is now idle - it was a pleasure to talk with you")
 			setverdict(PASS)
-		except Exception, e:
+		except Exception as e:
 			log(str(e))
 			f_releaseCall(controlA, callId)
 			setverdict(FAIL)

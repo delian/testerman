@@ -1702,7 +1702,7 @@ class WsClient:
 			if content:
 				content = zlib.decompress(base64.decodestring(content))
 				self.getLogger().debug("File decoded, loaded in %fs" % (time.time() - start))
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().error("Unable to get file: " + str(e))
 			raise e
 		return content
@@ -1789,7 +1789,7 @@ class WsClient:
 		if not os.path.lexists(basepath):
 			try:
 				os.makedirs(basepath)
-			except Exception, e:
+			except Exception as e:
 				raise Exception("Unable to create the installation directory (%s): %s" % (basepath, e))
 		
 		# We untar it into the current directory.
@@ -1807,7 +1807,7 @@ class WsClient:
 				# TODO: make sure to set write rights to allow future updates
 				# os.chmod("%s/%s" % (basepath, c), ....)
 			tfile.close()
-		except Exception, e:
+		except Exception as e:
 			archiveFileObject.close()
 			raise Exception("Error while unpacking the update archive:\n%s" % str(e))
 
@@ -1856,7 +1856,7 @@ def updateComponent(proxy, basepath, component, currentVersion = None, branches 
 
 			try:			
 				proxy.installComponent(url, unicode(basepath))
-			except Exception, e:
+			except Exception as e:
 				QMessageBox.warning(None, "Update manager", "Unable to install the update:\n%s\nContinuing with the current version." % str(e))
 				return False
 

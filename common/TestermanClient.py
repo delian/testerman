@@ -48,7 +48,7 @@ class _SafeThreadMethod:
 		self.__lock.acquire()
 		try:
 			ret = self.__send(self.__name, args)
-		except Exception, e:
+		except Exception as e:
 			self.__lock.release()
 			raise e
 		self.__lock.release()
@@ -212,7 +212,7 @@ class Client(Nodes.ConnectingNode):
 			host, port = netloc.split(':')
 			port = int(port)
 			return (host, port)
-		except Exception, e:
+		except Exception as e:
 			return ('', 0)
 
 	def startXc(self):
@@ -710,7 +710,7 @@ class Client(Nodes.ConnectingNode):
 			if content:
 				content = zlib.decompress(base64.decodestring(content))
 				self.getLogger().debug("File decoded, loaded in %fs" % (time.time() - start))
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().error("Unable to get file: " + str(e))
 			raise e
 		return content
@@ -1057,7 +1057,7 @@ class Client(Nodes.ConnectingNode):
 						if p.attributes.has_key('name') and p.attribute.has_key('value'):
 							entry['properties'][p.attributes['name']] = p.attributes['value']
 					ret.append(entry)
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().warning("Error while parsing update metadata file: %s" % str(e))
 			ret = []
 
@@ -1094,7 +1094,7 @@ class Client(Nodes.ConnectingNode):
 				# TODO: make sure to set write rights to allow future updates
 				# os.chmod("%s/%s" % (basepath, c), ....)
 			tfile.close()
-		except Exception, e:
+		except Exception as e:
 			archiveFileObject.close()
 			raise Exception("Error while unpacking the update archive:\n%s" % str(e))
 

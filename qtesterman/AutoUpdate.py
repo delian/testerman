@@ -106,7 +106,7 @@ def checkAndUpdateComponent(proxy, destinationPath, component, currentVersion = 
 			# Download and unpack the archive
 			try:
 				proxy.installComponent(url, destinationPath)
-			except Exception, e:
+			except Exception as e:
 				QMessageBox.warning(None, "Update manager", "Unable to install the update:\n%s\nContinuing with the current version." % str(e))
 				return False
 
@@ -152,7 +152,7 @@ def getNewVersionInfo(proxy, component, currentVersion = None, branches = [ "sta
 def updateComponent(proxy, url, destinationPath):
 	try:
 		proxy.installComponent(url, destinationPath)
-	except Exception, e:
+	except Exception as e:
 		QMessageBox.warning(None, "Update manager", "Unable to install the update:\n%s\nContinuing with the current version." % str(e))
 		return False
 

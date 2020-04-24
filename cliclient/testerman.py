@@ -123,7 +123,7 @@ def loadSessionParameters(filename = None, parameters = ''):
 				if m:
 					values[m.group('key').decode('utf-8')] = m.group('value').decode('utf-8')
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to read parameters from file '%s' (%s)" % (filename, str(e)))
 
 	# Now parse the parameters
@@ -143,7 +143,7 @@ def loadSessionParameters(filename = None, parameters = ''):
 
 			for key, value in map(lambda x: x.split('=', 1), parameters):
 				values[key.decode('utf-8')] = value.decode('utf-8')
-		except Exception, e:
+		except Exception as e:
 			raise Exception('Invalid parameters format (%s)' % str(e)) 
 	
 	return values
@@ -210,7 +210,7 @@ class SourceUri:
 	def parse(self, uri):
 		try:
 			self._scheme, self._path = uri.split(':', 1)
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Invalid source URI format (%s)" % uri)
 		
 		if self._path.endswith('.campaign'):
@@ -295,7 +295,7 @@ class TestermanCliClient:
 			f = open(sourceFilename)
 			source = f.read()
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			err = "Error: unable to read ATS file %s (%s)" % (sourceFilename, str(e))
 			self.log(err)
 			return None
@@ -314,7 +314,7 @@ class TestermanCliClient:
 		# Load the file
 		try:
 			source = self.__client.getFile('/repository/%s' % sourcePath).decode('utf-8')
-		except Exception, e:
+		except Exception as e:
 			err = "Error: unable to get ATS from the server path %s." % (sourcePath)
 			self.log(err)
 			return None
@@ -342,7 +342,7 @@ class TestermanCliClient:
 			header = [ ('job-id', 'job-id'), ('message', 'message') ]
 			self.log("Schedule ATS result: %s" % ret['message'])
 			return jobId
-		except Exception, e:
+		except Exception as e:
 			self.log(str(e))
 			return None
 
@@ -357,7 +357,7 @@ class TestermanCliClient:
 			f = open(sourceFilename)
 			source = f.read()
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			err = "Error: unable to read Campaign file %s (%s)" % (sourceFilename, str(e))
 			self.log(err)
 			return None
@@ -376,7 +376,7 @@ class TestermanCliClient:
 		# Load the file
 		try:
 			source = self.__client.getFile('/repository/%s' % sourcePath).decode('utf-8')
-		except Exception, e:
+		except Exception as e:
 			err = "Error: unable to get Campaign from the server path %s." % (sourcePath)
 			self.log(err)
 			return None
@@ -404,7 +404,7 @@ class TestermanCliClient:
 			header = [ ('job-id', 'job-id'), ('message', 'message') ]
 			self.log("Schedule Campaign result:\n%s" % prettyPrintDictList(header, [ ret ]))
 			return jobId
-		except Exception, e:
+		except Exception as e:
 			self.log(str(e))
 			return None
 	
@@ -428,7 +428,7 @@ class TestermanCliClient:
 			if not ret:
 				raise Exception("Unable to upload package (no error provided)")
 			self.log("%s correctly uploaded to %s" % (sourceFilename, tmpPackagePath))
-		except Exception, e:
+		except Exception as e:
 			self.log("Sorry, unable to import package: %s" % str(e))
 
 		# Execute it
@@ -452,7 +452,7 @@ class TestermanCliClient:
 			header = [ ('job-id', 'job-id'), ('message', 'message') ]
 			self.log("Schedule Package result:\n%s" % prettyPrintDictList(header, [ ret ]))
 			return jobId
-		except Exception, e:
+		except Exception as e:
 			self.log(str(e))
 			return None
 
@@ -523,7 +523,7 @@ class TestermanCliClient:
 					if result is not None:
 						self.__jobCompleteResult = result
 						self.__jobCompleteEvent.set()
-				except Exception, e:
+				except Exception as e:
 					self.log("Sorry, the job is not available on this server any more. Stopping monitoring (%s)" % str(e))
 					return None
 				
@@ -578,7 +578,7 @@ class TestermanCliClient:
 			ret = self.__client.getJobLog(jobId)
 			if not ret:
 				raise Exception("No log available (job not started or delete logs)")
-		except Exception, e:
+		except Exception as e:
 			self.log("Unable to get current log for job ID %s: %s\n" % (jobId, str(e)))
 			return None
 		
@@ -615,7 +615,7 @@ class TestermanCliClient:
 			f.write(contents)
 			f.close()
 			print "%s created." % filename
-		except Exception, e:
+		except Exception as e:
 			self.log("Sorry, unable to extract package: %s" % str(e))
 
 	def importPackage(self, path, filename):
@@ -636,7 +636,7 @@ class TestermanCliClient:
 			if not ret:
 				raise Exception("Unable to import package (no error provided)")
 			print "%s correctly imported as %s" % (filename, path)
-		except Exception, e:
+		except Exception as e:
 			self.log("Sorry, unable to import package: %s" % str(e))
 
 ###############################################################################
@@ -747,7 +747,7 @@ def main():
 			# Load initial session parameters
 			try:
 				session = loadSessionParameters(options.sessionParametersFilename, options.sessionParameters)
-			except Exception, e:
+			except Exception as e:
 				print str(e)
 				return RETCODE_EXECUTION_ERROR
 		
@@ -787,7 +787,7 @@ def main():
 						f.write(log)
 						f.close()
 						client.log("Execution logs available in '%s'" % options.outputFilename)
-					except Exception, e:
+					except Exception as e:
 						client.log("Unable to dump execution logs to '%s': %s" % (options.outputFilename, str(e)))
 						client.stopXc()
 						return RETCODE_EXECUTION_ERROR
@@ -844,7 +844,7 @@ def main():
 		else:
 			parser.print_help()
 			
-	except Exception, e:
+	except Exception as e:
 		print str(e)
 		return 1
 	

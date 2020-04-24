@@ -178,7 +178,7 @@ The test system interface port bound to such a probe complies with the ``SqlPort
 			try:
 				cursor.execute(str(query))
 				conn.commit()
-			except Exception, e:
+			except Exception as e:
 				self.getLogger().warning("Exception while executing query: %s" % getBacktrace())
 				conn.rollback()
 				cursor.close()
@@ -194,7 +194,7 @@ The test system interface port bound to such a probe complies with the ``SqlPort
 			self.triEnqueueMsg(('result', res))
 			cursor.close()
 			conn.close()
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().warning("Exception while handling a query: %s" % getBacktrace())
 			self.triEnqueueMsg(('error', str(e)))
 		

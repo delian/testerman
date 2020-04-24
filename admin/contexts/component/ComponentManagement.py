@@ -297,12 +297,12 @@ class ComponentContext(CommandContext):
 		if not fileExists(updateDir):
 			try:
 				os.makedirs(updateDir, 0755)
-			except Exception, e:
+			except Exception as e:
 				raise Exception("Cannot create the updates directory (%s)" % str(e))
 		try:
 			shutil.copyfile(archiveFilename, dst)
 			os.chmod(dst, 0644)
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Cannot copy %s to %s (%s)" % (archiveFilename, dst, str(e)))
 
 		return url

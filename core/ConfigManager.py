@@ -193,7 +193,7 @@ class ConfigManager:
 				v["actual"] = v["actual_xform"](v["default"])
 		except KeyError:
 			ex = KeyException("Cannot commit unregistered persistent variable %s" % key)
-		except Exception, e:
+		except Exception as e:
 			ex = TransformException("Unable to commit persistent variable %s: transformation error (%s)" % (key, str(e)))
 		self._mutex.release()
 		if ex:
@@ -244,7 +244,7 @@ class ConfigManager:
 					ret = v['user']
 				else:
 					ret = v['default']
-		except Exception, e:
+		except Exception as e:
 			print ("Error while accessing key %s: %s" % (key, str(e)))
 			getLogger().error("Error while accessing key %s: %s" % (key, str(e)))
 		self._mutex.release()
@@ -292,7 +292,7 @@ class ConfigManager:
 					except KeyException:
 						pass
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to read configuration file '%s' (%s)" % (filename, str(e)))
 
 	def write(self, filename):
@@ -307,7 +307,7 @@ class ConfigManager:
 			f = open(filename, "w")
 			f.write(contents)
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to save current configuration to file '%s' (%s)" % (filename, str(e)))
 
 	##

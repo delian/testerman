@@ -208,9 +208,9 @@ class WatchingThread(threading.Thread):
 				for directory in self._dirs:
 					try:
 						self._checkDir(directory)
-					except Exception, e:
+					except Exception as e:
 						self._probe.getLogger().debug("Unable to watch directory %s: %s" % (directory, str(e)))
-			except Exception, e:
+			except Exception as e:
 				self._probe.getLogger().debug("Error while watching directories: %s" % str(e))
 			self._stopEvent.wait(self._interval)
 	

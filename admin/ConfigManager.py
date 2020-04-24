@@ -60,7 +60,7 @@ class ConfigManager:
 				if m:
 					self.set(m.group('key').strip(), m.group('value').strip())
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to read configuration file '%s' (%s)" % (filename, str(e)))
 
 	def write(self, filename):
@@ -73,6 +73,6 @@ class ConfigManager:
 			f = open(filename, "w")
 			f.write(contents)
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to save current configuration to file '%s' (%s)" % (filename, str(e)))
 	

@@ -539,7 +539,7 @@ class spawn (object):
                 # SLE: make sure we don't echo input characters. For testerman, that's the 'default'.
                 # Moreover, it seems to be the only way to disable echo on Solaris - not allowed from the parent process
                 if not self.echo: self.setecho(False) 
-            except Exception, e:
+            except Exception as e:
                 # Some platforms do not like setwinsize (Cygwin).
                 # This will cause problem when running applications that
                 # are very picky about window size.

@@ -230,7 +230,7 @@ def logMessageSent(fromTc, fromPort, toTc, toPort, message, address = None):
 		address = ''
 	try:
 		tliLog('event', toXml('message-sent', { 'class': 'event', 'timestamp': time.time(), 'from-tc': fromTc, 'from-port': fromPort, 'to-tc': toTc, 'to-port': toPort }, '%s%s' % (testermanToXml(message, 'message'), testermanToXml(address, 'address'))))
-	except Exception, e:
+	except Exception as e:
 		ret = getBacktrace()
 		logUser(unicode(e) + u'\n' + unicode(ret))
 
@@ -274,7 +274,7 @@ def logTemplateMatch(tc, port, message, template, encodedMessage = None):
 			tliLog('match', toXml('template-match', { 'class': 'event', 'timestamp': time.time(), 'tc': tc, 'port': port }, '%s%s%s' % (testermanToXml(message, 'message'), testermanToXml(template, 'template'), testermanToXml(encodedMessage, 'encoded-message'))))
 		else:
 			tliLog('match', toXml('template-match', { 'class': 'event', 'timestamp': time.time(), 'tc': tc, 'port': port }, '%s%s' % (testermanToXml(message, 'message'), testermanToXml(template, 'template'))))
-	except Exception, e:
+	except Exception as e:
 		ret = getBacktrace()
 		logUser(unicode(e) + u'\n' + unicode(ret))
 
@@ -288,7 +288,7 @@ def logTemplateMismatch(tc, port, message, template, encodedMessage = None, mism
 			tliLog('mismatch', toXml('template-mismatch', attributes, '%s%s%s' % (testermanToXml(message, 'message'), testermanToXml(template, 'template'), testermanToXml(encodedMessage, 'encoded-message'))))
 		else:
 			tliLog('mismatch', toXml('template-mismatch', attributes, '%s%s' % (testermanToXml(message, 'message'), testermanToXml(template, 'template'))))
-	except Exception, e:
+	except Exception as e:
 		ret = getBacktrace()
 		logUser(unicode(e) + u'\n' + unicode(ret))
 

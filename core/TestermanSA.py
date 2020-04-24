@@ -107,7 +107,7 @@ def triSAReset():
 	for probe in ProbeBindings.values():
 		try:
 			probe.onTriSAReset()
-		except Exception, e:
+		except Exception as e:
 			log("triSAReset: error on probe %s during onTriSAReset(): %s" % (probe.getUri(), str(e)))
 		if probe.isRemote():
 			# Actually, we sould only do this on probes that were actually locked, i.e.
@@ -142,7 +142,7 @@ def triExecuteTestCase(testCaseId, tsiPortList):
 				registerWatchedProbe(probe)
 			try:
 				probe.onTriExecuteTestCase()
-			except Exception, e:
+			except Exception as e:
 				log("triExecuteTestCase: error on probe %s onTriExecuteTestCase(): %s" % (probe.getUri(), str(e)))
 		else:
 			# No implementation available
@@ -307,7 +307,7 @@ def onLogNotification(probeUri, logClass, logInfo):
 			# TODO/FIXME: retrieve the tsiPort from the probeUri
 			TestermanTCI.logSystemReceived(tsiPort = probeUri, label = label, payload = payload, sutAddress = sutAddress)
 
-	except Exception, e:
+	except Exception as e:
 		log("Exception in onLogNotification: %s" % str(e))
 
 def onTriEnqueueMsgNotification(probeUri, message, sutAddress):
@@ -320,7 +320,7 @@ def onTriEnqueueMsgNotification(probeUri, message, sutAddress):
 			probeAdapter = WatchedProbes[probeUri]
 			probeAdapter.triEnqueueMsg(message, sutAddress)
 
-	except Exception, e:
+	except Exception as e:
 		log("Exception in onTriEnqueueMsgNotification: %s" % str(e))
 
 ################################################################################

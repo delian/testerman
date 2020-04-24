@@ -114,7 +114,7 @@ def createPackage(sources, filename, baseDir = "", excluded = []):
 
 		# Purge the temp dir
 		shutil.rmtree(tmpdir)
-	except Exception, e:
+	except Exception as e:
 		try:
 			shutil.rmtree(tmpdir)
 		except:
@@ -149,7 +149,7 @@ def getPackageInfo(sourceRoot):
 			f = open(packageModuleFilename)
 			package = imp.load_module("package", f, sourceRoot, (".py", "r", imp.PY_SOURCE))
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to load module PACKAGE from %s (%s)." % (sourceRoot, str(e)))
 
 		packageInfo = {}
@@ -161,7 +161,7 @@ def getPackageInfo(sourceRoot):
 			# Exclude files are filename patterns, not including a path
 			packageInfo['excluded'] = package.getExcludedFiles() + [moduleBasename] # automatically exclude the PACKAGE.py
 			packageInfo['version'] = package.getVersion()
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to get component info (%s)." % str(e))
 	finally:
 		# Remove all modules that were imported during the PACKAGE importation.

@@ -147,7 +147,7 @@ class SnmpServer(threading.Thread):
 		self._transportDispatcher.jobStarted(1)
 		try:
 			self._transportDispatcher.runDispatcher(timeout = 1)
-		except Exception, e:
+		except Exception as e:
 			getLogger().error(u"Error while handling an SNMP message: %s" % unicode(e))
 	
 	def stop(self):

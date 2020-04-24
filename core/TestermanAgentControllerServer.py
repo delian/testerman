@@ -173,7 +173,7 @@ class XaServer(Nodes.ListeningNode):
 			resp.setBody(str(e))
 			self.sendResponse(channel, transactionId, resp)
 
-		except Exception, e:
+		except Exception as e:
 			resp = Messages.Response(501, "Internal server error")
 			resp.setBody(str(e) + "\n" + Nodes.getBacktrace())
 			self.sendResponse(channel, transactionId, resp)
@@ -444,7 +444,7 @@ class IaServer(Nodes.ListeningNode):
 			resp.setBody(str(e))
 			self.sendResponse(channel, transactionId, resp)
 
-		except Exception, e:
+		except Exception as e:
 			resp = Messages.Response(501, "Internal server error")
 			resp.setBody(str(e) + "\n" + Nodes.getBacktrace())
 			self.sendResponse(channel, transactionId, resp)
@@ -460,7 +460,7 @@ class IaServer(Nodes.ListeningNode):
 				self._controller.unsubscribe(channel, uri)
 			else:
 				self.getLogger().info("Received unsupported notification method: " + method)
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().error("While handling notification: " + str(e))
 	
 	def onResponse(self, channel, transactionId, response):
@@ -526,7 +526,7 @@ class Controller(object):
 			self._xaServer.finalize()
 			self._iaServer.stop()
 			self._iaServer.finalize()
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().error("Unable to stop gracefully: %s" % str(e))
 
 	def initialize(self):
@@ -985,7 +985,7 @@ class Controller(object):
 			f = open(completePath)
 			content = f.read()
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().warning("Unable to send file %s: %s" % (path, str(e)))
 		
 		return content 
@@ -1077,7 +1077,7 @@ def main():
 	if configFile:
 		try:
 			cm.read(configFile)
-		except Exception, e:
+		except Exception as e:
 			print str(e)
 			return 1
 
@@ -1137,7 +1137,7 @@ def main():
 			time.sleep(1)
 	except KeyboardInterrupt:	
 		getLogger().info("Shutting down Testerman Agent Controller Server...")
-	except Exception, e:
+	except Exception as e:
 		print "Unable to start server: " + str(e)
 		getLogger().critical("Unable to start server: " + str(e))
 

@@ -58,7 +58,7 @@ def registerPluginClass(label, pluginId, pluginClass, configurationClass = None,
 		else:
 			log("WARNING: unable to register Plugin '%s' {%s}: a plugin with the same ID has already been registered" % (label, pluginId))
 			return False
-	except Exception, e:
+	except Exception as e:
 		log("WARNING: unable to register a plugin: " + unicode(e))
 	return Flase
 
@@ -100,9 +100,9 @@ def scanPlugins():
 				__import__("plugins." + m)
 				log("%s analyzed" % m)
 
-			except Exception, e:
+			except Exception as e:
 				log("Unable to import plugin %s: %s" % (m, str(e)))
-	except Exception, e:
+	except Exception as e:
 		log("Unable to scan for plugins: " + str(e))
 
 ###############################################################################

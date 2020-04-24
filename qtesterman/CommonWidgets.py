@@ -1107,7 +1107,7 @@ class WTemplateView(QTreeWidget):
 				dialog = WValueDialog(data = item.getValue(), binary = False, parent = self)
 			dialog.exec_()
 
-		except Exception, e:
+		except Exception as e:
 			print str(e)
 
 
@@ -1230,7 +1230,7 @@ def mimeDataToObjects(mimeType, mimeData):
 	try:
 		objects = pickle.loads(data.data())
 		return objects
-	except Exception, e:
+	except Exception as e:
 		log("DEBUG: unable to deserialize %s mime data: %s" % (mimeType, str(e)))
 		return None
 

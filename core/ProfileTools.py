@@ -67,7 +67,7 @@ def parseProfile(xmlProfile):
 				name = parameter.attributes['name'].value
 				value = parameter.childNodes[0].data
 				profile.parameters[name] = value
-			except Exception, e:
+			except Exception as e:
 				getLogger().warning("Unable to parse a parameter in profile: %s" % str(e))
 
 	except Exception:

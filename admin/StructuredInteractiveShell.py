@@ -559,7 +559,7 @@ class SequenceOfNode(SyntaxNode):
 
 				res.append(val)
 				logging.debug("Captured: " + str(val))
-			except Exception, e:
+			except Exception as e:
 				logging.debug("Exception " + str(e))
 				break
 		return (res, remainingTokens)
@@ -577,7 +577,7 @@ class SequenceOfNode(SyntaxNode):
 			try:
 				logging.debug("sequenceOf suggestions with remaining tokens " + str(remainingTokens))
 				suggestions, incomplete, remainingTokens = self.itemSyntaxNode.suggestNextTokens(remainingTokens)
-			except Exception, e:
+			except Exception as e:
 				logging.debug("sequenceOf suggestions: " + str(e))
 				break
 			if incomplete:
@@ -1228,7 +1228,7 @@ class CmdContextManagerAdapter(ContextManager):
 					return ret + [ '' ] # the trailing '' is here to force a continuation
 				else:
 					return ret # will force a word completion
-			except Exception, e:
+			except Exception as e:
 				return []
 		
 		def onecmd(self, line):
@@ -1246,7 +1246,7 @@ class CmdContextManagerAdapter(ContextManager):
 				self._contextManager.execute(self.tokenize(line))
 			except ShellExit:
 				raise
-			except Exception, e:
+			except Exception as e:
 				if self._contextManager.isDebug():
 					self.stdout.write(getBacktrace() + "\n")
 				self.stdout.write("%% error: %s\n" % str(e))

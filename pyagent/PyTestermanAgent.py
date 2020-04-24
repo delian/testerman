@@ -324,7 +324,7 @@ class Agent(Nodes.ConnectingNode):
 		self.channel = channel
 		try:
 			self.registerAgent()
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().error("Unable to register agent: " + str(e))
 			self.getLogger().error("Disconnecting for a later attempt")
 			self.disconnect(self.channel)
@@ -335,7 +335,7 @@ class Agent(Nodes.ConnectingNode):
 		for probe in self.probes.values():
 			try:
 				self.registerProbe(probe)
-			except Exception, e:
+			except Exception as e:
 				self.getLogger().warning("Unable to register probe %s (%s)" % (str(probe.getUri()), str(e)))
 
 		self.getLogger().info("Probes registered")
@@ -425,7 +425,7 @@ class Agent(Nodes.ConnectingNode):
 		except ProbeException, e:
 			self.response(transactionId, 516, "Probe error", str(e) + "\n" + Nodes.getBacktrace())
 
-		except Exception, e:
+		except Exception as e:
 			self.response(transactionId, 515, "Internal server error", str(e) + "\n" + Nodes.getBacktrace())
 		
 	def onNotification(self, channel, message):
@@ -625,7 +625,7 @@ class Agent(Nodes.ConnectingNode):
 						if p.attributes.has_key('name') and p.attribute.has_key('value'):
 							entry['properties'][p.attributes['name']] = p.attributes['value']
 					ret.append(entry)
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().warning("Error while parsing update metadata file: %s" % str(e))
 			ret = []
 
@@ -665,7 +665,7 @@ class Agent(Nodes.ConnectingNode):
 				# TODO: make sure to set write rights to allow future updates
 				# os.chmod("%s/%s" % (basepath, c), ....)
 			tfile.close()
-		except Exception, e:
+		except Exception as e:
 			archiveFileObject.close()
 			raise Exception("Error while unpacking the update archive:\n%s" % str(e))
 
@@ -734,7 +734,7 @@ class Agent(Nodes.ConnectingNode):
 		if url:
 			try:
 				self.installComponent(url, basepath)
-			except Exception, e:
+			except Exception as e:
 				raise Exception("Unable to install the update:\n%s\nContinuing with the current version." % str(e))
 	
 			self.getLogger().info("Agent updated from %s to %s (%s)" % (currentVersion, selectedVersion, selectedBranch))
@@ -767,9 +767,9 @@ def scanPlugins(paths, label):
 					m = m[:-3]
 				try:
 					__import__(m)
-				except Exception, e:
+				except Exception as e:
 					getLogger().warning("Unable to import %s %s: %s" % (m, label, str(e)))
-		except Exception, e:
+		except Exception as e:
 			getLogger().info("Unable to scan %s path for %ss: %s" % (path, label, str(e)))
 
 ################################################################################

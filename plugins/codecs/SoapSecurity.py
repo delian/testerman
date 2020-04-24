@@ -168,7 +168,7 @@ def loadCertificates(filenames):
 
 			CertificatesBySki[ski] = cert
 			print "DEBUG: certificate for '%s' loaded" % cert.get_subject().as_text()
-		except Exception, e:
+		except Exception as e:
 			print "DEBUG: unable to load certificate %s (%s)" % (filename, str(e))
 
 def loadCertificate(filename):
@@ -191,7 +191,7 @@ def loadCertificate(filename):
 		CertificatesBySki[ski] = cert
 		return cert
 
-	except Exception, e:
+	except Exception as e:
 		print "DEBUG: unable to load certificate %s (%s)" % (filename, str(e))
 		return None	
 
@@ -203,7 +203,7 @@ def loadKey(filename):
 		key = M2.EVP.load_key_string(pem)
 		print "DEBUG: key loaded"
 		return key
-	except Exception, e:
+	except Exception as e:
 		print "DEBUG: unable to load key %s (%s)" % (filename, str(e))
 		return None	
 
@@ -211,7 +211,7 @@ def loadKeyFromPem(pem):
 	try:
 		key = M2.EVP.load_key_string(pem)
 		return key
-	except Exception, e:
+	except Exception as e:
 		raise Exception("unable to parse PEM key (%s)" % (str(e)))
 
 def loadCertFromPem(pem):
@@ -229,7 +229,7 @@ def loadCertFromPem(pem):
 		except:
 			pass
 		return (cert, ski)
-	except Exception, e:
+	except Exception as e:
 		raise Exception("unable to parse PEM certificate (%s)" % (str(e)))
 	
 

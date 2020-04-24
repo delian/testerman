@@ -174,7 +174,7 @@ def scheduleAts(source, atsId, username, session, at, path = None, groups = None
 		else:
 			message = "will start on %s" % time.strftime("%Y-%m-%d, at %H:%M:%S (server time)", time.localtime(job.getScheduledStartTime()))
 		res = { 'job-id': jobId, 'job-uri': job.getUri(), 'message': "ATS scheduled, %s. Its job ID is %d" % (message, jobId) }
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Scheduling error: %s" % (str(e)))
 		getLogger().info("<< scheduleAts(...): Fault:\n%s" % Tools.getBacktrace())
 		raise(e)
@@ -239,7 +239,7 @@ def scheduleCampaign(source, campaignId, username, session, at, path = None):
 		else:
 			message = "will start on %s" % time.strftime("%Y%m%d, at %H:%M:%S", time.localtime(job.getScheduledStartTime()))
 		res = { 'job-id': jobId, 'job-uri': job.getUri(), 'message': "Campaign scheduled, %s. Its job ID is %d" % (message, jobId) }
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Scheduling error: %s" % (str(e)))
 		getLogger().info("<< scheduleCampaign(...): Fault:\n%s" % Tools.getBacktrace())
 		raise(e)
@@ -274,7 +274,7 @@ def getJobInfo(jobId = None):
 	res = []
 	try:
 		res = JobManager.instance().getJobInfo(jobId)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to complete getJobInfo operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< getJobInfo(...): Fault:\n%s" % str(e))
 		raise(e)
@@ -313,7 +313,7 @@ def getJobDetails(jobId):
 	res = []
 	try:
 		res = JobManager.instance().getJobDetails(jobId)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to complete getJobDetails operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< getJobDetails(...): Fault:\n%s" % str(e))
 		raise(e)
@@ -345,7 +345,7 @@ def getJobLog(jobId, useCompression = True):
 				res = base64.encodestring(zlib.compress(log))
 			else:
 				res = base64.encodestring(log)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to complete getJobLog operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< getJobLog(...): Fault:\n%s" % str(e))
 		raise(e)
@@ -370,7 +370,7 @@ def getJobLogFilename(jobId):
 	res = None
 	try:
 		res = JobManager.instance().getJobLogFilename(jobId)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to complete getJobLogFilename operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< getJobLogFilename(...): Fault:\n%s" % str(e))
 		raise(e)
@@ -397,7 +397,7 @@ def rescheduleJob(jobId, at):
 	res = False
 	try:
 		res = JobManager.instance().rescheduleJob(jobId, at)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to complete rescheduleJob operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< rescheduleJob(...): Fault:\n%s" % str(e))
 		raise(e)
@@ -425,7 +425,7 @@ def sendSignal(jobId, signal):
 	ret = False
 	try:
 		ret = JobManager.instance().sendSignal(jobId, signal)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< sendSignal(...): Fault:\n%s" % str(e))
 		raise(e)
@@ -497,7 +497,7 @@ def getFile(path, useCompression = False):
 				ret = base64.encodestring(zlib.compress(contents))
 			else:
 				ret = base64.encodestring(contents)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< getFile(...): Fault:\n%s" % str(e))
 		ret = None
@@ -541,7 +541,7 @@ def putFile(content, path, useCompression = False, username = None):
 		# /repository/samples/test.ats@1.1.2
 		# etc
 		res = True
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< putFile(...): Fault:\n" + str(e))
 		raise(e)
@@ -576,7 +576,7 @@ def getDirectoryListing(path):
 
 		# Sort the entries, so that it is useless to implement it in all clients ?
 		res.sort(key = operator.itemgetter('name'))
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< getDirectoryListing(...): Fault:\n%s" % str(e))
 		# Well, actually, we do not return a fault in this case...
@@ -617,7 +617,7 @@ def getFileInfo(path):
 				res['size'] = attributes.size
 			if attributes.mtime is not None:
 				res['timestamp'] = attributes.mtime
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< getFileInfo(...): Fault:\n" + str(e))
 		raise(e)
@@ -644,7 +644,7 @@ def removeFile(path):
 	res = False
 	try:
 		res = FileSystemManager.instance().unlink(path)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< removeFile(...): Fault:\n" + str(e))
 		raise(e)
@@ -672,7 +672,7 @@ def removeDirectory(path, recursive = False):
 	res = False
 	try:
 		res = FileSystemManager.instance().rmdir(path, recursive)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< removeDirectory(...): Fault:\n" + str(e))
 		raise(e)
@@ -720,7 +720,7 @@ def move(source, destination):
 	res = False
 	try:
 		res = FileSystemManager.instance().move(source, destination)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< move(...): Fault:\n" + str(e))
 		raise(e)
@@ -764,7 +764,7 @@ def copy(source, destination):
 	res = False
 	try:
 		res = FileSystemManager.instance().copy(source, destination)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< copy(...): Fault:\n" + str(e))
 		raise(e)
@@ -793,7 +793,7 @@ def rename(path, newName):
 	res = False
 	try:
 		res = FileSystemManager.instance().rename(path, newName)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< rename(...): Fault:\n" + str(e))
 		raise(e)
@@ -819,7 +819,7 @@ def makeDirectory(path):
 	res = False
 	try:
 		res = FileSystemManager.instance().mkdir(path)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< makeDirectory(...): Fault:\n" + str(e))
 		raise(e)
@@ -870,7 +870,7 @@ def getDependencies(path, recursive = False):
 		else:
 			raise Exception('Unsupported file format, cannot resolve dependencies')
 		
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< getDependencies(...): Fault:\n" + str(e))
 		raise(e)
@@ -924,7 +924,7 @@ def getReverseDependencies(path):
 			# Reverse dependencies is not supported on something that is not a module
 			res = []
 		
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< getReverseDependencies(...): Fault:\n" + str(e))
 		raise(e)
@@ -971,7 +971,7 @@ def exportPackage(path, useCompression = False):
 				ret = base64.encodestring(zlib.compress(contents))
 			else:
 				ret = base64.encodestring(contents)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< createPackageFile(...): Fault:\n%s" % str(e))
 		raise(e)
@@ -1007,7 +1007,7 @@ def importPackageFile(content, path, useCompression = False):
 			content = zlib.decompress(content)
 		
 		res = Package.importPackageFile(content, path)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< importPackageFile(...): Fault:\n" + str(e))
 		raise(e)
@@ -1035,7 +1035,7 @@ def createPackage(path):
 	res = False
 	try:
 		res = Package.createPackage(path)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to perform operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< createPackage(...): Fault:\n" + str(e))
 		raise(e)
@@ -1075,7 +1075,7 @@ def schedulePackage(path, username, session, at, script = None, profileName = No
 		else:
 			raise Exception("Invalid script/default script for package execution (unrecognized job type based on extension - %s)" % script)
 	
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Scheduling error: %s" % (str(e)))
 		getLogger().info("<< schedulePackage(...): Fault:\n%s" % Tools.getBacktrace())
 		raise(e)
@@ -1129,7 +1129,7 @@ def deployProbe(agentName, probeName, probeType):
 	# Raises an error if needed
 	try:
 		ProbeManager.instance().deployProbe(agentName, probeName, probeType)
-	except Exception, e:
+	except Exception as e:
 		getLogger().info("<< deployProbe: Fault:\n" + str(e))
 		raise(e)
 	getLogger().info("<< deployProbe OK")
@@ -1153,7 +1153,7 @@ def undeployProbe(agentName, probeName):
 	# Raises an error if needed
 	try:
 		ProbeManager.instance().undeployProbe(agentName, probeName)
-	except Exception, e:
+	except Exception as e:
 		getLogger().info("<< undeployProbe: Fault:\n" + str(e))
 		raise(e)
 	getLogger().info("<< undeployProbe OK")
@@ -1173,7 +1173,7 @@ def getRegisteredProbes():
 	getLogger().info(">> getRegisteredProbes")
 	try:
 		res = ProbeManager.instance().getRegisteredProbes()
-	except Exception, e:
+	except Exception as e:
 		getLogger().info("<< getRegisteredProbes: Fault:\n" + str(e))
 		raise(e)
 	
@@ -1194,7 +1194,7 @@ def getRegisteredAgents():
 	getLogger().info(">> getRegisteredAgents")
 	try:
 		res = ProbeManager.instance().getRegisteredAgents()
-	except Exception, e:
+	except Exception as e:
 		getLogger().info("<< getRegisteredAgents: Fault:\n" + str(e))
 		raise(e)
 	
@@ -1217,7 +1217,7 @@ def restartAgent(agentName):
 	# Raises an error if needed
 	try:
 		ProbeManager.instance().restartAgent(agentName)
-	except Exception, e:
+	except Exception as e:
 		getLogger().info("<< restartAgent: Fault:\n" + str(e))
 		raise(e)
 	getLogger().info("<< restartAgent OK")
@@ -1245,7 +1245,7 @@ def updateAgent(agentName, branch = None, version = None):
 	# Raises an error if needed
 	try:
 		ProbeManager.instance().updateAgent(agentName)
-	except Exception, e:
+	except Exception as e:
 		getLogger().info("<< updateAgent: Fault:\n" + str(e))
 		raise(e)
 	getLogger().info("<< updateAgent OK")
@@ -1396,7 +1396,7 @@ def purgeJobQueue(older_than):
 	res = 0
 	try:
 		res = JobManager.instance().purgeJobs(older_than)
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to complete purgeJobs operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< purgeJobQueue(...): Fault:\n%s" % str(e))
 		raise(e)
@@ -1420,7 +1420,7 @@ def persistJobQueue():
 	
 	try:
 		res = JobManager.instance().persist()
-	except Exception, e:
+	except Exception as e:
 		e =  Exception("Unable to complete persistJobQueue operation: %s\n%s" % (str(e), Tools.getBacktrace()))
 		getLogger().info("<< persistJobQueue(...): Fault:\n%s" % str(e))
 		raise(e)

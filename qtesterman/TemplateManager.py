@@ -32,7 +32,7 @@ def xmlToPythonStruct(xmlString):
 	try:
 		dom = xml.dom.minidom.parseString(xmlString) 
 		return xmlNodeToPythonStruct(dom.documentElement)
-	except Exception, e:
+	except Exception as e:
 		print("Error: " + unicode(e).encode('utf-8'))
 	
 def xmlNodeToPythonStruct(node):
@@ -61,7 +61,7 @@ def xmlNodeToPythonStruct(node):
 
 			return ("xmlcdata", xmlNodeToPythonStruct(dom.documentElement))
 		
-		except Exception, e:
+		except Exception as e:
 			return ("cdata", node.nodeValue)
 	else:
 		return ("unsupported", node.nodeValue)
@@ -195,7 +195,7 @@ class TemplateManager(QObject):
 				filecontent = "".join(fp.readlines())
 				fp.close()
 				self.xmlContent = xmlToPythonStruct(filecontent)
-			except Exception, e:
+			except Exception as e:
 				log("DEBUG: default template file problem (%s) : %s" % (xmlFile, str(e)))
 			self._createTemplateList()
 
@@ -223,7 +223,7 @@ class TemplateManager(QObject):
 									newTemplate.content.append(("text", content[1]))
 							self.templates.append(newTemplate)
 				return True
-			except Exception, e:
+			except Exception as e:
 				log("DEBUG: xml file structure seems to be invalid : %s" % str(e))
 				return None
 

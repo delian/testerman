@@ -985,7 +985,7 @@ class Port:
 			try:
 				os.write(self._notifier[1], 'r')
 				logInternal("port %s: notifying a new message for reader on %s" % (self, self._notifier[0]))
-			except Exception, e:
+			except Exception as e:
 				logInternal("port %s: async notifier error %s" % (self, e))
 				pass
 		# else not started: not enqueueing anything.
@@ -1067,7 +1067,7 @@ class Port:
 			self._started = True
 			try:
 				self._notifier = os.pipe()
-			except Exception, e:
+			except Exception as e:
 				self._unlock()
 				raise Exception("Unable to start port %s: %s" % (str(self), e))
 		self._unlock()
@@ -1954,7 +1954,7 @@ def alt(alternatives):
 							if matchedInfo:
 								# Exit the loop on messages directly.
 								break
-					except Exception, e:
+					except Exception as e:
 						port._unlock()
 						logInternal("Exception while analyzing system events: %s" % str(e))
 						raise
@@ -2024,7 +2024,7 @@ def alt(alternatives):
 								os.read(port._notifier[0], 1)
 							except:
 								pass
-					except Exception, e:
+					except Exception as e:
 						port._unlock()
 						logInternal("Exception while consuming standard port message: %s" % str(e))
 						raise e
@@ -2088,7 +2088,7 @@ def alt(alternatives):
 						raise
 					
 	#			if r: logInternal("activity detected on port(s) %s" % r)
-	except Exception, e:
+	except Exception as e:
 		logInternal("exception in alt(): %s (%s)" % (str(e), repr(e)))
 		if systemQueueWatched:
 			_getSystemQueue()._unregisterListener()
@@ -2170,7 +2170,7 @@ class SystemQueue(Port):
 			try:
 				os.write(p[1], 'r')
 				logInternal("system queue: notifying a new message for reader on %s" % (p[0]))
-			except Exception, e:
+			except Exception as e:
 				logInternal("system queue: async notifier error %s" % (e))
 				pass
 
@@ -3011,7 +3011,7 @@ def _templateMatch(message, template, path):
 		# Let's see if we can first decode the message
 		try:
 			decodedMessage = template.decode(message)
-		except Exception, e:
+		except Exception as e:
 			logInternal("mismatch: unable to decode message part with codec %s: %s" % (template._codec, str(e) + getBacktrace()))
 			return (False, message, path)
 		# TODO: handle decoding error here ?

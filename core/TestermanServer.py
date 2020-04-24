@@ -257,7 +257,7 @@ class XmlRpcServerThread(threading.Thread):
 		try:
 			while not self._stopEvent.isSet(): 
 				self._server.handle_request_with_timeout(0.01)
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Exception in XMLRPC server thread: " + str(e))
 		getLogger().info("XML-RPC server stopped")
 
@@ -265,7 +265,7 @@ class XmlRpcServerThread(threading.Thread):
 		try:
 			self._stopEvent.set()
 			self.join()
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Unable to stop XML-RPC server gracefully: %s" % str(e))
 			
 
@@ -400,7 +400,7 @@ def main():
 		if configFile: cm.read(configFile)
 		if usersFile: cm.read(usersFile, autoRegister = True)
 		if apisFile: cm.read(apisFile, autoRegister = True)
-	except Exception, e:
+	except Exception as e:
 		print str(e)
 		return 1
 
@@ -503,7 +503,7 @@ def main():
 			time.sleep(1)
 	except KeyboardInterrupt:
 		getLogger().info("Shutting down Testerman Server...")
-	except Exception, e:
+	except Exception as e:
 		sys.stderr.write("Unable to start server: %s\n" % str(e))
 		getLogger().critical("Unable to start server: " + str(e))
 

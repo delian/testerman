@@ -287,7 +287,7 @@ The test system interface port bound to such a probe complies with the ``Transpo
 				if len(conns) == 1:
 					# A single connection exist. Auto select it.
 					sutAddress = "%s:%s" % conns[0].peerAddress
-			except Exception, e:
+			except Exception as e:
 				self._unlock()
 				raise Exception("Cannot find a valid existing connection to send data by default (%s)" % str(e))
 			self._unlock()
@@ -409,7 +409,7 @@ The test system interface port bound to such a probe complies with the ``Transpo
 				sock = self._toSsl(sock, serverSide = False)
 				self.getLogger().debug("SSL client socket initialized.")
 			conn = self._registerOutgoingConnection(sock, to)
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().info("Connection to %s failed: %s" % (str(to), str(e)))
 			if self['enable_notifications']:
 				self.triEnqueueMsg(('connectionError', str(e)), "%s:%s" % to)
@@ -476,7 +476,7 @@ The test system interface port bound to such a probe complies with the ``Transpo
 		if conn:
 			try:
 				conn.socket.close()
-			except Exception, e:
+			except Exception as e:
 				self.getLogger().warning("Unable to close socket from %s: %s" % (addr, str(e)))
 		# Disconnection notification
 		if self['enable_notifications']:
@@ -517,7 +517,7 @@ The test system interface port bound to such a probe complies with the ``Transpo
 			self._listeningSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 			self._listeningSocket.bind(addr)
 			self._listeningSocket.listen(10)
-		except Exception, e:
+		except Exception as e:
 			self._unlock()
 			raise e
 		self._unlock()
@@ -532,7 +532,7 @@ The test system interface port bound to such a probe complies with the ``Transpo
 				self._listeningSocket.close()
 				self._listeningSocket = None
 				self.getLogger().info("Stopped listening")
-		except Exception, e:
+		except Exception as e:
 			pass
 		self._unlock()
 
@@ -695,10 +695,10 @@ class PollingThread(threading.Thread):
 								# New received message.
 								self._probe._feedData(addr, data)
 
-					except Exception, e:
+					except Exception as e:
 						self._probe.getLogger().warning("exception while polling active/listening sockets: %s" % str(e) + ProbeImplementationManager.getBacktrace())
 
-			except Exception, e:
+			except Exception as e:
 				self._probe.getLogger().warning("exception while polling active/listening sockets: %s" % str(e))
 				# Avoid 100% CPU usage when select() raises an error
 				time.sleep(0.01)

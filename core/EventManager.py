@@ -240,7 +240,7 @@ class Manager:
 					f = open(filename, 'a')
 					f.write('%s\n' % notification.getBody())
 					f.close()
-				except Exception, e:
+				except Exception as e:
 					self.getLogger().error("Unable to write log for %s: %s" % (notification.getUri(), str(e)))		
 		else:
 			self.getLogger().warning("Received unsupported notification method: " + method)
@@ -276,7 +276,7 @@ def finalize():
 	try:
 		instance().stop()
 		instance().finalize()
-	except Exception, e:
+	except Exception as e:
 		getLogger().error("Unable to stop the event manager gracefully: %s" % str(e))
 	
 def instance():

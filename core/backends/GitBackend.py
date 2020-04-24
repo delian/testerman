@@ -123,7 +123,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 				content = f.read()
 				f.close()
 				return content
-			except Exception, e:
+			except Exception as e:
 				getLogger().warning("Unable to read file %s: %s" % (filename, str(e)))
 				return None
 		else:
@@ -163,7 +163,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 					os.remove(backupFile)
 				except:
 					pass
-		except Exception, e:
+		except Exception as e:
 			if backupFile:
 				os.rename(backupFile, filename)
 			getLogger().warning("Unable to write content to %s: %s" % (filename, str(e)))
@@ -206,14 +206,14 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 		newprofilesdir = "%s.profiles" % newfilename
 		try:
 			os.rename(filename, newfilename)
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to rename %s to %s: %s" % (filename, newname, str(e)))
 			return False
 
 		try:
 			# rename profiles dir, too
 			os.rename(profilesdir, newprofilesdir)
-		except Exception, e:
+		except Exception as e:
 			pass
 
 		# Identify the profiles that were renamed/moved
@@ -261,7 +261,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 
 		try:
 			os.remove(filename)
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to unlink %s: %s" % (filename, str(e)))
 			return False
 		
@@ -288,7 +288,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 				elif os.path.isdir("%s/%s" % (path, entry)) and not entry in self._excludedPatterns and not entry.endswith('.profiles'):
 					ret.append({'name': entry, 'type': 'directory'})
 			return ret
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to list directory %s: %s" % (path, str(e)))
 		return None
 
@@ -333,7 +333,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 			else:
 				os.rmdir(path)
 				return True
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to rmdir %s: %s" % (path, str(e)))
 		return False
 
@@ -367,7 +367,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 		try:
 			os.rename(path, newname)
 			return True
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to rename dir %s to %s: %s" % (path, newname, str(e)))
 			return False
 		
@@ -389,7 +389,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 			a.mtime = s.st_ctime
 			a.size = s.st_size
 			return a
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to get file attributes for %s: %s" % (filename, str(e)))			
 		return None
 
@@ -490,7 +490,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 				elif os.path.isdir("%s/%s" % (profilesdir, entry)) and not entry in self._excludedPatterns:
 					ret.append({'name': entry, 'type': 'directory'})
 			return ret
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to list profiles directory %s: %s" % (profilesdir, str(e)))
 		return None
 
@@ -505,7 +505,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 			content = f.read()
 			f.close()
 			return content
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to read file %s: %s" % (filename, str(e)))
 			return None
 		
@@ -545,7 +545,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 					os.remove(backupFile)
 				except:
 					pass
-		except Exception, e:
+		except Exception as e:
 			if backupFile:
 				os.rename(backupFile, profilefilename)
 			getLogger().warning("Unable to write content to %s: %s" % (profilefilename, str(e)))
@@ -573,7 +573,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 		profilefilename = "%s.profiles/%s" % (filename, profilename)
 		try:
 			os.remove(profilefilename)
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to unlink %s: %s" % (profilefilename, str(e)))
 			return False
 
@@ -595,7 +595,7 @@ class GitBackend(FileSystemBackend.FileSystemBackend):
 			a.mtime = s.st_ctime
 			a.size = s.st_size
 			return a
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to get file attributes for %s: %s" % (profilefilename, str(e)))			
 		return None
 	

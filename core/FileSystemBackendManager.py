@@ -145,7 +145,7 @@ def mountRoot():
 	try:
 		if not backend.initialize():
 			raise Exception('initialize() returned False')
-	except Exception, e:
+	except Exception as e:
 		raise Exception("Unable to initialize the root backend %s: %s" % (str(backend), str(e)))
 	# Finally mount it
 	if not mount('/', backend, prefix = ''):
@@ -159,7 +159,7 @@ def mountAll():
 	"""
 	try:
 		mountRoot()
-	except Exception, e:
+	except Exception as e:
 		getLogger().critical("Unable to mount the root file system: %s" % (str(e)))
 		raise(e)
 
@@ -190,7 +190,7 @@ def mountAll():
 				mounts.append( (mountpoint, backendType, properties) )
 			else:
 				getLogger().warning("Invalid backend definition '%s' in configuration file: missing 'backend' or 'mountpoint' keys" % section)
-	except Exception, e:
+	except Exception as e:
 		getLogger().warning("Unable to load backend configuration file %s: %s" % (confFilename, str(e)))
 
 	# Now proceed to actual mounts
@@ -207,7 +207,7 @@ def mountAll():
 			initialized = False
 			try:
 				initialized = backend.initialize()
-			except Exception, e:
+			except Exception as e:
 				getLogger().warning("Exception while initializing backend %s: %s" % (str(backend), str(e)))
 				initialized = False
 			if not initialized:
@@ -240,9 +240,9 @@ def scanPlugins(paths, label):
 					m = m[:-3]
 				try:
 					__import__(m)
-				except Exception, e:
+				except Exception as e:
 					getLogger().warning("Unable to import %s %s: %s" % (m, label, str(e)))
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to scan %s path for %ss: %s" % (path, label, str(e)))
 
 def scanFileSystemBackends():

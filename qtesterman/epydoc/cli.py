@@ -440,7 +440,7 @@ def parse_arguments():
         try:
             parse_configfiles(options.configfiles, options, names)
         except (KeyboardInterrupt,SystemExit): raise
-        except Exception, e:
+        except Exception as e:
             if len(options.configfiles) == 1:
                 cf_name = 'config file %s' % options.configfiles[0]
             else:
@@ -712,7 +712,7 @@ def main(options, names):
     if xlink is not None:
         try:
             xlink.ApiLinkReader.read_configuration(options, problematic=False)
-        except Exception, exc:
+        except Exception as exc:
             log.error("Error while configuring external API linking: %s: %s"
                 % (exc.__class__.__name__, exc))
 
@@ -772,7 +772,7 @@ def main(options, names):
             for filename in options.pstat_files[1:]:
                 profile_stats.add(filename)
         except KeyboardInterrupt: raise
-        except Exception, e:
+        except Exception as e:
             log.error("Error reading pstat file: %s" % e)
             profile_stats = None
         if profile_stats is not None:

@@ -925,7 +925,7 @@ class SequenceSyntaxNode(SyntaxNode):
 			if content.has_key(name):
 				try:
 					buf.append(sn.encode_ber(content[name], context))
-				except Exception, e:
+				except Exception as e:
 					raise BerEncodingError("%s: unable to encode field '%s' in sequence: %s" % (str(self), name, str(e)))
 				if trace_encoding:
 					print "%s: field '%s' encoded in sequence:\n%s" % (str(self), name, binascii.hexlify(buf[-1]))

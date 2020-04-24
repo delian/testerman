@@ -305,7 +305,7 @@ class FileSystemManager:
 
 		try:
 			backend.write(adjusted, content, baseRevision = None, reason = reason, username = username)
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Unable to write %s: %s" % (filename, str(e)))
 			return False
 
@@ -330,7 +330,7 @@ class FileSystemManager:
 
 		try:
 			backend.writeprofile(adjusted, profilename, content, username = username)
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Unable to profile %s for %s: %s" % (profilename, filename, str(e)))
 			return False
 
@@ -497,7 +497,7 @@ class FileSystemManager:
 				if type_ == 'file':
 					try:
 						currentBackend.unlink(name, notify = notify)
-					except Exception, e:
+					except Exception as e:
 						getLogger().warning("Unable to recursively delete adjusted file '%s' for backend '%s': %s" % (name, currentBackend, str(e)))
 				elif type_ == 'directory':
 					# FIXME: here we should compute the docroot name of the file

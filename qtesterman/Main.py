@@ -52,7 +52,7 @@ import LogViewer
 
 try:
 	import Editors
-except Exception, e:
+except Exception as e:
 	log(str(e))
 
 
@@ -749,7 +749,7 @@ class WMainWindow(QMainWindow):
 			QApplication.instance().set("gui.statusbar", self.statusBar)
 			self.statusBar.showMessage("Welcome to Testerman.", 5000)
 
-		except Exception, e:
+		except Exception as e:
 			log("Warning: unable to create a widget: %s" % str(e))
 			import TestermanNodes
 			log(TestermanNodes.getBacktrace())
@@ -1071,7 +1071,7 @@ class WMainWindow(QMainWindow):
 			f = open(QApplication.instance().get('qtestermanpath') + '/releasenotes.txt')
 			rn = f.read()
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			log("Unable to read release notes: " + str(e))
 		dialog = WTextEditDialog(rn, getClientName() + " release notes", 1, self)
 		dialog.exec_()
@@ -1313,7 +1313,7 @@ def exportLog(logFilename, shouldConnect, defaultUrl, defaultUsername, pluginNam
 		f = open(logFilename, 'r')
 		xmlLog = f.read()
 		f.close()
-	except Exception, e:
+	except Exception as e:
 		log("Unable to load log file: %s" % unicode(e))
 		return 1
 	
@@ -1392,7 +1392,7 @@ def run():
 			["help", "version", "log=", "debug", "force-update", "online",
 			 "export-with=", "export-parameters=", "server=", "username=",
 			])
-	except Exception, e:
+	except Exception as e:
 		usage(str(e))
 		sys.exit(2)
 

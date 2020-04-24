@@ -484,7 +484,7 @@ The test system interface port bound to such a probe complies with the ``RtpPort
 				sock.setblocking(0)
 				# Register the new socket (sock, refcount)
 				self._sockets[sock.getsockname()] = (sock, 1)
-		except Exception, e:
+		except Exception as e:
 			self._unlock()
 			self.getLogger().error('Unable to get a local socket for %s' % str(addr))
 			raise e
@@ -516,7 +516,7 @@ The test system interface port bound to such a probe complies with the ``RtpPort
 					self._sockets[addr] = (s, refCount)
 			else:
 				self.getLogger().warning("Shared socket %s not found" % str(addr))
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().warning("Unable to close socket conditionally: %s" % str(e))
 		self._unlock()
 
@@ -530,7 +530,7 @@ The test system interface port bound to such a probe complies with the ``RtpPort
 			sock = self._getLocalSocket(fromAddr)
 			self._sendingThread = SendingThread(self, sock, toAddr, payloadType, frameSize, packetSize, sampleRate, ssrc)
 			self._sendingThread.start()
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().error("Unable to start sending RTP: %s" % str(e))
 		self._unlock()
 
@@ -543,7 +543,7 @@ The test system interface port bound to such a probe complies with the ``RtpPort
 			sock = self._getLocalSocket(fromAddr)
 			self._listeningThread = ListeningThread(self, sock, timeout)
 			self._listeningThread.start()
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().error("Unable to start listening RTP: %s" % str(e))
 		self._unlock()
 
@@ -590,7 +590,7 @@ The test system interface port bound to such a probe complies with the ``RtpPort
 					# We should "padd" our data with something to reach packetSize
 					data += (packetSize - len(data)) * '\x00'
 				self._unlock()
-			except Exception, e:
+			except Exception as e:
 				self._unlock()
 				self.getLogger().warning("Unable to read next packet from source data to stream: %s" % str(e))	
 				data = self._defaultPayload.getNextPacket()
@@ -609,7 +609,7 @@ The test system interface port bound to such a probe complies with the ``RtpPort
 		try:
 			self._dataToStream = StringIO.StringIO(data)
 			self._dataToStreamLoopCount = count
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().warning("Exception while setting data to stream: %s" % str(e))
 		self._unlock()
 
@@ -623,7 +623,7 @@ The test system interface port bound to such a probe complies with the ``RtpPort
 				self._dataToStream.close()
 			self._dataToStream = None
 			self._dataToStreamLoopCount = 0
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().warning("Exception while resetting data to stream: %s" % str(e))
 		self._unlock()
 	
@@ -711,9 +711,9 @@ class SendingThread(threading.Thread):
 
 				try:
 					fromSocket.sendto(packetBytes, 0, toAddr)
-				except Exception, e:
+				except Exception as e:
 					self._probe.getLogger().warning("Exception while sending a RTP packet: %s" % str(e))
-			except Exception, e:
+			except Exception as e:
 				self._probe.getLogger().warning("Exception while sending RTP: %s " % str(e))
 			# Wait our interval (should be an asynchronous tick, normally...)
 			time.sleep(interval)
@@ -789,7 +789,7 @@ class ListeningThread(threading.Thread):
 				lastSsrc = ssrc
 				lastTime = time.time()
 			
-			except Exception, e:
+			except Exception as e:
 				self._probe.getLogger().error("Exception while listening RTP: %s" % str(e))
 
 		self._probe._conditionallyCloseSocket(fromSocket)

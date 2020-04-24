@@ -178,7 +178,7 @@ class RootContext(SIS.CommandContext):
 			makedir("%s/updates" % docroot)
 			makedir("%s/archives" % docroot)
 			makedir("%s/repository/samples" % docroot)
-		except Exception, e:
+		except Exception as e:
 			self.error("An error occured while creating directories: " + str(e))
 			return -1
 		self.notify("Copying samples...")
@@ -188,7 +188,7 @@ class RootContext(SIS.CommandContext):
 				shutil.copy(f, "%s/repository/samples" % docroot)
 			for f in glob.glob("%s/samples/*.campaign" % srcroot):
 				shutil.copy(f, "%s/repository/samples" % docroot)
-		except Exception, e:
+		except Exception as e:
 			self.error("An error occured while copying samples: " + str(e))
 			return -1
 		self.notify("Done")
@@ -225,7 +225,7 @@ class RootContext(SIS.CommandContext):
 		cm = ConfigManager.ConfigManager()
 		try:
 			cm.read("%s/conf/testerman.conf" % home)
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to read saved configuration file: " + str(e))
 
 		headers = [ ("key", "Variable Name"), ("value", "Value") ]
@@ -364,7 +364,7 @@ class RootContext(SIS.CommandContext):
 				for p in Tools.getChildrenPids(pid):
 					try:
 						os.kill(p, signal.SIGKILL)
-					except Exception, e:
+					except Exception as e:
 						self.notify("WARNING: unable to kill process %s (%s)" % (p, str(e)))
 				# But we assume we killed it...
 				return 0
@@ -562,7 +562,7 @@ or set the TESTERMAN_ADMIN_TARGET environment variable."""
 		cm = ConfigManager.ConfigManager()
 		try:
 			cm.read("%s/conf/testerman.conf" % home)
-		except Exception, e:
+		except Exception as e:
 			print "Invalid Testerman target - cannot find or read %s/conf/testerman.conf file." % home
 			sys.exit(2)
 
@@ -612,7 +612,7 @@ or set the TESTERMAN_ADMIN_TARGET environment variable."""
 	if args:
 		try:
 			ret = adminShell.execute(args)
-		except Exception, e:
+		except Exception as e:
 			print str(e)
 			ret = 3
 		sys.exit(ret)

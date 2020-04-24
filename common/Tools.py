@@ -143,7 +143,7 @@ def parseStatusFile_linux(filename):
 					ppid_ = int(m.group(1))
 			elif ppid_ and pid_:
 				break
-	except Exception, e:
+	except Exception as e:
 		pass
 	return (pid_, ppid_)
 
@@ -295,11 +295,11 @@ def daemonize(pidFilename = None, stdout = None, stderr = None, displayPid = Fal
 			# Only close TTYs, not files, etc
 			try:
 				os.ttyname(fd)
-			except Exception, e:
+			except Exception as e:
 				continue
 			try:
 				os.close(fd)
-			except Exception, e:
+			except Exception as e:
 				pass
 		
 		# Finally we redirect std fds
@@ -314,7 +314,7 @@ def daemonize(pidFilename = None, stdout = None, stderr = None, displayPid = Fal
 		else: os.dup2(n, 2)
 		return os.getpid()
 
-	except Exception, e:
+	except Exception as e:
 		# What should we do ?...
 		raise e
 

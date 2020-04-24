@@ -301,7 +301,7 @@ The test system interface port bound to such a probe complies with the ``LdapPor
 		try:
 			self._unbind()
 			self.triEnqueueMsg(('unbindResult', True))
-		except Exception, e:
+		except Exception as e:
 			self.triEnqueueMsg(('error', 'Error while binding: %s' % str(e)), self['server_url'])
 	
 	def abandon(self):
@@ -376,7 +376,7 @@ The test system interface port bound to such a probe complies with the ``LdapPor
 		try:
 			self._bind(bindDn, password)
 			self.triEnqueueMsg(('bindResult', True))
-		except Exception, e:
+		except Exception as e:
 			self.triEnqueueMsg(('error', 'Error while binding: %s' % str(e)), self['server_url'])
 	
 	def search(self, basedn, filter_, scope, attributes):
@@ -415,7 +415,7 @@ The test system interface port bound to such a probe complies with the ``LdapPor
 		except ldap.NO_SUCH_OBJECT:
 			res = True
 			resultSet = []
-		except Exception, e:
+		except Exception as e:
 			self._onError(request, ProbeImplementationManager.getBacktrace())
 	
 		if res:
@@ -450,7 +450,7 @@ The test system interface port bound to such a probe complies with the ``LdapPor
 		except ldap.NO_SUCH_OBJECT:
 			res = True
 			deleteResult = False
-		except Exception, e:
+		except Exception as e:
 			self._onError(request, ProbeImplementationManager.getBacktrace())
 	
 		if res:
@@ -485,7 +485,7 @@ The test system interface port bound to such a probe complies with the ``LdapPor
 				# Let's add it
 				self._server.add_s(dn, ldap.modlist.addModlist(attributes))
 				completed = True
-		except Exception, e:
+		except Exception as e:
 			self.triEnqueueMsg(('error', 'Error while updating/adding some data:\n%s' % ProbeImplementationManager.getBacktrace()), self['server_url'])
 
 		if completed:
@@ -501,7 +501,7 @@ The test system interface port bound to such a probe complies with the ``LdapPor
 			try:
 				self._bind(self.getBindDn(), self['password'])
 				ret = True
-			except Exception, e:
+			except Exception as e:
 				self.triEnqueueMsg(('error', 'Error while binding: %s' % str(e)), self['server_url'])
 		else:
 			ret = True

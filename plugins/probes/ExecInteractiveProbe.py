@@ -56,7 +56,7 @@ def parseStatusFile_linux(filename):
 					ppid_ = int(m.group(1))
 			elif ppid_ and pid_:
 				break
-	except Exception, e:
+	except Exception as e:
 		pass
 	return (pid_, ppid_)
 
@@ -132,7 +132,7 @@ def getChildrenPids(pid):
 			pid_, ppid_ = parseStatusFile(filename)
 			if pid_ and ppid_:
 				pids.append( (pid_, ppid_) )
-		except Exception, e:
+		except Exception as e:
 			pass
 	
 	# Now let's construct the tree for the looked up pid
@@ -326,7 +326,7 @@ The test system interface port bound to such a probe complies with the ``Interac
 			try:
 				execThread.stop()
 				self.getLogger().info('Execution thread stopped')
-			except Exception, e:
+			except Exception as e:
 				self.getLogger().error('Error while cancelling the pending execution thread: %s' % str(e))
 		# Nothing to do if no pending thread.
 		self.getLogger().debug('execThread is now %s' % self._execThread)
@@ -345,7 +345,7 @@ The test system interface port bound to such a probe complies with the ``Interac
 			# Now start our dedicated thread.
 			self._execThread = ExecThread(self, command, compiledPatterns)
 			self._execThread.start()
-		except Exception, e:
+		except Exception as e:
 			self._unlock()
 			raise e
 		
@@ -402,7 +402,7 @@ class ExecThread(threading.Thread):
 			else: # Assume this is a string
 				self._process = pexpect.spawn(self._command)
 			self._process.setwinsize(24, 80)
-		except Exception, e:
+		except Exception as e:
 			self._probe.triEnqueueMsg('Internal execution error: %s' % ProbeImplementationManager.getBacktrace())
 
 		retcode = None
@@ -457,7 +457,7 @@ class ExecThread(threading.Thread):
 			for p in pids:
 				try:
 					os.kill(p, s)
-				except Exception, e:
+				except Exception as e:
 					self._probe.getLogger().warning("Unable to kill process %s: %s" % (pid, str(e))) 
 		# And we should wait for a notification indicating that the process
 		# has died...
@@ -475,7 +475,7 @@ class ExecThread(threading.Thread):
 			for p in pids:
 				try:
 					os.kill(p, s)
-				except Exception, e:
+				except Exception as e:
 					self._probe.getLogger().warning("Unable to send signal %s to process %s: %s" % (s, pid, str(e))) 
 	
 	def sendInput(self, input_):
@@ -492,7 +492,7 @@ class ExecThread(threading.Thread):
 			return
 		try:
 			data = data.decode(self._encoding)
-		except Exception, e:
+		except Exception as e:
 			self._probe.getLogger().warning('Invalid encoding scheme on output %s (%s):\n%s' % (stream, str(e), repr(data)))
 			return
 		

@@ -741,7 +741,7 @@ class PythonSourceColorizer:
             else:
                 try:
                     s += self.add_line_numbers(cgi.escape(toktext), css_class)
-                except Exception, e:
+                except Exception as e:
                     print (toktext, css_class, toktext.encode('ascii'))
                     raise
 

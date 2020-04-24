@@ -99,7 +99,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 			content = f.read()
 			f.close()
 			return content
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to read file %s: %s" % (filename, str(e)))
 			return None
 
@@ -132,7 +132,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 				except:
 					pass
 			return None # No new revision created.
-		except Exception, e:
+		except Exception as e:
 			if backupFile:
 				os.rename(backupFile, filename)
 			getLogger().warning("Unable to write content to %s: %s" % (filename, str(e)))
@@ -153,7 +153,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 		newprofilesdir = "%s.profiles" % newn
 		try:
 			os.rename(filename, newn)
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to rename %s to %s: %s" % (filename, newname, str(e)))
 			return False
 		
@@ -173,13 +173,13 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 		profilesdir = "%s.profiles" % filename
 		try:
 			shutil.rmtree(profilesdir, ignore_errors = True)
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to remove profiles associated to %s: %s" % (filename, str(e)))
 
 		try:
 			os.remove(filename)
 			return True
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to unlink %s: %s" % (filename, str(e)))
 		return False
 
@@ -197,7 +197,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 				elif os.path.isdir("%s/%s" % (path, entry)) and not entry in self._excludedPatterns and not entry.endswith('.profiles'):
 					ret.append({'name': entry, 'type': 'directory'})
 			return ret
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to list directory %s: %s" % (path, str(e)))
 		return None
 
@@ -227,7 +227,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 			else:
 				os.rmdir(path)
 				return True
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to rmdir %s: %s" % (path, str(e)))
 		return False
 
@@ -239,7 +239,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 		try:
 			os.rename(path, newname)
 			return True
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to rename dir %s to %s: %s" % (path, newname, str(e)))
 		return False
 
@@ -254,7 +254,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 			a.mtime = s.st_ctime
 			a.size = s.st_size
 			return a
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to get file attributes for %s: %s" % (filename, str(e)))			
 		return None
 
@@ -296,7 +296,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 				elif os.path.isdir("%s/%s" % (profilesdir, entry)) and not entry in self._excludedPatterns:
 					ret.append({'name': entry, 'type': 'directory'})
 			return ret
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to list profiles directory %s: %s" % (profilesdir, str(e)))
 		return None
 
@@ -311,7 +311,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 			content = f.read()
 			f.close()
 			return content
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to read file %s: %s" % (filename, str(e)))
 			return None
 		
@@ -344,7 +344,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 				except:
 					pass
 			return None # No new revision created.
-		except Exception, e:
+		except Exception as e:
 			if backupFile:
 				os.rename(backupFile, profilefilename)
 			getLogger().warning("Unable to write content to %s: %s" % (profilefilename, str(e)))
@@ -359,7 +359,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 		try:
 			os.remove(profilefilename)
 			return True
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to unlink %s: %s" % (profilefilename, str(e)))
 		return False
 		
@@ -377,7 +377,7 @@ class LocalBackend(FileSystemBackend.FileSystemBackend):
 			a.mtime = s.st_ctime
 			a.size = s.st_size
 			return a
-		except Exception, e:
+		except Exception as e:
 			getLogger().warning("Unable to get file attributes for %s: %s" % (profilefilename, str(e)))			
 		return None
 	

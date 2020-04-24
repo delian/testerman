@@ -124,7 +124,7 @@ class WDocumentManager(CommonWidgets.WEnhancedTabWidget):
 				contents = f.read()
 				f.close()
 				fileTimestamp = os.stat(unicode(path)).st_mtime
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self, 'Unable to open %s: %s' % (unicode(path), str(e)))
 				return False
 
@@ -273,7 +273,7 @@ class WDocumentManager(CommonWidgets.WEnhancedTabWidget):
 				contents = f.read()
 				f.close()
 				fileTimestamp = os.stat(unicode(path)).st_mtime
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self, 'Unable to open %s: %s' % (model.getUrl().toString(), unicode(e)))
 
 		if contents is not None and fileTimestamp is not None:
@@ -282,7 +282,7 @@ class WDocumentManager(CommonWidgets.WEnhancedTabWidget):
 				model.setSavedAttributes(url = model.getUrl(), timestamp = fileTimestamp)
 				model.resetModificationFlag()
 				QApplication.instance().get('gui.statusbar').showMessage('Document reloaded.', 5000)
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self, 'Unable to reload %s: %s' % (model.getUrl().toString(), unicode(e)))
 
 	def newAts(self):

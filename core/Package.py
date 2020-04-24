@@ -136,7 +136,7 @@ def getPackageMetadata(path):
 			raise Exception("Unable to read the package description file for package %s" % path)
 		# Now, parse the document
 		return parsePackageDescription(content)
-	except Exception, e:
+	except Exception as e:
 		raise e
 
 def parsePackageDescription(content):
@@ -162,7 +162,7 @@ def parsePackageDescription(content):
 				ret['status'] = e.firstChild.nodeValue
 		
 		return ret
-	except Exception, e:
+	except Exception as e:
 		raise Exception("Error while parsing package description file: %s" % e)
 		
 
@@ -214,7 +214,7 @@ def importPackageFile(content, path):
 	"""
 	try:
 		checkPackageFile(content)
-	except Exception, e:
+	except Exception as e:
 		getLogger().info("Invalid package file: %s" % e)
 		raise Exception("Invalid package file: %s" % e)
 	
@@ -260,7 +260,7 @@ if __name__ == '__main__':
 	try:
 		checkPackageFile(tpk)
 		print "The package file %s is a valid Testerman package." % sys.argv[1]
-	except Exception, e:
+	except Exception as e:
 		print "Invalid package file: %s" % e
 	
 	

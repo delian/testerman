@@ -228,7 +228,7 @@ The	test system interface port bound to such a probe complies with the ``Transpo
 			sock.connect(to)
 			conn = self._registerOutgoingConnection(sock, to)
 			# Connection notification ?
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().info("Connection to %s failed: %s" % (str(to), str(e)))
 			if self['enable_notifications']:
 				self.triEnqueueMsg(('connectionError', str(e)), "%s:%s" % to)
@@ -316,7 +316,7 @@ The	test system interface port bound to such a probe complies with the ``Transpo
 			self._listeningSocket.bind(addr)
 			self._listeningSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 			self._listeningSocket.listen(10)
-		except Exception, e:
+		except Exception as e:
 			raise e
 	
 	def _stopListening(self):
@@ -416,10 +416,10 @@ class PollingThread(threading.Thread):
 								# New received message.
 								self._probe._feedData(addr, data)
 
-					except Exception, e:
+					except Exception as e:
 						self._probe.getLogger().warning("exception while polling active/listening sockets: %s" % str(e))
 					
-			except Exception, e:
+			except Exception as e:
 				self._probe.getLogger().warning("exception while polling active/listening sockets: %s" % str(e))
 				# Avoid 100% CPU usage when select() raised an error
 				time.sleep(0.01)	

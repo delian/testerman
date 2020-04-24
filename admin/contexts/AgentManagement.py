@@ -147,7 +147,7 @@ class AgentContext(CommandContext):
 		try:
 			self._getClient().restartAgent(agent)
 			self.notify("Agent successfully restarted.")
-		except Exception, e:
+		except Exception as e:
 			self.notify("Unable to restart this agent:\n%s" % str(e))
 
 	def updateAgent(self, agent, branch = 'stable', version = None):
@@ -159,6 +159,6 @@ class AgentContext(CommandContext):
 			self._getClient().updateAgent(agent, branch, version)
 			self.notify("Agent successfully updated.")
 			self.notify("Don't forget to restart it to take the update into account.")
-		except Exception, e:
+		except Exception as e:
 			self.notify("Unable to update this agent:\n%s" % str(e))
 

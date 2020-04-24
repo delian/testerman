@@ -118,7 +118,7 @@ class WXsltLogView(Plugin.WReportView):
 			f = open(self.xsltPath.toAscii() + '/' + self.transformationComboBox.currentText().toAscii())
 			xslt = f.read()
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			log("Unable to read XSLT file: " + str(e))
 			return
 
@@ -135,7 +135,7 @@ class WXsltLogView(Plugin.WReportView):
 			#xsltDoc.freeDoc() -- freeStylesheet does it ???
 			transformedDoc.freeDoc()
 			xmlDoc.freeDoc()
-		except Exception, e:
+		except Exception as e:
 			log("Unable to apply XSLT to log: " + str(e))
 			transient.hide()
 			transient.setParent(None) # enable garbage collecting of the transient window

@@ -165,7 +165,7 @@ class WRevisionsDialog(QDialog):
 			# try:			
 			buffer1 = self._client.getFile('%s/revisions/%s' % (self._filename, items[0].revisionInfo['id']))
 			buffer2 = self._client.getFile('%s/revisions/%s' % (self._filename, items[1].revisionInfo['id']))
-			# except Exception, e: ...
+			# except Exception as e: ...
 			
 			self._diffViewer.doDiff(label1, buffer1, label2, buffer2)
 
@@ -693,7 +693,7 @@ class AsyncFetchingThread(QThread):
 	def run(self):
 		try:
 			self._asyncExpander._fetchedChildItemData = self._asyncExpander._fetcher()
-		except Exception, e:
+		except Exception as e:
 			pass
 		self.emit(SIGNAL("fetched"))
 		self.exec_()
@@ -969,7 +969,7 @@ class AtsWidgetItem(ExpandableWidgetItem):
 			try:
 				buffer1 = self.treeWidget().getClient().getFile(file1)
 				buffer2 = self.treeWidget().getClient().getFile(file2)
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self.treeWidget(), "Unable to get at least one file for file comparison:\n%s" % str(e))
 				return
 			finally:
@@ -1007,7 +1007,7 @@ class ModuleWidgetItem(BaseWidgetItem):
 			try:
 				buffer1 = self.treeWidget().getClient().getFile(file1)
 				buffer2 = self.treeWidget().getClient().getFile(file2)
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self.treeWidget(), "Unable to get at least one file for file comparison:\n%s" % str(e))
 				return
 			finally:
@@ -1047,7 +1047,7 @@ class CampaignWidgetItem(ExpandableWidgetItem):
 			try:
 				buffer1 = self.treeWidget().getClient().getFile(file1)
 				buffer2 = self.treeWidget().getClient().getFile(file2)
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self.treeWidget(), "Unable to get at least one file for file comparison:\n%s" % str(e))
 				return
 			finally:
@@ -1076,7 +1076,7 @@ class ExecutionLogsWidgetItem(ExpandableWidgetItem):
 			for entry in l:
 				if entry['type'] == 'log':
 					ret.append('%s/%s' % (archivePath, entry['name']))
-		except Exception, e:
+		except Exception as e:
 			print "DEBUG: " + str(e)
 		return ret
 
@@ -1148,7 +1148,7 @@ class ProfilesDirWidgetItem(ExpandableWidgetItem):
 			for entry in l:
 				if entry['type'] == 'profile':
 					ret.append('%s/%s' % (self._path, entry['name']))
-		except Exception, e:
+		except Exception as e:
 			print "DEBUG: " + str(e)
 		return ret
 
@@ -1645,7 +1645,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 		try:
 			deps = self.getClient().getReverseDependencies(path)
 			deps.sort()
-		except Exception, e:
+		except Exception as e:
 			CommonWidgets.systemError(self, "Unable to get reverse dependencies for this file:\n%s" % str(e))
 			return
 		transient.dispose()
@@ -1726,7 +1726,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 		try:
 			deps = self.getClient().getDependencies(path)
 			deps.sort()
-		except Exception, e:
+		except Exception as e:
 			CommonWidgets.systemError(self, "Unable to get dependencies for this file:\n%s" % str(e))
 			return
 		transient.dispose()
@@ -1741,7 +1741,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 		revisions = None
 		try:
 			revisions = self.getClient().getDirectoryListing(path + '/revisions')
-		except Exception, e:
+		except Exception as e:
 			pass
 		transient.dispose()
 		if revisions is None:
@@ -1768,7 +1768,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 				self._client.makeDirectory("%s/%s" % (path, name))
 				# As usual, the new folder creation will be notified by the server, so
 				# no local view update to perform synchronously
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self, 'Unable to create this folder here: %s' % str(e))
 
 	def _exportPackage(self, item):
@@ -1792,7 +1792,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 					QMessageBox.information(self, getClientName(), "Package successfully exported to %s" % filename, QMessageBox.Ok)
 				else:
 					CommonWidgets.userError(self, 'Sorry, this package cannot be found')
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self, 'Unable to export package: %s' % str(e))
 
 	def _createPackage(self, item):
@@ -1807,7 +1807,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 		if status and not name.isEmpty():
 			try:
 				self._client.createPackage("%s/%s" % (path, name))
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self, 'Unable to create this package here: %s' % str(e))
 
 	def _importPackage(self, item):
@@ -1827,7 +1827,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 			f = open(unicode(filename), 'rb')
 			contents = f.read()
 			f.close()
-		except Exception, e:
+		except Exception as e:
 			CommonWidgets.systemError(self, 'Unable to read this package: %s' % str(e))
 			return
 		
@@ -1843,7 +1843,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 			transient.showTextLabel("Importing package to %s..." % target)
 			try:
 				self._client.importPackageFile(contents, target)
-			except Exception, e:
+			except Exception as e:
 				transient.dispose()
 				CommonWidgets.systemError(self, 'Unable to import package: %s' % str(e))
 				return
@@ -1907,7 +1907,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 						return self.getClient().copy(src, dst)
 					else:
 						return False
-		except Exception, e:
+		except Exception as e:
 			pass
 		finally:
 			QApplication.instance().restoreOverrideCursor()
@@ -1967,7 +1967,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 			ex = None
 			try:
 				deps = self.getClient().getDependencies(src)
-			except Exception, e:
+			except Exception as e:
 				ex = e
 			transient.dispose()
 			if ex:
@@ -1994,7 +1994,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 				return True
 			else:
 				return False
-		except Exception, e:
+		except Exception as e:
 			pass
 		finally:
 			QApplication.instance().restoreOverrideCursor()
@@ -2027,7 +2027,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 				if progress.wasCanceled():
 					break
 			progress.setParent(None)
-		except Exception, e:
+		except Exception as e:
 			progress.setParent(None)
 			CommonWidgets.systemError(self, "Unable to complete operation: %s" % str(e))
 
@@ -2079,7 +2079,7 @@ class WServerFileSystemTreeWidget(QTreeWidget):
 			try:
 				self._renameItem(item, currentName, newName)
 				# Let the server dispatch new name notifications.
-			except Exception, e:
+			except Exception as e:
 				# Revert to its previous name
 				item.setBasename(currentName)
 				CommonWidgets.userError(self, 'Cannot rename "%s" to "%s":\n%s' % (currentName, newName, str(e)))
@@ -2250,7 +2250,7 @@ if __name__ == "__main__":
 #		browser.show()
 
 #		print "Save file: %s" % getSaveFilename(client, defaultExtension = "ats", filter_ = [ "ats" ])
-	except Exception, e:
+	except Exception as e:
 		import TestermanNodes
 		print TestermanNodes.getBacktrace()
 		client.stopXc()

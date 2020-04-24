@@ -143,7 +143,7 @@ The test system interface port bound to such a probe complies with the ``Transpo
 		if self._localSocket:
 			try:
 				self._localSocket.close()
-			except Exception, e:
+			except Exception as e:
 				pass
 			self._localSocket = None
 		self._unlock()
@@ -202,7 +202,7 @@ The test system interface port bound to such a probe complies with the ``Transpo
 				else:
 					# Reuse the local, not listening socket ??
 					sock = self._localSocket
-			except Exception, e:
+			except Exception as e:
 				self._unlock()
 				raise e
 		
@@ -257,7 +257,7 @@ The test system interface port bound to such a probe complies with the ``Transpo
 			self._listeningSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
 			self._listeningSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 			self._listeningSocket.bind(addr)
-		except Exception, e:
+		except Exception as e:
 			self._unlock()
 			raise e
 		self._unlock()
@@ -372,10 +372,10 @@ class PollingThread(threading.Thread):
 						# New received message.
 						self._probe._feedData(localaddr, addr, data)
 
-					except Exception, e:
+					except Exception as e:
 						self._probe.getLogger().warning("exception while polling active/listening sockets: %s" % str(e))
 			
-			except Exception, e:
+			except Exception as e:
 				self._probe.getLogger().warning("exception while polling active/listening sockets: %s" % str(e))
 				# Avoid 100% CPU usage when select() raised an error
 				time.sleep(0.01)	

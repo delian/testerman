@@ -88,11 +88,11 @@ def daemonize(pidFilename = None, stdout = None, stderr = None, displayPid = Fal
 			# Only close TTYs, not files, etc
 			try:
 				os.ttyname(fd)
-			except Exception, e:
+			except Exception as e:
 				continue
 			try:
 				os.close(fd)
-			except Exception, e:
+			except Exception as e:
 				pass
 		
 		# Finally we redirect std fds
@@ -107,7 +107,7 @@ def daemonize(pidFilename = None, stdout = None, stderr = None, displayPid = Fal
 		else: os.dup2(n, 2)
 		return os.getpid()
 
-	except Exception, e:
+	except Exception as e:
 		# What should we do ?...
 		raise e
 
@@ -177,7 +177,7 @@ def main():
 			# The actual deployment should include the registration, and the registration is only possible if the agent is connected.
 			try:
 				agent.deployProbe(type_, name)
-			except Exception, e:
+			except Exception as e:
 				agent.warning("Unable to autodeploy %s as %s: %s" % (name, type_, str(e)))
 	
 	agent.info("Ready")

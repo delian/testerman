@@ -90,7 +90,7 @@ class ProbeImplementation:
 			else:
 				# Missing arguments
 				raise ProbeException("Missing mandatory parameter(s): %s" % ', '.join(missingArgs))
-		except Exception, e:
+		except Exception as e:
 			raise e
 	
 	def _getBacktrace(self):

@@ -230,7 +230,7 @@ Properties for the `ini` plugin:
 			ret = plugin.getValue(filename, keypath)
 			if ret is None:
 				ret = ''
-		except Exception, e:
+		except Exception as e:
 			return ('errorResult', str(e))
 		return ('getResult', ret)
 	
@@ -240,7 +240,7 @@ Properties for the `ini` plugin:
 			return  ('errorResult', 'unsupported configuration file format (%s)' % format)
 		try:
 			ret = plugin.setValue(filename, keypath, value)
-		except Exception, e:
+		except Exception as e:
 			return ('errorResult', str(e))
 		return ('setResult', ret)
 	
@@ -289,9 +289,9 @@ def scanPlugins(paths, label):
 				try:
 					plugin = __import__(m)
 					registerPlugin(plugin.SUPPORTED_CONF_FILE_FORMATS, plugin)
-				except Exception, e:
+				except Exception as e:
 					ProbeImplementationManager.getLogger().warning("Unable to import %s %s: %s" % (m, label, str(e)))
-		except Exception, e:
+		except Exception as e:
 			ProbeImplementationManager.getLogger().warning("Unable to scan %s path for %ss: %s" % (path, label, str(e)))
 
 # On import, scan plugins

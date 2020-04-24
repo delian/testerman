@@ -184,7 +184,7 @@ def initialize():
 def finalize():
 	try:
 		instance().finalize()
-	except Exception, e:
+	except Exception as e:
 		getLogger().error("Unable to stop the probe manager gracefully: %s" % str(e))
 
 

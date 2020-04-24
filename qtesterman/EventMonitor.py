@@ -57,7 +57,7 @@ class EventMonitor(QObject):
 			# NB: local IP address is only taken into account once, during the first subscription.
 			getProxy().subscribe(uri, callback = self.onReceivedEvent)
 			self.subscribedUri = uri
-		except Exception, e:
+		except Exception as e:
 			print("Unable to subscribe: %s" % str(e))
 			return False
 
@@ -74,7 +74,7 @@ class EventMonitor(QObject):
 		try:
 			getProxy().unsubscribe(self.subscribedUri, callback = self.onReceivedEvent)
 			self.subscribedUri = None
-		except Exception, e:
+		except Exception as e:
 			print("Unable to unsubscribe: %s" % str(e))
 			return False
 

@@ -446,7 +446,7 @@ class TcpPacketizerClientThread(threading.Thread):
 				self.on_connection()
 				# Polling loop
 				self.__main_receive_send_loop()
-			except Exception, e:
+			except Exception as e:
 				try:
 					self.trace("Trying to reconnect in %ds..." % self.reconnectInterval)
 					if self.connected:
@@ -529,7 +529,7 @@ class TcpPacketizerClientThread(threading.Thread):
 								self.socket.sendall(message)
 							except Queue.Empty:
 								pass
-							except Exception, e:
+							except Exception as e:
 								self.trace("Unable to send message: " + str(e))
 						else:
 							# Not ready yet. Will perform a new attempt on next main loop iteration.
@@ -548,7 +548,7 @@ class TcpPacketizerClientThread(threading.Thread):
 							self.socket.sendall(message)
 						except Queue.Empty:
 							pass
-						except Exception, e:
+						except Exception as e:
 							self.trace("Unable to send message: " + str(e))
 					# No more enqueued messages to send - we don't need to wait for
 					# the network socket to be writable anymore.
@@ -588,7 +588,7 @@ class TcpPacketizerClientThread(threading.Thread):
 				self.trace("Low level error: " + str(e))
 				raise e # We'll reconnect
 
-			except Exception, e:
+			except Exception as e:
 				self.trace("Exception in main pool for incoming data: " + str(e))
 				pass
 
@@ -637,7 +637,7 @@ class TcpPacketizerClientThread(threading.Thread):
 							self.socket.sendall(message)
 						except Queue.Empty:
 							pass
-						except Exception, e:
+						except Exception as e:
 							self.trace("Unable to send message: " + str(e))
 					else:
 						# Not ready. Will perform a new attempt on next main loop iteration
@@ -651,7 +651,7 @@ class TcpPacketizerClientThread(threading.Thread):
 				self.trace("Low level error: " + str(e))
 				raise e # We'll reconnect
 
-			except Exception, e:
+			except Exception as e:
 				self.trace("Exception in main pool for incoming data: " + str(e))
 				pass
 
@@ -820,7 +820,7 @@ class ConnectingConnectorThread(TcpPacketizerClientThread, IConnector):
 			message = parseMessage(packet)
 			if callable(self._onMessageCallback):
 				self._onMessageCallback(0, message)
-		except Exception, e:
+		except Exception as e:
 			self.trace("Exception while reading message: " + str(e))
 			pass
 
@@ -913,7 +913,7 @@ class BaseNode(object):
 					cb()
 				except Queue.Empty:
 					pass
-				except Exception, e:
+				except Exception as e:
 					pass
 
 		def _stop(self):
@@ -1364,7 +1364,7 @@ class AgentInstaller(ConnectingNode):
 		try:
 			updates = self.getFile("/updates.xml")
 			self.getLogger().debug("Updates file:\n%s" % updates)
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().warning("Unable to fetch update metadata from TACS")
 			print getBacktrace()
 			return []
@@ -1402,7 +1402,7 @@ class AgentInstaller(ConnectingNode):
 						if p.attributes.has_key('name') and p.attribute.has_key('value'):
 							entry['properties'][p.attributes['name']] = p.attributes['value']
 					ret.append(entry)
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().warning("Error while parsing update metadata file: %s" % str(e))
 			ret = []
 
@@ -1427,7 +1427,7 @@ class AgentInstaller(ConnectingNode):
 		if not os.path.lexists(basepath):
 			try:
 				os.makedirs(basepath)
-			except Exception, e:
+			except Exception as e:
 				raise Exception("Unable to create the installation directory (%s): %s" % (basepath, e))
 		
 		# We untar it into the current directory.
@@ -1448,7 +1448,7 @@ class AgentInstaller(ConnectingNode):
 				# TODO: make sure to set write rights to allow future updates
 				# os.chmod("%s/%s" % (basepath, c), ....)
 			tfile.close()
-		except Exception, e:
+		except Exception as e:
 			archiveFileObject.close()
 			raise Exception("Error while unpacking the update archive:\n%s" % str(e))
 
@@ -1514,7 +1514,7 @@ class AgentInstaller(ConnectingNode):
 		if url:
 			try:
 				self.installComponent(url, basepath)
-			except Exception, e:
+			except Exception as e:
 				raise Exception("Unable to install the update:\n%s" % str(e))
 	
 			self.getLogger().info("Agent %s (%s) has been installed." % (selectedVersion, selectedBranch))
@@ -1532,7 +1532,7 @@ class AgentInstaller(ConnectingNode):
 		try:
 			ret = self.installAgent(installDir = self._installDir, preferredBranches = self._branches, preferredVersion = self._preferredVersion)
 			self._responseQueue.put(ret)
-		except Exception, e:
+		except Exception as e:
 			self.getLogger().error("Unable to update: %s" % e)
 			self._responseQueue.put(False)
 

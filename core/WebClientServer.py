@@ -149,7 +149,7 @@ class XcApplication(WebServer.WebSocketApplication):
 		"""
 		try:
 			m = TestermanMessages.parse(msg)
-		except Exception, e:
+		except Exception as e:
 			getLogger().info("%s: Invalid Xc message: %s" % (self, str(e)))
 			return
 		
@@ -242,7 +242,7 @@ class WebClientApplication(WebServer.WebApplication):
 		"""
 		try:
 			l = self._getClient().getDirectoryListing(path)
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Unable to browse directory %s: %s" % (path, str(e)))
 			l = []
 
@@ -270,7 +270,7 @@ class WebClientApplication(WebServer.WebApplication):
 		# Fetch the file to extract the metadata
 		try:
 			source = self._client.getFile(path)
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Unable to fetch source code for %s: %s" % (path, str(e)))
 			self.request.sendError(404, "ATS not found")
 			return
@@ -297,7 +297,7 @@ class WebClientApplication(WebServer.WebApplication):
 			archivePath = '/archives/%s' % ('/'.join(path.split('/')[2:]))
 			try:
 				l = self._getClient().getDirectoryListing(path + '/profiles')
-			except Exception, e:
+			except Exception as e:
 				getLogger().error("Unable to fetch profiles for %s: %s" % (path, str(e)))
 				l = []
 			if l:
@@ -311,7 +311,7 @@ class WebClientApplication(WebServer.WebApplication):
 		archivePath = '/archives/%s' % ('/'.join(path.split('/')[2:]))
 		try:
 			l = self._getClient().getDirectoryListing(archivePath)
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Unable to fetch logs for %s: %s" % (path, str(e)))
 			l = []
 
@@ -365,7 +365,7 @@ class WebClientApplication(WebServer.WebApplication):
 						p = ProfileTools.parseProfile(self._getClient().getFile(path + '/profiles/%s.profile' % profile))
 						if not p:
 							raise Exception("Profile not found or invalid for this ATS")
-					except Exception, e:
+					except Exception as e:
 						getLogger().error("Error in run_ats: %s" % str(e))
 						raise e
 					parameters = p.getParameters()
@@ -408,7 +408,7 @@ class WebClientApplication(WebServer.WebApplication):
 
 			ret = self._getClient().scheduleAts(source, label, username, session, at, path = path, groups = groups)
 			jobId = ret['job-id']
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Error in run_ats: %s" % str(e))
 			raise e
 
@@ -432,7 +432,7 @@ class WebClientApplication(WebServer.WebApplication):
 		try:
 			jobInfo = self._getClient().getJobInfo(int(jobId))
 			jobLogFilename = self._getClient().getJobLogFilename(int(jobId))
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("handle_monitor_ats: %s" % str(e))
 			error = True
 		
@@ -548,7 +548,7 @@ class WebClientApplication(WebServer.WebApplication):
 		# via XSL Tranformations.
 		try:
 			log = self._getClient().getFile(path)
-		except Exception, e:
+		except Exception as e:
 			self.request.sendError(404)
 			return
 		
@@ -568,7 +568,7 @@ class WebClientApplication(WebServer.WebApplication):
 			log = '<?xml version="1.0" encoding="utf-8" ?>\n<ats>\n'
 			log += self._getClient().getFile(path)
 			log += '</ats>'
-		except Exception, e:
+		except Exception as e:
 			self.request.sendError(404)
 			return
 		
@@ -801,7 +801,7 @@ class HttpServerThread(threading.Thread):
 		try:
 			while not self._stopEvent.isSet(): 
 				self._server.handle_request_with_timeout(0.01)
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Exception in HTTP server thread: " + str(e))
 		getLogger().info("HTTP server stopped")
 		self._client.stopXc()
@@ -810,7 +810,7 @@ class HttpServerThread(threading.Thread):
 		try:
 			self._stopEvent.set()
 			self.join()
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("Unable to stop HTTP server gracefully: %s" % str(e))
 
 ################################################################################
@@ -901,7 +901,7 @@ def main():
 	try:
 		if configFile: cm.read(configFile)
 		if usersFile: cm.read(usersFile, autoRegister = True)
-	except Exception, e:
+	except Exception as e:
 		print str(e)
 		return 1
 
@@ -974,7 +974,7 @@ def main():
 			time.sleep(1)
 	except KeyboardInterrupt:
 		getLogger().info("Shutting down WebClient Server...")
-	except Exception, e:
+	except Exception as e:
 		sys.stderr.write("Unable to start server: %s\n" % str(e))
 		getLogger().critical("Unable to start server: " + str(e))
 

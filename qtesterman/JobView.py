@@ -198,7 +198,7 @@ class WAtsDetailsDialog(QDialog):
 			f.write(te)
 			f.close()
 			QMessageBox.information(self, getClientName(), "Test Executable successfully saved.", QMessageBox.Ok)
-		except Exception, e:
+		except Exception as e:
 			CommonWidgets.systemError(self, "Unable to save file as %s: %s" % (filename, str(e)))
 			return False		
 
@@ -513,7 +513,7 @@ class WJobTreeWidget(QTreeWidget):
 	def _sendSignal(self, jobId, signal):
 		try:
 			self._client.sendSignal(jobId, signal)	
-		except Exception, e:
+		except Exception as e:
 			print "DEBUG: " + str(e)
 
 	def _viewLog(self, jobId):

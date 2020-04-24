@@ -53,7 +53,7 @@ def parseStatusFile_linux(filename):
 					ppid_ = int(m.group(1))
 			elif ppid_ and pid_:
 				break
-	except Exception, e:
+	except Exception as e:
 		pass
 	return (pid_, ppid_)
 
@@ -129,7 +129,7 @@ def getChildrenPids(pid):
 			pid_, ppid_ = parseStatusFile(filename)
 			if pid_ and ppid_:
 				pids.append( (pid_, ppid_) )
-		except Exception, e:
+		except Exception as e:
 			pass
 	
 	# Now let's construct the tree for the looked up pid
@@ -284,10 +284,10 @@ The test system interface port bound to such a probe complies with the ``ExecPor
 
 				try:
 					self.executeCommand(command)
-				except Exception, e:
+				except Exception as e:
 					self.triEnqueueMsg(str(e))
 
-		except Exception, e:
+		except Exception as e:
 			raise ProbeImplementationManager.ProbeException(self._getBacktrace())
 		
 	# Specific implementation
@@ -312,7 +312,7 @@ The test system interface port bound to such a probe complies with the ``ExecPor
 			try:
 				execThread.stop()
 				self.getLogger().info('Execution thread stopped')
-			except Exception, e:
+			except Exception as e:
 				self.getLogger().error('Error while cancelling the pending execution thread: %s' % str(e))
 		# Nothing to do if no pending thread.
 		self.getLogger().debug('execThread is now %s' % self._execThread)
@@ -331,7 +331,7 @@ The test system interface port bound to such a probe complies with the ``ExecPor
 			# Now start our dedicated thread.
 			self._execThread = ExecThread(self, command)
 			self._execThread.start()
-		except Exception, e:
+		except Exception as e:
 			self._unlock()
 			raise e
 		
@@ -369,7 +369,7 @@ class ExecThread(threading.Thread):
 			self._process = subprocess.Popen(self._command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, executable=self._probe["shell"])
 			output, _ = self._process.communicate()
 			status = self._process.returncode
-		except Exception, e:
+		except Exception as e:
 			self._probe.triEnqueueMsg('Internal execution error: %s' % str(e))
 		
 		self._process = None
@@ -403,7 +403,7 @@ class ExecThread(threading.Thread):
 			for p in pids:
 				try:
 					os.kill(p, s)
-				except Exception, e:
+				except Exception as e:
 					self._probe.getLogger().warning("Unable to kill process %s: %s" % (pid, str(e))) 
 		# And we should wait for a notification indicating that the process
 		# has died...

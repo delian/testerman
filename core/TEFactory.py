@@ -181,7 +181,7 @@ def createTestExecutable(name, ats, atsDirInTePackage):
 		)
 	try:
 		te = substituteVariables(template, variables)
-	except Exception, e:
+	except Exception as e:
 		getLogger().error("Unable to substitute variables in TE: %s" % str(e))
 		raise e
 	

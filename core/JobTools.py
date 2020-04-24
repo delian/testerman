@@ -200,7 +200,7 @@ def parseMetadata(xmlMetadata):
 				p = Parameter(name, defaultValue, type_)
 				# description is ignored for now (not used in TE)
 				metadata.parameters[name] = p
-			except Exception, e:
+			except Exception as e:
 				getLogger().warning("Unable to parse a parameter in metadata: %s" % str(e))
 
 		for group in doc.getElementsByTagName('group'):
@@ -212,7 +212,7 @@ def parseMetadata(xmlMetadata):
 					metadata.groups[name] = description
 				else:
 					metadata.groups[name] = ''
-			except Exception, e:
+			except Exception as e:
 				getLogger().warning("Unable to parse a group in metadata: %s" % str(e))
 	
 	except Exception:

@@ -175,7 +175,7 @@ class TcpPacketizerClientThread(threading.Thread):
 				self.on_connection()
 				# Polling loop
 				self.__main_receive_send_loop()
-			except Exception, e:
+			except Exception as e:
 				try:
 					self.trace("Exception in main loop:\n" + getBacktrace())
 					self.trace("Trying to reconnect in %ds..." % self.reconnectInterval)
@@ -279,7 +279,7 @@ class TcpPacketizerClientThread(threading.Thread):
 								self.socket.sendall(message)
 							except Queue.Empty:
 								pass
-							except Exception, e:
+							except Exception as e:
 								self.trace("Unable to send message: " + str(e))
 						else:
 							# Not ready yet. Will perform a new attempt on next main loop iteration.
@@ -298,7 +298,7 @@ class TcpPacketizerClientThread(threading.Thread):
 							self.socket.sendall(message)
 						except Queue.Empty:
 							pass
-						except Exception, e:
+						except Exception as e:
 							self.trace("Unable to send message: " + str(e))
 					# No more enqueued messages to send - we don't need to wait for
 					# the network socket to be writable anymore.
@@ -327,7 +327,7 @@ class TcpPacketizerClientThread(threading.Thread):
 				self.trace("Low level error: " + str(e))
 				raise e # We'll reconnect
 
-			except Exception, e:
+			except Exception as e:
 				self.trace("Exception in main pool for incoming data: " + str(e))
 				pass
 
@@ -376,7 +376,7 @@ class TcpPacketizerClientThread(threading.Thread):
 							self.socket.sendall(message)
 						except Queue.Empty:
 							pass
-						except Exception, e:
+						except Exception as e:
 							self.trace("Unable to send message: " + str(e))
 					else:
 						# Not ready. Will perform a new attempt on next main loop iteration
@@ -390,7 +390,7 @@ class TcpPacketizerClientThread(threading.Thread):
 				self.trace("Low level error: " + str(e))
 				raise e # We'll reconnect
 
-			except Exception, e:
+			except Exception as e:
 				self.trace("Exception in main pool for incoming data: " + str(e))
 				pass
 
@@ -592,7 +592,7 @@ class TcpPacketizerServerThread(threading.Thread):
 			while not self.stopEvent.isSet():
 				try:
 					self.__main_receive_send_loop()
-				except Exception, e:
+				except Exception as e:
 					# This means that the stream was broken
 					print str(e)
 					self.trace(str(e))
@@ -672,7 +672,7 @@ class TcpPacketizerServerThread(threading.Thread):
 								self.socket.sendall(message)
 							except Queue.Empty:
 								pass
-							except Exception, e:
+							except Exception as e:
 								self.trace("Unable to send message: " + str(e))
 						else:
 							# Not ready yet. Will perform a new attempt on next main loop iteration.
@@ -694,7 +694,7 @@ class TcpPacketizerServerThread(threading.Thread):
 						except IOError, e:
 							self.trace("IOError while sending a packet to client (%s) - disconnecting" % str(e))
 							self.stop()
-						except Exception, e:
+						except Exception as e:
 							self.trace("Unable to send message: %s" % str(e))
 					# No more enqueued messages to send - we don't need to wait for
 					# the network socket to be writable anymore.
@@ -928,7 +928,7 @@ class ListeningConnectorThread(TcpPacketizerServerThread, IConnector):
 			message = Messages.parse(packet)
 			if callable(self._onMessageCallback):
 				self._onMessageCallback(client_address, message)
-		except Exception, e:
+		except Exception as e:
 			self.trace("Exception while reading message: " + str(e))
 			pass
 
@@ -992,7 +992,7 @@ class ConnectingConnectorThread(TcpPacketizerClientThread, IConnector):
 			message = Messages.parse(packet)
 			if callable(self._onMessageCallback):
 				self._onMessageCallback(0, message)
-		except Exception, e:
+		except Exception as e:
 			self.trace("Exception while reading message: " + str(e))
 			pass
 
@@ -1085,7 +1085,7 @@ class BaseNode(object):
 					cb()
 				except Queue.Empty:
 					pass
-				except Exception, e:
+				except Exception as e:
 					pass
 
 		def _stop(self):

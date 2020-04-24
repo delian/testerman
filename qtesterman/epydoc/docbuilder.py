@@ -99,7 +99,7 @@ class BuildOptions:
                 and re.compile(exclude_introspect) or None)
             self._parse_regexp = (exclude_parse
                 and re.compile(exclude_parse) or None)
-        except Exception, exc:
+        except Exception as exc:
             log.error('Error in regular expression pattern: %s' % exc)
             raise
 
@@ -198,7 +198,7 @@ def build_doc_index(items, introspect=True, parse=True, add_submodules=True,
         options = BuildOptions(parse=parse, introspect=introspect,
             exclude_introspect=exclude_introspect, exclude_parse=exclude_parse,
             add_submodules=add_submodules)
-    except Exception, e:
+    except Exception as e:
         # log.error already reported by constructor.
         return None
 

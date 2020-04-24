@@ -238,7 +238,7 @@ class WTemplateApplicationWidget(QWidget):
 			f.close()
 			QMessageBox.information(self, getClientName(), "File saved successfully.", QMessageBox.Ok)
 			return True
-		except Exception, e:
+		except Exception as e:
 			CommonWidgets.systemError(self, "Unable to save file as %s: %s" % (filename, unicode(e)))
 			return False
 
@@ -259,7 +259,7 @@ class WTemplateApplicationWidget(QWidget):
 					content = f.read().decode('utf-8')
 					f.close()
 					template = airspeed.Template(content)
-				except Exception, e:
+				except Exception as e:
 					# Instead of a popup, silently display the error message within the report.
 					# Avoid popping an error when opening the log viewer with an incorrect plugin configuration.
 					template = airspeed.Template("Unable to load template file '%s': %s" % (unicode(filename), str(e)))
@@ -297,7 +297,7 @@ class WTemplateApplicationWidget(QWidget):
 		try:
 			ret = template.merge(context, xform = xform)
 			self._source = ret
-		except Exception, e:
+		except Exception as e:
 			ret = str(e)
 
 		if self._source is None or not displayAsHtml:
@@ -446,7 +446,7 @@ class TemplateEditDialog(QDialog):
 			# Let's save the updated template
 			try:
 				self._save()
-			except Exception, e:
+			except Exception as e:
 				ret = QMessageBox.warning(self, "Error",
 					"Unable to save template file:\n%s\nContinue anyway ?" % (str(e)),
 					QMessageBox.Yes | QMessageBox.No)

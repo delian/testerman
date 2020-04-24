@@ -677,7 +677,7 @@ class WRawLogView(QWidget):
 			logSaver.saveAs(filename, rawLogs)
 			QMessageBox.information(self, getClientName(), "Execution log saved successfully.", QMessageBox.Ok)
 			return True
-		except Exception, e:
+		except Exception as e:
 			systemError(self, "Unable to save file as %s: %s" % (filename, unicode(e)))
 			return False
 
@@ -1058,14 +1058,14 @@ class WLogViewer(QWidget):
 			try:
 				log("Updating from server: hot log from job %d..." % self.jobId)
 				logfile = getProxy().getJobLog(self.jobId)
-			except Exception, e:
+			except Exception as e:
 				logfile = None
 			
 			try:
 				jobInfo = getProxy().getJobInfo(self.jobId)
 				if jobInfo and jobInfo.has_key('state'):
 					state = jobInfo['state']
-			except Exception, e:
+			except Exception as e:
 				pass
 			
 			if state is None:
@@ -1087,7 +1087,7 @@ class WLogViewer(QWidget):
 			try:
 				logfile = loadLog(self._url)
 				state = 'n/a'
-			except Exception, e:
+			except Exception as e:
 				QMessageBox.information(self, getClientName(), "Unable to load this log file.")
 				return
 

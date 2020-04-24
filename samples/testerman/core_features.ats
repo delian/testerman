@@ -639,7 +639,7 @@ class TC_TEMPLATE_MATCH_GENERAL(TestCase):
 			if not assert_match(message, ('choiceName', superset({ 'key4': superset(('choiceName3', { 'key2': 1.0 }))}))): raise Exception('recursive/4')
 	
 			setverdict('pass')
-		except Exception, e:
+		except Exception as e:
 			log("Unable to complete test case: matching error for %s" % str(e))
 			setverdict('fail')
 
@@ -706,7 +706,7 @@ class TC_TEMPLATE_MATCH_LIST(TestCase):
 			if assert_match([1, 2, 3, 4, 5, 6, 7], [1, any_or_none(), 1, any_or_none()]): raise Exception('(wildcard/9)')
 
 			setverdict('pass')
-		except Exception, e:
+		except Exception as e:
 			log("Unable to complete test case: matching error for %s" % str(e))
 			setverdict('fail')
 

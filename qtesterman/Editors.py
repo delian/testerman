@@ -138,7 +138,7 @@ class WDocumentEditor(QWidget):
 			else:
 				QApplication.instance().get('gui.statusbar').showMessage("Local copy saved as %s successfully" % (filename))
 			return True
-		except Exception, e:
+		except Exception as e:
 			log(getBacktrace())
 			CommonWidgets.systemError(self, "Unable to save file as %s: %s" % (filename, str(e)))
 			QApplication.instance().get('gui.statusbar').showMessage("Unable to save file %s: %s" % (filename, str(e)))
@@ -164,7 +164,7 @@ class WDocumentEditor(QWidget):
 			ret = getProxy().putFile(self.model.getDocumentSource(), unicode(filename), useCompression = True, username = unicode(username))
 			if not ret:
 				error = "Please check permissions."
-		except Exception, e:
+		except Exception as e:
 			log(getBacktrace())
 			error =	str(e)
 
@@ -883,7 +883,7 @@ class WAtsDocumentEditor(WDocumentEditor):
 				session = session,
 				at = at,
 				groups = selectedGroups)
-		except Exception, e:
+		except Exception as e:
 			CommonWidgets.systemError(self, str(e))
 			return None
 		QApplication.instance().get('gui.statusbar').showMessage(res['message'])
@@ -1172,7 +1172,7 @@ class WCampaignDocumentEditor(WDocumentEditor):
 				unicode(QApplication.instance().username()), 
 				session = session,
 				at = at)
-		except Exception, e:
+		except Exception as e:
 			CommonWidgets.systemError(self, str(e))
 			return None
 		QApplication.instance().get('gui.statusbar').showMessage(res['message'])
@@ -2096,7 +2096,7 @@ class WSessionParameterEditor(QTreeWidget):
 					f.write("%s=%s\n" % (name.encode('utf-8'), value.encode('utf-8')))
 				f.close()
 				QMessageBox.information(self, getClientName(), "Script parameters have been saved successfully.", QMessageBox.Ok)
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self, "Unable to save parameter file: " + str(e))
 				log("Unable to save parameter file: " + str(e))
 
@@ -2127,7 +2127,7 @@ class WSessionParameterEditor(QTreeWidget):
 						p['previous-value'] = values[name]
 
 				self.rebuildTree()
-			except Exception, e:
+			except Exception as e:
 				CommonWidgets.systemError(self, "Unable to load parameter file: " + str(e))
 				log("Unable to load parameter file: " + str(e))
 
@@ -2834,7 +2834,7 @@ class WProfilesManager(QWidget):
 				l = getProxy().getDirectoryListing(unicode(self._associatedScriptModel.getUrl().path()) + '/profiles')
 				if l is None:
 					l = []
-			except Exception, e:
+			except Exception as e:
 				log('Cannot get profiles for this script: %s' % e)
 				l = []
 			
@@ -2983,7 +2983,7 @@ class WProfilesManager(QWidget):
 			ret = getProxy().putFile(self.model.getDocumentSource(), unicode(filename), useCompression = True)
 			if not ret:
 				error = "Please check permissions."
-		except Exception, e:
+		except Exception as e:
 			log(getBacktrace())
 			error =	str(e)
 

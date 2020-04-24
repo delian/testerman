@@ -295,14 +295,14 @@ The test system interface port bound to such a probe complies with the ``FileMan
 			try:
 				self.getLogger().debug("Removing added file %s..." % path)
 #				shutil.rmtree(path)
-			except Exception, e:
+			except Exception as e:
 				self.getLogger().warning("Unable to remove added file %s: %s" % (path, str(e)))
 
 		for path in self._modifiedFiles:
 			try:
 				self.getLogger().debug("Restoring modified/deleted file %s..." % path)
 				# ...
-			except Exception, e:
+			except Exception as e:
 				self.getLogger().warning("Unable to restore modified/deleted file %s: %s" % (path, str(e)))
 
 		self._addedFiles = []

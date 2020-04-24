@@ -154,7 +154,7 @@ The test system interface port bound to such a probe complies with the ``ExecPor
 		self._known_hosts = None
 		try:
 			self._known_hosts = os.path.join(os.environ['HOME'], ".ssh", "known_hosts")
-		except Exception, e:
+		except Exception as e:
 			pass
 
 	# ProbeImplementation reimplementation
@@ -214,10 +214,10 @@ The test system interface port bound to such a probe complies with the ``ExecPor
 
 				try:
 					self.executeCommand(command, username, host, password, timeout, workingdir)
-				except Exception, e:
+				except Exception as e:
 					self.triEnqueueMsg(str(e))
 
-		except Exception, e:
+		except Exception as e:
 			raise ProbeImplementationManager.ProbeException(self._getBacktrace())
 		
 	# Specific implementation
@@ -243,7 +243,7 @@ The test system interface port bound to such a probe complies with the ``ExecPor
 				sshThread.stop()
 				sshThread.join(3.0)
 				self.getLogger().debug('SSH thread stopped')
-			except Exception, e:
+			except Exception as e:
 				self.getLogger().error('Error while cancelling the pending SSH thread: %s' % str(e))
 		# Nothing to do if no pending thread.
 
@@ -280,7 +280,7 @@ The test system interface port bound to such a probe complies with the ``ExecPor
 								else:
 									# Discard the entry, this is our hostname
 									pass
-							except Exception, e:
+							except Exception as e:
 								# In case of an error, let's keep the entry
 								adjustedlines.append(l)
 							
@@ -294,7 +294,7 @@ The test system interface port bound to such a probe complies with the ``ExecPor
 					fcntl.flock(f.fileno(), fcntl.LOCK_EX)
 					f.write(''.join(adjustedlines))
 					f.close()
-				except Exception, e:
+				except Exception as e:
 					# Just proceed. It may still work.
 					try:
 						f.close()
@@ -323,7 +323,7 @@ The test system interface port bound to such a probe complies with the ``ExecPor
 				
 			# Now start our dedicated thread.
 			self._sshThread = SshThread(self, ssh, command)
-		except Exception, e:
+		except Exception as e:
 			self._unlock()
 			raise e
 		
@@ -386,7 +386,7 @@ class SshThread(threading.Thread):
 					status = int(self._ssh.before.split('\n')[1].strip())
 					self._ssh.logout()
 					break
-		except Exception, e:
+		except Exception as e:
 			self._probe.triEnqueueMsg('Internal SSH error: %s' % str(e))
 			
 		# Kill the ssh session, if still active for wathever reason

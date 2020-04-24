@@ -324,7 +324,7 @@ if __name__ == '__main__':
         raise e
     except SystemExit, e: # sys.exit()
         raise e
-    except Exception, e:
+    except Exception as e:
         print 'ERROR, UNEXPECTED EXCEPTION'
         print str(e)
         traceback.print_exc()

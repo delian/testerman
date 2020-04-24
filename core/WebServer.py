@@ -641,7 +641,7 @@ class WebSocketApplication:
 		getLogger().info("WebSocket link connected from %s" % str(self._getClientAddress()))
 		try:
 			self.onWsOpen()
-		except Exception, e:
+		except Exception as e:
 			getLogger().error("WebSocket: userland error when handling onWsOpen(): %s" % str(e))
 			self.wsClose()
 
@@ -681,7 +681,7 @@ class WebSocketApplication:
 				getLogger().error("WebSocket: Low level error: " + str(e))
 				self.wsClose()
 
-			except Exception, e:
+			except Exception as e:
 				getLogger().error("WebSocket: Exception in main pool for incoming data: " + str(e))
 				self.wsClose()
 
@@ -741,7 +741,7 @@ class WebSocketApplication:
 				getLogger().debug("Missing data Ws stream into frames")
 				# not enough data yet
 				return currentFrames
-			except Exception, e:
+			except Exception as e:
 				getLogger().debug("Exception while splitting Ws stream into frames: %s" % Tools.getBacktrace())
 				return currentFrames
 
@@ -778,7 +778,7 @@ class WebSocketApplication:
 				
 				try:
 					self.onWsMessage(frame.payload)
-				except Exception, e:
+				except Exception as e:
 					getLogger().error("WebSocket: userland exception while handling message:\n%s\n%s" % (repr(msg), Tools.getBacktrace()))
 			
 			else:

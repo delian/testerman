@@ -367,7 +367,7 @@ class ReportExporter(Plugin.ReportExporter):
 			content = f.read().decode('utf-8')
 			f.close()
 			template = airspeed.Template(content)
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to read template file %s: %s" % (templateFilename, unicode(e)))
 
 		html = self["html"]
@@ -378,7 +378,7 @@ class ReportExporter(Plugin.ReportExporter):
 			
 		try:
 			return template.merge(context, xform = xform)
-		except Exception, e:
+		except Exception as e:
 			raise Exception("Unable to apply template file %s: %s" % (templateFilename, unicode(e)))
 
 	##
@@ -410,7 +410,7 @@ class ReportExporter(Plugin.ReportExporter):
 				f = open(outputFilename, 'w')
 				f.write(output.encode('utf-8'))
 				f.close()
-			except Exception, e:
+			except Exception as e:
 				raise Exception("Unable to save output file file %s: %s" % (outputFilename, unicode(e)))
 				
 		return True

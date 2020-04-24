@@ -634,7 +634,7 @@ def process_file(module_doc):
                                      'syntax (%s, line %d) -- %s' %
                                      (module_doc.filename, lineno, e))
                 except KeyboardInterrupt, e: raise
-                except Exception, e:
+                except Exception as e:
                     log.error('Internal error during parsing (%s, line '
                               '%s):\n%s' % (module_doc.filename, lineno, e))
                     raise

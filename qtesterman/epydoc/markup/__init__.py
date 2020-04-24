@@ -176,7 +176,7 @@ def parse(docstring, markup='plaintext', errors=None, **options):
     # Parse the docstring.
     try: parsed_docstring = parse_docstring(docstring, errors, **options)
     except KeyboardInterrupt: raise
-    except Exception, e:
+    except Exception as e:
         if epydoc.DEBUG: raise
         log.error('Internal error while parsing a docstring: %s; '
                   'treating docstring as plaintext' % e)

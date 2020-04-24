@@ -259,7 +259,7 @@ class DictWrapper:
 				return self._taggedDocstring._tags[tagName].value()
 			else:
 				raise KeyError(name)
-		except Exception, e:
+		except Exception as e:
 			print str(e)
 
 
